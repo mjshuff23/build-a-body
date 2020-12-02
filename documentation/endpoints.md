@@ -34,7 +34,6 @@
 **Stretch Goal Endpoints**
 
   - /body-map - GET mappable body image for exercises
-
   - /recipes - GET all recipes
   - /recipes - POST new recipes
   - /recipes/:id - GET individual recipe
