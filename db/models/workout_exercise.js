@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Workout_exercise = sequelize.define('workout_exercise', {
+  const Workout_exercise = sequelize.define('WorkoutExercise', {
     workout_id: DataTypes.INTEGER,
     exercise_id: DataTypes.INTEGER
   }, {});

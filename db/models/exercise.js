@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Exercise = sequelize.define('exercises', {
+  const Exercise = sequelize.define('Exercise', {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     user_id: DataTypes.INTEGER,
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   Exercise.associate = function (models) {
     // associations can be defined here
     Exercise.belongsTo(models.User, { foreignKey: 'user_id' });
-    Exercise.hasMany(models.Workout_exercise, { foreignKey: 'exercise_id' });
+    Exercise.hasMany(models.WorkoutExercise, { foreignKey: 'exercise_id' });
     Exercise.hasMany(models.Comment, {
       foreignKey: 'commentableId',
       constraints: false,
