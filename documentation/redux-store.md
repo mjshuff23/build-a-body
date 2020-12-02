@@ -4,11 +4,13 @@
         username: '',
     },
     Exercises: {
-        dict: {},
-        ids: [],
+       id: {},
+       id: {},
+       ...
     },
     Workouts: {
-        dict: {},
-        ids: [],
+       id: {},
+       id: {},
+       ...
     },
 }

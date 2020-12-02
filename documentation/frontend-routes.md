@@ -2,7 +2,7 @@
 
   - /login - Login
   - /signup - Signup
-  - /logout - Logout
-  - /home - Main Page
-  - /exercises - Exercises
-  - /workouts - Workouts
+  - / - Main Page
+  - /exercises/:id - Exercise
+  - /workouts/:id - Workout
+  - /users/:id - User Info Page
