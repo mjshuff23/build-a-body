@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('workouts', [
+    return queryInterface.bulkInsert('Workouts', [
       {
         title: 'Push Day',
         description: 'In this workout, we will be focusing on pushing exercises, which focuses on your triceps, chest, and shoulders.',
@@ -35,6 +35,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('workouts', null, {});
+    return queryInterface.bulkDelete('Workouts', null, {});
   }
 };

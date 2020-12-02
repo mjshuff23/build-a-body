@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('exercises', [
+    return queryInterface.bulkInsert('Exercises', [
       {
         title: 'Bicep Curl',
         description: '1. Start standing with a dumbbell in each hand. Your elbows should rest at your sides and your forearms should extend out in front of your body. \n2. Bring the dumbbells all the way up to your shoulders by bending your elbows. \n3. Once at the top, hold for a second by squeezing the muscle. \n4. Reverse the curl slowly and repeat.',
@@ -80,6 +80,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('exercises', null, {});
+    return queryInterface.bulkDelete('Exercises', null, {});
   }
 };

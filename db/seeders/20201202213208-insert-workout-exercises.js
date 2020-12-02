@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('workout_exercises', [
+    return queryInterface.bulkInsert('WorkoutExercises', [
       { workout_id: 1, exercise_id: 3, createdAt: new Date(), updatedAt: new Date() },
       { workout_id: 1, exercise_id: 4, createdAt: new Date(), updatedAt: new Date() },
       { workout_id: 2, exercise_id: 1, createdAt: new Date(), updatedAt: new Date() },
@@ -16,6 +16,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('workout_exercises', null, {});
+    return queryInterface.bulkDelete('WorkoutExercises', null, {});
   }
 };
