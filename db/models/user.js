@@ -23,14 +23,16 @@ module.exports = (sequelize, DataTypes) => {
         len: [60, 60],
       },
     },
-    tokenId: {
-      type: DataTypes.STRING
-    }
   }, {});
 
   User.associate = function (models) {
     User.hasMany(models.Exercise, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true });
     User.hasMany(models.Workout, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true });
+  };
+
+  User.prototype.validatePassword = function (password) {
+    // because this is a model instance method, `this` is the user instance here:
+    return bcrypt.compareSync(password, this.hashedPassword.toString());
   };
 
   return User;
