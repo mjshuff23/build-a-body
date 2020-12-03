@@ -1,30 +1,55 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
-
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { BrowserRouter, Redirect, Route, NavLink, Switch } from 'react-router-dom';
+import { loadToken } from "./store/actions/authentication";
+import { ProtectedRoute, PrivateRoute } from './route-util';
+import LoginForm from './components/LoginForm';
+import LandingPage from './components/LandingPage';
+import MainPage from './components/MainPage';
+import './components/stylesheets/App.css';
 import UserList from './components/UsersList';
 
+function App({ needLogin, loadToken }) {
+    const [loaded, setLoaded] = useState(false);
 
-function App() {
+    useEffect(() => {
+        setLoaded(true);
+        loadToken();
+    }, [loadToken]);
 
-  return (
-    <BrowserRouter>
-        <nav>
-            <ul>
-                <li><NavLink to="/" activeClass="active">Home</NavLink></li>
-                <li><NavLink to="/users" activeClass="active">Users</NavLink></li>
-            </ul>
-        </nav>
-        <Switch>
-            <Route path="/users">
-                <UserList />
-            </Route>
+    if (!loaded) {
+        return null;
+    }
 
-            <Route path="/">
-                <h1>My Home Page</h1>
-            </Route>
-        </Switch>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Route path="/landing" component={ LandingPage } />
+                <ProtectedRoute
+                    path="/login"
+                    exact={ true }
+                    needLogin={ needLogin }
+                    component={ LoginForm }
+                />
+                <PrivateRoute
+                    path="/"
+                    exact={ true }
+                    needLogin={ needLogin }
+                    component={ () => <MainPage /> }
+                />
+
+                <Redirect to="/" />
+
+            </Switch>
+        </BrowserRouter>
+    );
 }
 
-export default App;
+
+const AppContainer = () => {
+    const needLogin = useSelector((state) => !state.authentication.token);
+    const dispatch = useDispatch();
+    return <App needLogin={ needLogin } loadToken={ () => dispatch(loadToken()) } />;
+};
+
+export default AppContainer;
