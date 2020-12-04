@@ -1,5 +1,13 @@
 .mainPage {
-    background-color: #2d3142;
+    background-color: #212121;
     height: 100vh;
     width: 100vw;
+}
+
+:link {
+    color: #f7f5fa;
+}
+
+:visited {
+    color: #f7f5fa;
 }

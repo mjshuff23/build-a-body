@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { BrowserRouter, Redirect, Route, NavLink, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { loadToken } from "./store/actions/authentication";
 import { ProtectedRoute, PrivateRoute } from './route-util';
 import LoginForm from './components/LoginForm';

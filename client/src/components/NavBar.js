@@ -1,46 +1,82 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import './stylesheets/NavBar.css';
-import { SidebarData } from './SidebarData';
-import *  as FaIcons from "react-icons/fa";
-import { Fade as Hamburger } from 'hamburger-react';
-import *  as AiIcons from "react-icons/ai";
-import { NavLink, Link } from 'react-router-dom';
 
 function NavBar() {
-    const [sidebar, setSidebar] = useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const openSidebar = () => setSidebar(!sidebar);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
-        <div className='nav'>
-            <div className="navBar">
-                <Link to="#">
+        <div className="navBar">
+            <div className="navBar__menuLink">
+                {/* Exercises */ }
+                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={ handleClick }>
+                    Exercises
+            </Button>
+                <Menu
+                    id="simple-menu"
+                    anchorEl={ anchorEl }
+                    keepMounted
+                    open={ Boolean(anchorEl) }
+                    onClose={ handleClose }
+                >
+                    <MenuItem onClick={ handleClose }>Profile</MenuItem>
+                    <MenuItem onClick={ handleClose }>My account</MenuItem>
+                    <MenuItem onClick={ handleClose }>Logout</MenuItem>
+                </Menu>
 
-                    <FaIcons.FaBars className='navBar__lines' size='32' onClick={ openSidebar } />
-                    {/* <Hamburger size='22' color="#2d3142"
-                        toggled={ sidebar } toggle={ openSidebar } /> */}
-                </Link>
+                {/* Workouts */ }
+                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={ handleClick }>
+                    Workouts
+            </Button>
+                <Menu
+                    id="simple-menu"
+                    anchorEl={ anchorEl }
+                    keepMounted
+                    open={ Boolean(anchorEl) }
+                    onClose={ handleClose }
+                >
+                    <MenuItem onClick={ handleClose }>Profile</MenuItem>
+                    <MenuItem onClick={ handleClose }>My account</MenuItem>
+                    <MenuItem onClick={ handleClose }>Logout</MenuItem>
+                </Menu>
+
+                {/* UserInfo */ }
+                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={ handleClick }>
+                    Settings
+            </Button>
+                <Menu
+                    id="simple-menu"
+                    anchorEl={ anchorEl }
+                    keepMounted
+                    open={ Boolean(anchorEl) }
+                    onClose={ handleClose }
+                >
+                    <MenuItem onClick={ handleClose }>Profile</MenuItem>
+                    <MenuItem onClick={ handleClose }>My account</MenuItem>
+                    <MenuItem onClick={ handleClose }>Logout</MenuItem>
+                </Menu>
             </div>
-            <nav className={ sidebar ? 'navBar__menu active' : "navBar__menu" }>
-                <ul className='navBar__items'>
-                    <li className="navBar--toggle">
-                        <Link to="#" className='navBar__menuBar' onClick={ openSidebar }>
-                            <AiIcons.AiOutlineClose />
-                        </Link>
-                    </li>
-                    { SidebarData.map((item, idx) => {
-                        return (
-                            <li key={ idx } className={ item.className }>
-                                <NavLink exact to={ item.path } activeClassName='active'>
-                                    { item.icon }
-                                    <span className="navBar__linkText">{ item.title }</span>
-                                </NavLink>
-                            </li>
-                        );
-                    }) }
-                </ul>
-            </nav>
         </div>
     );
+    // return (
+    //     <div>
+    //         Nav Bar
+
+    //         {/* Exercises Popover */ }
+
+    //         {/* Workouts Popover */ }
+    //     </div>
+    // );
 }
+
 export default NavBar;

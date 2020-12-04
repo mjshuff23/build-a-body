@@ -1,1 +1,20 @@
 /* TODO Add site wide styles */
+
+:root {
+    --primary-bg-color: #2D3142;
+    --primary-font-color: #f7f5fa;
+    --primary-link-color: #cfe6f7;
+}
+
+body {
+    background-color: var(--primary-bg-color);
+    color: var(--primary-font-color);
+}
+
+:link {
+    color: var(--primary-link-color);
+}
+
+:visited {
+    color: var(--primary-link-color);
+}
