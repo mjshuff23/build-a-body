@@ -8,15 +8,15 @@ import Feed from './Feed';
 import { useDispatch, useSelector } from 'react-redux';
 import { addExercise } from '../store/actions/exercises';
 import { setCurrentExerciseGroup, setExercises } from '../store/actions/exercises';
+import { setWorkouts } from '../store/actions/workouts';
 function MainPage() {
     const dispatch = useDispatch();
     const exercises = useSelector(state => state.exercises);
 
     useEffect(() => {
         // Load Body Parts for menu
-        async function fetchData() {
-            const token = localStorage.getItem("build-a-body/authentication/token");
-            console.log(token);
+        const token = localStorage.getItem("build-a-body/authentication/token");
+        async function fetchExercises() {
             const response = await fetch('api/exercises', {
                 headers: {
                     'Content-Type': 'application/json',
@@ -26,12 +26,27 @@ function MainPage() {
 
             if (response.ok) {
                 const { exerciseObject, bodyPartsArray } = await response.json();
-                console.log(exerciseObject, bodyPartsArray);
                 dispatch(setExercises(exerciseObject, bodyPartsArray));
                 dispatch(addExercise({ id: 10, title: 'CHUAAA' }));
             }
         }
-        fetchData();
+        fetchExercises();
+
+        async function fetchWorkouts() {
+            const response = await fetch('api/workouts', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const workoutsObject = await response.json();
+                console.log(workoutsObject);
+                dispatch(setWorkouts(workoutsObject));
+            }
+        }
+        fetchWorkouts();
     }, []);
 
 

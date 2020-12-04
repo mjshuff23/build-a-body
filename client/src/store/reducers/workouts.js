@@ -9,21 +9,20 @@ const initialState = {
 export default function reducer(state = initialState, action) {
     let newState = { ...state };
     switch (action.type) {
-        case SET_EXERCISES:
-            newState.list = { ...action.exerciseObject };
-            newState.bodyParts = [...action.bodyPartsArray];
+        case SET_WORKOUTS:
+            newState.list = { ...action.workoutsObject };
             newState.ids = Object.keys(newState.list);
             return newState;
-        case SET_CURRENT_BODY_PART:
-            newState.currentBodyPart = action.bodyPart;
+        case SET_CURRENT_WORKOUT:
+            newState.currentWorkout = action.workoutId;
             return newState;
-        case ADD_EXERCISE:
-            newState.list[action.exercise.id] = action.exercise;
-            newState.ids.push(action.exercise.id);
+        case ADD_WORKOUT:
+            newState.list[action.workout.id] = action.workout;
+            newState.ids.push(action.workout.id);
             return newState;
-        case REMOVE_EXERCISE:
-            delete newState.list[action.exerciseId];
-            newState.ids = newState.ids.filter(id => id !== action.exerciseId);
+        case REMOVE_WORKOUT:
+            delete newState.list[action.workoutId];
+            newState.ids = newState.ids.filter(id => id !== action.workoutId);
         default:
             return state;
     }
