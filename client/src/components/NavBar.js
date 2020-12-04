@@ -31,10 +31,10 @@ function NavBar() {
                     { SidebarData.map((item, idx) => {
                         return (
                             <li key={ idx } className={ item.className }>
-                                <Link to={ item.path }>
+                                <NavLink exact to={ item.path } activeClassName='active'>
                                     { item.icon }
                                     <span className="navBar__linkText">{ item.title }</span>
-                                </Link>
+                                </NavLink>
                             </li>
                         );
                     }) }

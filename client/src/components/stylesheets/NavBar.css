@@ -38,6 +38,11 @@
     text-decoration: none;
 }
 
+.active {
+    color: #1a1a1a;
+    font-weight: bolder;
+}
+
 .navBar__text a:visited {
     font-size: 1.3rem;
     color: #2d3142;
