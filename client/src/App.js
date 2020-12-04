@@ -33,13 +33,9 @@ function App({ needLogin, loadToken }) {
                 />
                 <PrivateRoute
                     path="/"
-                    exact={ true }
                     needLogin={ needLogin }
-                    component={ () => <MainPage /> }
+                    component={ MainPage }
                 />
-
-                <Redirect to="/" />
-
             </Switch>
         </BrowserRouter>
     );

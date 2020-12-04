@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Exercises() {
+function Feed() {
     return (
         <div>
-            Exercises
+            Feed
         </div>
     );
 }
 
-export default Exercises;
+export default Feed;
