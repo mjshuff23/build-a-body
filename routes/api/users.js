@@ -25,7 +25,7 @@ const validateSignUp = [
         .isLength({ max: 50 })
         .withMessage('Username must not be more than 50 characters long')
         .custom((value) => {
-            return db.User.findOne({ where: { username: value } }).then((user) => {
+            return User.findOne({ where: { username: value } }).then((user) => {
                 if (user) {
                     return Promise.reject(
                         'The provided username is already in use by another account'
@@ -39,7 +39,7 @@ const validateSignUp = [
         .isLength({ max: 255 })
         .withMessage('Email Address must not be more than 255 characters long')
         .custom((value) => {
-            return db.User.findOne({ where: { email: value } }).then((user) => {
+            return User.findOne({ where: { email: value } }).then((user) => {
                 if (user) {
                     return Promise.reject(
                         'The provided Email Address is already in use by another account'
@@ -66,27 +66,11 @@ const validateSignUp = [
     handleValidationErrors
 ];
 
-router.post(
-    '/',
-    validateSignUp,
-    asyncHandler(async (req, res) => {
-        const { username, email, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({ username, email, hashedPassword });
-
-        const token = getUserToken(user);
-        res.cookie('token', token);
-        res.status(201).json({
-            user: { id: user.id },
-            token,
-        });
-    })
-);
 
 router.post(
     "/login",
-    validateEmailAndPassword,
     asyncHandler(async (req, res, next) => {
+        console.log('test');
         const { email, password } = req.body;
         const user = await User.findOne({
             where: {
@@ -102,16 +86,35 @@ router.post(
             return next(err);
         }
         const token = getUserToken(user);
-        res.json({ token, user: { id: user.id } });
+        res.json({ token, user: { id: user.id, email: user.email, username: user.username } });
     })
 );
+
+
+router.post(
+    '/',
+    validateSignUp,
+    asyncHandler(async (req, res) => {
+        const { username, email, password } = req.body;
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await User.create({ username, email, hashedPassword });
+
+        const token = getUserToken(user);
+        res.cookie('token', token);
+        res.status(201).json({
+            user: { id: user.id, email: user.email, username: user.username },
+            token,
+        });
+    })
+);
+
 
 router.post(
     '/token',
     validateEmailAndPassword,
     asyncHandler(async (req, res, next) => {
         const { email, password } = req.body;
-        const user = await User.findOne({
+        const { id, username } = await User.findOne({
             where: {
                 email,
             },
@@ -127,7 +130,7 @@ router.post(
 
         const token = getUserToken(user);
         res.cook('token', token);
-        res.json({ token, user: { id: user.id } });
+        res.json({ token, user: { id, username, email } });
     })
 );
 
@@ -143,10 +146,10 @@ router.get(
 
 router.get(
     '/:id',
-    requireAuth,
     asyncHandler(async (req, res, next) => {
         const userId = parseInt(req.params.id);
-        const { id, username, email } = await User.findByPk(userId);
+        const user = await User.findByPk(userId);
+        const { id, username, email } = user;
 
         if (!user) {
             const err = new Error("No User Found");

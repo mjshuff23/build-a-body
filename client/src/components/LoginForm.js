@@ -40,7 +40,7 @@ const LoginForm = () => {
                     value={ password }
                     onChange={ updatePassword }
                 />
-                <button className="loginForm__button" type="submit">Login to Dischord</button>
+                <button className="loginForm__button" type="submit">Login</button>
             </form>
             <NavLink to="/landing" className="loginForm__signupLink">No Account? Sign Up Here!</NavLink>
         </div>

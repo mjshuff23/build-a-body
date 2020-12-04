@@ -6,7 +6,6 @@ const { validationError } = require("sequelize");
 const createError = require('http-errors');
 const helmet = require('helmet');
 const path = require('path');
-const csurf = require('csurf');
 const { environment } = require("./config");
 const routes = require('./routes');
 
@@ -22,14 +21,6 @@ app.use(cookieParser());
 // Security Middleware
 app.use(cors({ origin: true }));
 app.use(helmet({ hsts: false }));
-app.use(csurf({
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production',
-    httpOnly: true
-  }
-}));
-
 
 app.use(routes);
 
@@ -41,20 +32,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
-
-
-
-app.use(function (err, _req, _res, next) {
-  next(createError(404));
-});
-
-app.use((err, req, res, next) => {
-  if (err instanceof validationError) {
-    err.errors = err.errors.map(e => e.message);
-    err.title = "Sequelize Error";
-  }
-  next(err);
-});
 
 app.use(function (err, _req, res, _next) {
   res.status(err.status || 500);
