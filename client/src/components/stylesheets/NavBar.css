@@ -8,3 +8,7 @@
 .navBar__menuLink {
     display: contents;
 }
+
+.MuiButton-label {
+    color: var(--primary-link-color) !important;
+}

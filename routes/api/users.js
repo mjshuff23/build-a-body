@@ -6,6 +6,7 @@ const { getUserToken, requireAuth } = require('../../auth');
 const { User } = require('../../db/models');
 
 const router = express.Router();
+// router.use(requireAuth);
 
 const validateEmailAndPassword = [
     check('email')

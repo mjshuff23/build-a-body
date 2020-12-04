@@ -1,9 +1,9 @@
 /* TODO Add site wide styles */
 
 :root {
-    --primary-bg-color: #2D3142;
+    --primary-bg-color: #212121;
     --primary-font-color: #f7f5fa;
-    --primary-link-color: #cfe6f7;
+    --primary-link-color: #1098f7;
 }
 
 body {
