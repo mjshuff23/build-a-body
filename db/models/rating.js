@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Rating = sequelize.define('Rating', {
     score: DataTypes.INTEGER,
     ratableId: DataTypes.INTEGER,
+    user_id: DataTypes.INTEGER,
     ratableType: DataTypes.STRING
   }, {});
   Rating.associate = function (models) {
@@ -12,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     });
     Rating.belongsTo(models.Workout, {
       foreignKey: 'ratableId', constraints: false,
+    });
+
+    Rating.belongsTo(models.User, {
+      foreignKey: 'user_id',
     });
 
     Rating.addHook("afterFind", findResult => {

@@ -2,7 +2,8 @@ const express = require('express');
 const { check } = require('express-validator');
 const { asyncHandler, handleValidationErrors } = require('../../utils');
 const { getUserToken, requireAuth } = require('../../auth');
-const { User, Exercise } = require('../../db/models');
+const { User, Exercise, Rating, Comment } = require('../../db/models');
+const rating = require('../../db/models/rating');
 
 const router = express.Router();
 // router.use(requireAuth);
@@ -10,10 +11,21 @@ const router = express.Router();
 // Get All Exercises and Exercise Body Parts
 router.get('/', asyncHandler(async (req, res, next) => {
     // Get All Exercises
-    const exercises = await Exercise.findAll();
+    const exercises = await Exercise.findAll({
+        include: [{ model: User, attributes: ['username'] }, { model: Rating, include: { model: User, attributes: ['username'] } }, { model: Comment, include: { model: User, attributes: ['username'] } }]
+    });
 
     let exerciseObject = {};
     for (let exercise of exercises) {
+        let ratingCount = 0;
+        let ratingSum = 0;
+        for (let rating of exercise.Ratings) {
+            ratingSum += rating.score;
+            ratingCount++;
+        }
+        exercise.dataValues.averageRating = ratingSum / ratingCount;
+        exercise.dataValues.ratingCount = ratingCount;
+
         exerciseObject[exercise.id] = exercise;
     }
     console.log(`Exercise Object:`, exerciseObject);
