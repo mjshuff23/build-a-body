@@ -9,14 +9,24 @@ const router = express.Router();
 
 // Get All Workouts
 router.get('/', asyncHandler(async (req, res, next) => {
-    // Get All Exercises
+    // Get All Exercises, Ratings, and Comments
     const workouts = await Workout.findAll({
-        include: [{ model: User, attributes: ['username'] }, { model: WorkoutExercise }, { model: Rating, include: { model: User, attributes: ['username'] } }, { model: Comment, include: { model: User, attributes: ['username'] } }],
+        include: [{
+            model: User, attributes: ['username']
+        },
+        { model: WorkoutExercise },
+        {
+            model: Rating, include:
+                { model: User, attributes: ['username'] }
+        },
+        {
+            model: Comment, include:
+                { model: User, attributes: ['username'] }
+        }],
     });
 
     let workoutsObject = {};
     for (let workout of workouts) {
-
         // Add up ratings to get average rating
         let ratingCount = 0;
         let ratingSum = 0;

@@ -1,3 +1,3 @@
 .landingPage {
-    background-color: #2d3142;
+    background-color: var(--primary-bg-color);
 }

@@ -12,7 +12,17 @@ const router = express.Router();
 router.get('/', asyncHandler(async (req, res, next) => {
     // Get All Exercises
     const exercises = await Exercise.findAll({
-        include: [{ model: User, attributes: ['username'] }, { model: Rating, include: { model: User, attributes: ['username'] } }, { model: Comment, include: { model: User, attributes: ['username'] } }]
+        include: [{
+            model: User, attributes: ['username']
+        },
+        {
+            model: Rating, include:
+                { model: User, attributes: ['username'] }
+        },
+        {
+            model: Comment, include:
+                { model: User, attributes: ['username'] }
+        }]
     });
 
     let exerciseObject = {};
