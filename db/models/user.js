@@ -29,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function (models) {
     User.hasMany(models.Exercise, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true });
     User.hasMany(models.Workout, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true });
+    User.hasMany(models.Rating, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true });
+    User.hasMany(models.Comment, { foreignKey: 'user_id', onDelete: 'CASACADE', hooks: true });
   };
 
   User.prototype.validatePassword = function (password) {

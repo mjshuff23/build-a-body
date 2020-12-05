@@ -2,6 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
     content: DataTypes.STRING,
+    user_id: DataTypes.INTEGER,
     commentableId: DataTypes.INTEGER,
     commentableType: DataTypes.STRING
   }, {});
@@ -16,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
     Comment.belongsTo(models.Workout, {
       foreignKey: 'commentableId', constraints: false
     });
+
+    Comment.belongsTo(models.User, {
+      foreignKey: 'user_id',
+    });
+
 
     Comment.addHook("afterFind", findResult => {
       if (!Array.isArray(findResult)) findResult = [findResult];
