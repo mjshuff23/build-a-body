@@ -30,7 +30,6 @@ function MainPage() {
             if (response.ok) {
                 const { exerciseObject, bodyPartsArray } = await response.json();
                 dispatch(setExercises(exerciseObject, bodyPartsArray));
-                dispatch(addExercise({ id: 10, title: 'CHUAAA' }));
             }
         }
         fetchExercises();

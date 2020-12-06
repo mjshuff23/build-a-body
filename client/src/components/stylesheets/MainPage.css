@@ -2,6 +2,13 @@
     background-color: #212121;
     height: 100vh;
     width: 100vw;
+    overflow: hidden;
+}
+
+.exercises {
+    height: 100vh;
+    width: 100vw;
+    overflow: scroll;
 }
 
 :link {
