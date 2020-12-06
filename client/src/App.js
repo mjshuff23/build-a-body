@@ -7,6 +7,7 @@ import LoginForm from './components/LoginForm';
 import LandingPage from './components/LandingPage';
 import MainPage from './components/MainPage';
 import './components/stylesheets/App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import UserList from './components/UsersList';
 
 function App({ needLogin, loadToken }) {

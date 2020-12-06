@@ -8,7 +8,7 @@
 
 body {
     background-color: var(--primary-bg-color);
-    color: var(--primary-font-color);
+    color: var(--primary-font-color) !important;
 }
 
 :link {
