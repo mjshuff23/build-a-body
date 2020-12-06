@@ -25,7 +25,7 @@ function Workouts() {
                                         : null }</div>
                                 )) }
                             </ul>
-                            <br></br>
+                            <hr></hr>
                         </>
                     );
                 })
