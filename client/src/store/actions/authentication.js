@@ -1,3 +1,4 @@
+import { backendUrl } from "../../config";
 export const TOKEN_KEY = "build-a-body/authentication/token";
 export const SET_TOKEN = "build-a-body/authentication/SET_TOKEN";
 export const REMOVE_TOKEN = "build-a-body/authentication/REMOVE_TOKEN";
@@ -12,7 +13,7 @@ export const loadToken = () => async (dispatch) => {
     if (token) {
         const userId = window.localStorage.getItem('userId');
         dispatch(setToken(token));
-        const response = await fetch(`api/users/${userId}`);
+        const response = await fetch(`${backendUrl}/api/users/${userId}`);
         if (response.ok) {
             const user = await response.json();
             dispatch(addUser(user));
@@ -22,7 +23,7 @@ export const loadToken = () => async (dispatch) => {
 };
 
 export const login = (email, password) => async (dispatch) => {
-    const response = await fetch(`api/users/login`, {
+    const response = await fetch(`${backendUrl}/api/users/login`, {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

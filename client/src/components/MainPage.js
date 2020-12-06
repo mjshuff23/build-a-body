@@ -5,10 +5,13 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import Exercises from './Exercises';
 import NavBar from './NavBar';
 import Feed from './Feed';
+import Workouts from './Workouts';
+import User from './User';
 import { useDispatch, useSelector } from 'react-redux';
 import { addExercise } from '../store/actions/exercises';
 import { setCurrentExerciseGroup, setExercises } from '../store/actions/exercises';
 import { setWorkouts } from '../store/actions/workouts';
+import { backendUrl } from '../config';
 function MainPage() {
     const dispatch = useDispatch();
     const exercises = useSelector(state => state.exercises);
@@ -17,7 +20,7 @@ function MainPage() {
         // Load Body Parts for menu
         const token = localStorage.getItem("build-a-body/authentication/token");
         async function fetchExercises() {
-            const response = await fetch('api/exercises', {
+            const response = await fetch(`${backendUrl}/api/exercises`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -33,7 +36,7 @@ function MainPage() {
         fetchExercises();
 
         async function fetchWorkouts() {
-            const response = await fetch('api/workouts', {
+            const response = await fetch(`${backendUrl}/api/workouts`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -56,6 +59,8 @@ function MainPage() {
             <NavBar />
             <Switch>
                 <Route exact path='/exercises'><Exercises /></Route>
+                <Route exact path='/workouts'><Workouts /></Route>
+                <Route path={ `/user/` }><User /></Route>
                 <Route exact path='/'><Feed /></Route>
             </Switch>
             {/* Workouts */ }
