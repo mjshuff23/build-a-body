@@ -21,6 +21,10 @@ export default function reducer(state = initialState, action) {
         case ADD_EXERCISE:
             newState.list[action.exercise.id] = action.exercise;
             newState.ids.push(action.exercise.id);
+            // Does the body part exist in our body part array? If not, add it
+            if (newState.bodyParts.indexOf(action.exercise.body_part) === -1) {
+                newState.bodyParts.push(action.exercise.body_part);
+            }
             return newState;
         case REMOVE_EXERCISE:
             // Remove from list
