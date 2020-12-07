@@ -44,7 +44,6 @@ function MainPage() {
 
             if (response.ok) {
                 const workoutsObject = await response.json();
-                console.log(workoutsObject);
                 dispatch(setWorkouts(workoutsObject));
             }
         }

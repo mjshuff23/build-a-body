@@ -56,10 +56,9 @@ router.delete('/:exerciseId', asyncHandler(async (req, res, next) => {
     const exercise = await Exercise.findByPk(exerciseId);
     if (exercise) {
         await exercise.destroy();
-        console.log(exercise);
-        res.json(`Exercise ${exerciseId} destroyed.`);
+        // console.log(exercise);
+        return res.json(`Exercise ${exerciseId} destroyed.`);
     }
-
     res.json(`An error occurred trying to delete Exercise ${exerciseId}`);
 }));
 

@@ -24,7 +24,16 @@ export default function reducer(state = initialState, action) {
             return newState;
         case REMOVE_EXERCISE:
             delete newState.list[action.exerciseId];
-            newState.ids = newState.ids.filter(id => id !== action.exerciseId);
+            newState.ids = newState.ids.filter(id => Number(id) !== Number(action.exerciseId));
+            // We must check bodyPart array to see if it still includes the exercise body part we have just deleted.
+            let newBodyPartsList = new Set();
+            for (let listItem in newState.list) {
+                console.log(newState.list[listItem]);
+                if (newBodyPartsList.has(newState.list[listItem].body_part)) continue;
+                newBodyPartsList.add(newState.list[listItem].body_part);
+            }
+            newState.bodyParts = Array.from(newBodyPartsList);
+            return newState;
         default:
             return state;
     }

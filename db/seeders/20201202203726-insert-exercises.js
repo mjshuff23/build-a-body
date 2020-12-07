@@ -15,7 +15,7 @@ module.exports = {
       },
       {
         title: 'Hammer Curl', description: '1. Stand with your feet shoulder-width apart and a slight bend in your knees. \n2. Hold a pair of dumbbells in your hands with your palms facing towards your body – this is the main difference from the standard curl, which you start with your palms facing forwards. \n3. Keeping your elbows close to your body, slowly curl the dumbbell up to your shoulders. \n4. Pause for a second at the top of the lift, squeeze your biceps, then lower the weights under control.',
-        user_id: 1,
+        user_id: 2,
         type: 'Strength',
         body_part: 'Biceps',
         difficulty: 'Easy',
@@ -24,7 +24,7 @@ module.exports = {
       },
       {
         title: 'Tricep Dips', description: 'Can be performed on parallel bars at your gym or a bench. \n1. Hold your entire body weight up with your arms extended and feet hovering over the floor, ankles crossed. \n2. Lower your body until your elbows reach a 90-degree angle before returning to your starting position.',
-        user_id: 1,
+        user_id: 3,
         type: 'Strength',
         body_part: 'Triceps',
         difficulty: 'Intermediate',
@@ -42,7 +42,7 @@ module.exports = {
       },
       {
         title: 'Barbell Squat', description: '1. Start by bending your hips back while allowing your knees to bend forward, keeping your back straight and your knees pointed same direction as feet. \n2. Descend until thighs are just past parallel to floor. \n3. Extend knees and hips until legs are straight. \n4. Return and repeat.',
-        user_id: 1,
+        user_id: 2,
         type: 'Strength',
         body_part: 'Quadriceps',
         difficulty: 'Intermediate',
@@ -51,7 +51,7 @@ module.exports = {
       },
       {
         title: 'Lying Hamstring Curls', description: '1. Start by adjusting the machine so your thighs and torso sit comfortably on the pads when you’re lying face down. \n2. Grasp the handles on the front of the machine and curl your lower legs up as far as possible without lifting your thighs off the pad. \n3. Hold for a second at the top of the movement, then lower slowly back to the start.',
-        user_id: 1,
+        user_id: 3,
         type: 'Strength',
         body_part: 'Hamstrings',
         difficulty: 'Easy',
@@ -69,7 +69,7 @@ module.exports = {
       },
       {
         title: 'Stationary Bike', description: '1. Adjust the seat to where you feel comfortable. \n2. Set the handlebars correctly(if your bike allows adjustments). \n3. Adjust the pedal straps so that your feet are comfortable, but not too tight. \n4. Do not pedal with just your toes, and do not hunch over.',
-        user_id: 1,
+        user_id: 3,
         type: 'Cardiovascular',
         body_part: 'Legs',
         difficulty: 'Easy',
