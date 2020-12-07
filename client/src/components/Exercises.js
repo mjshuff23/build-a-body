@@ -8,7 +8,7 @@ function Exercises() {
     const exercises = Object.values(exerciseState.list);
     return (
         <div className="exercises">
-            {/* <div className="filter">
+            <div className="filter">
                 { exerciseState.bodyParts ?
                     exerciseState.bodyParts.map(bodyPart => (
                         <>
@@ -19,7 +19,7 @@ function Exercises() {
                         </>
                     ))
                     : null }
-            </div> */}
+            </div>
             {exercises ?
                 exercises.map(exercise => {
                     let descriptionSteps;

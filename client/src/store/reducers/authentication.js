@@ -19,7 +19,6 @@ export default function reducer(state = initialState, action) {
             return newState;
         case ADD_USER:
             return { ...state, ...action.user };
-        // return { ...state, username: action.username };
         default:
             return state;
     }
