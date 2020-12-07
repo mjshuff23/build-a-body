@@ -25,7 +25,8 @@ const LoginForm = () => {
     return (
         <div className="loginForm">
             <h2 className='loginForm__header'>Login</h2>
-            <form onSubmit={ handleSubmit }>
+            <br></br>
+            <form className="loginForm__form" onSubmit={ handleSubmit }>
                 <input
                     className="loginForm__input"
                     type="text"
@@ -33,6 +34,7 @@ const LoginForm = () => {
                     value={ email }
                     onChange={ updateEmail }
                 />
+                <br></br>
                 <input
                     className="loginForm__input"
                     type="password"
@@ -40,6 +42,7 @@ const LoginForm = () => {
                     value={ password }
                     onChange={ updatePassword }
                 />
+                <br></br>
                 <button className="loginForm__button" type="submit">Login</button>
             </form>
             <NavLink to="/landing" className="loginForm__signupLink">No Account? Sign Up Here!</NavLink>

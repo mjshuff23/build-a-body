@@ -1,11 +1,25 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import './stylesheets/Exercises.css';
+import { Checkbox } from '@material-ui/core';
 
 function Exercises() {
     const exerciseState = useSelector(state => state.exercises);
     const exercises = Object.values(exerciseState.list);
     return (
         <div className="exercises">
+            {/* <div className="filter">
+                { exerciseState.bodyParts ?
+                    exerciseState.bodyParts.map(bodyPart => (
+                        <>
+                            { bodyPart } <Checkbox
+                                value={ bodyPart }
+                                inputProps={ { 'aria-label': `${bodyPart}` } }
+                            />
+                        </>
+                    ))
+                    : null }
+            </div> */}
             {exercises ?
                 exercises.map(exercise => {
                     let descriptionSteps;
