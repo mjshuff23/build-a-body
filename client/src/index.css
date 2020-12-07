@@ -23,3 +23,11 @@ body {
 :visited {
     color: var(--primary-link-color);
 }
+
+.bg-dark {
+    background-image: url('https://body-builder-project.s3.us-east-2.amazonaws.com/navbar-2.jpg');
+}
+
+#basic-navbar-nav {
+    font-size: 1.05em;
+}
