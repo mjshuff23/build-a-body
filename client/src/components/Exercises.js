@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/Exercises.css';
 import { Checkbox } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 import { backendUrl } from '../config';
 import { removeExercise } from '../store/actions/exercises';
 
@@ -38,7 +39,7 @@ function Exercises() {
 
     return (
         <div className="exercises">
-            <div className="filter">
+            {/* <div className="filter">
                 { exerciseState.bodyParts ?
                     exerciseState.bodyParts.map(bodyPart => (
                         <>
@@ -49,7 +50,8 @@ function Exercises() {
                         </>
                     ))
                     : null }
-            </div>
+            </div> */}
+            <div className="addExerciseIcon">Add A New Exercise<AddIcon style={ { fontSize: 40 } } /></div>
             {exercises ?
                 exercises.map(exercise => {
                     let descriptionSteps;
