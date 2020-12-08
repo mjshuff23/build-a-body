@@ -6,3 +6,24 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.workouts {
+    background-color: var(--primary-bg-color);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    padding-bottom: 30px;
+    align-items: center;
+    background-image: url('https://body-builder-project.s3.us-east-2.amazonaws.com/bg-logged-in-3.jpg');
+}
+
+.userInfo {
+    background-color: var(--primary-bg-color);
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('https://body-builder-project.s3.us-east-2.amazonaws.com/bg-logged-in-3.jpg');
+}

@@ -43,4 +43,15 @@ router.get('/', asyncHandler(async (req, res, next) => {
     res.json(workoutsObject);
 }));
 
+
+router.delete('/:workoutId', asyncHandler(async (req, res, next) => {
+    const workoutId = parseInt(req.params.workoutId);
+    const workout = await Workout.findByPk(workoutId);
+    if (workout) {
+        await workout.destroy();
+        return res.json(`Workout ${workoutId} destroyed.`);
+    }
+    res.json(`An error occurred trying to delete Workout ${workoutId}`);
+}));
+
 module.exports = router;

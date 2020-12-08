@@ -1,8 +1,9 @@
 import React from 'react';
+import './stylesheets/Feed.css';
 
 function Feed() {
     return (
-        <div>
+        <div className='feed'>
             Feed
         </div>
     );

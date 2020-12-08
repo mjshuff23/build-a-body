@@ -22,7 +22,8 @@ export default function reducer(state = initialState, action) {
             return newState;
         case REMOVE_WORKOUT:
             delete newState.list[action.workoutId];
-            newState.ids = newState.ids.filter(id => id !== action.workoutId);
+            newState.ids = newState.ids.filter(id => Number(id) !== Number(action.workoutId));
+            return newState;
         default:
             return state;
     }
