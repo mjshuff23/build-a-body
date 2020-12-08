@@ -41,7 +41,8 @@ function SignUpForm() {
     return (
         <div className="signUpForm">
             <h2 className='signUpForm__header'>Sign Up</h2>
-            <form onSubmit={ handleSubmit }>
+            <br></br>
+            <form className="signUpForm__form" onSubmit={ handleSubmit }>
                 <input
                     className="signUpForm__input"
                     type="text"
@@ -49,6 +50,7 @@ function SignUpForm() {
                     value={ username }
                     onChange={ updateUsername }
                 />
+                <br></br>
                 <input
                     className="signUpForm__input"
                     type="text"
@@ -56,20 +58,23 @@ function SignUpForm() {
                     value={ email }
                     onChange={ updateEmail }
                 />
+                <br></br>
                 <input
                     className="signUpForm__input"
                     type="password"
-                    placeholder="password"
+                    placeholder="Password"
                     value={ password }
                     onChange={ updatePassword }
                 />
+                <br></br>
                 <input
                     className="signUpForm__input"
                     type="password"
-                    placeholder="password"
+                    placeholder="Confirm Password"
                     value={ confirmPassword }
                     onChange={ updateConfirmPassword }
                 />
+                <br></br>
                 <button className="signUpForm__button" type="submit">Sign Up!</button>
             </form>
             <NavLink to='/login' className="signUpForm__loginLink">Already have an account?</NavLink>

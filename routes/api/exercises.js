@@ -51,4 +51,37 @@ router.get('/', asyncHandler(async (req, res, next) => {
     res.json({ exerciseObject, bodyPartsArray });
 }));
 
+router.delete('/:exerciseId', asyncHandler(async (req, res, next) => {
+    const exerciseId = parseInt(req.params.exerciseId);
+    const exercise = await Exercise.findByPk(exerciseId);
+    if (exercise) {
+        await exercise.destroy();
+        // console.log(exercise);
+        return res.json(`Exercise ${exerciseId} destroyed.`);
+    }
+    res.json(`An error occurred trying to delete Exercise ${exerciseId}`);
+}));
+
+router.post('/', asyncHandler(async (req, res, next) => {
+    const { title, description,
+        user_id, type,
+        body_part, difficulty,
+        equipment, video_url } = req.body;
+
+    console.log(req.body);
+
+    const exercise = await Exercise.create({
+        title, description,
+        user_id, type,
+        body_part, difficulty,
+        equipment, video_url
+    });
+
+    if (exercise) {
+        return res.json(exercise);
+    }
+
+    res.json(`An error occured trying to create that exercise!`);
+}));
+
 module.exports = router;
