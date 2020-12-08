@@ -13,13 +13,11 @@ function Exercises() {
     const exerciseState = useSelector(state => state.exercises);
     const exercises = Object.values(exerciseState.list);
     const userId = localStorage.getItem("userId");
-    const [show, setShow] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const dispatch = useDispatch();
 
     const handleDelete = async (exerciseId) => {
-
         async function deleteExercise(exerciseId) {
             const response = await fetch(`${backendUrl}/api/exercises/${exerciseId}`, {
                 method: 'DELETE',
@@ -27,16 +25,13 @@ function Exercises() {
                     'Content-Type': 'application/json',
                 }
             });
-
             if (response.ok) {
                 const data = await response.json();
                 return true;
             }
-
             console.log(`Error trying to delete exercise ${exerciseId}`);
         }
         const deleted = await deleteExercise(exerciseId);
-
         if (deleted) {
             dispatch(removeExercise(exerciseId));
         }
@@ -51,7 +46,6 @@ function Exercises() {
     };
 
     const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
 
     return (
         <div className="exercises">
