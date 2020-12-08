@@ -2,7 +2,7 @@
     background-color: var(--primary-bg-color);
     display: flex;
     flex-direction: column;
-    padding-bottom: 20px;
+    padding: 20px;
     align-items: center;
     background-image: url('https://body-builder-project.s3.us-east-2.amazonaws.com/bg-logged-in-3.jpg');
 }
