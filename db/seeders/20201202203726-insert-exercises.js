@@ -10,6 +10,7 @@ module.exports = {
         type: 'Strength',
         body_part: 'Biceps',
         difficulty: 'Easy',
+        video_url: 'https://www.youtube.com/watch?v=sAq_ocpRh_I',
         equipment: 'Dumbbell',
         createdAt: new Date(), updatedAt: new Date()
       },
@@ -19,6 +20,7 @@ module.exports = {
         type: 'Strength',
         body_part: 'Biceps',
         difficulty: 'Easy',
+        video_url: 'https://www.youtube.com/watch?v=zC3nLlEvin4',
         equipment: 'Dumbbell',
         createdAt: new Date(), updatedAt: new Date()
       },
@@ -28,6 +30,7 @@ module.exports = {
         type: 'Strength',
         body_part: 'Triceps',
         difficulty: 'Intermediate',
+        video_url: 'https://www.youtube.com/watch?v=wjUmnZH528Y',
         equipment: 'n/a',
         createdAt: new Date(), updatedAt: new Date()
       },
@@ -37,6 +40,7 @@ module.exports = {
         type: 'Strength',
         body_part: 'Chest',
         difficulty: 'Intermediate',
+        video_url: 'https://www.youtube.com/watch?v=lj_pzdeuHbw',
         equipment: 'Barbell',
         createdAt: new Date(), updatedAt: new Date()
       },
@@ -46,6 +50,7 @@ module.exports = {
         type: 'Strength',
         body_part: 'Quadriceps',
         difficulty: 'Intermediate',
+        video_url: 'https://www.youtube.com/watch?v=tTEB9jWjjys',
         equipment: 'Barbell',
         createdAt: new Date(), updatedAt: new Date()
       },
@@ -55,6 +60,7 @@ module.exports = {
         type: 'Strength',
         body_part: 'Hamstrings',
         difficulty: 'Easy',
+        video_url: 'https://www.youtube.com/watch?v=NlZeAGZ_YJw',
         equipment: 'Machine',
         createdAt: new Date(), updatedAt: new Date()
       },
@@ -64,6 +70,7 @@ module.exports = {
         type: 'Cardiovascular',
         body_part: 'Legs',
         difficulty: 'Easy',
+        video_url: 'https://www.youtube.com/watch?v=8i3Vrd95o2k',
         equipment: 'Machine',
         createdAt: new Date(), updatedAt: new Date()
       },
@@ -73,6 +80,7 @@ module.exports = {
         type: 'Cardiovascular',
         body_part: 'Legs',
         difficulty: 'Easy',
+        video_url: 'https://www.youtube.com/watch?v=S0nRkf5wU5U',
         equipment: 'Machine',
         createdAt: new Date(), updatedAt: new Date()
       },

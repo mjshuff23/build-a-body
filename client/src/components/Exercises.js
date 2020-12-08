@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/Exercises.css';
 import { Checkbox } from '@material-ui/core';
@@ -6,14 +6,20 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { backendUrl } from '../config';
 import { removeExercise } from '../store/actions/exercises';
+import { Popover } from '@material-ui/core';
+import ExerciseForm from './ExerciseForm';
 
 function Exercises() {
     const exerciseState = useSelector(state => state.exercises);
     const exercises = Object.values(exerciseState.list);
     const userId = localStorage.getItem("userId");
+    const [show, setShow] = useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
     const dispatch = useDispatch();
 
     const handleDelete = async (exerciseId) => {
+
         async function deleteExercise(exerciseId) {
             const response = await fetch(`${backendUrl}/api/exercises/${exerciseId}`, {
                 method: 'DELETE',
@@ -34,24 +40,39 @@ function Exercises() {
         if (deleted) {
             dispatch(removeExercise(exerciseId));
         }
-
     };
+
+    const handleClick = (e) => {
+        setAnchorEl(e.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 
     return (
         <div className="exercises">
-            {/* <div className="filter">
-                { exerciseState.bodyParts ?
-                    exerciseState.bodyParts.map(bodyPart => (
-                        <>
-                            { bodyPart } <Checkbox
-                                value={ bodyPart }
-                                inputProps={ { 'aria-label': `${bodyPart}` } }
-                            />
-                        </>
-                    ))
-                    : null }
-            </div> */}
-            <div className="addExerciseIcon">Add A New Exercise<AddIcon style={ { fontSize: 40 } } /></div>
+
+            <div className="addExerciseIcon">Add A New Exercise<AddIcon style={ { fontSize: 40 } } onClick={ handleClick } /></div>
+            <Popover
+                open={ open }
+                anchorEl={ anchorEl }
+                onClose={ handleClose }
+                anchorOrigin={ {
+                    vertical: 'top',
+                    horizontal: 'left',
+                } }
+                transformOrigin={ {
+                    vertical: 'top',
+                    horizontal: 'left',
+                } }
+            >
+                <ExerciseForm />
+            </Popover>
+
             {exercises ?
                 exercises.map(exercise => {
                     let descriptionSteps;

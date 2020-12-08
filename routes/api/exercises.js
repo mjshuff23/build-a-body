@@ -66,13 +66,15 @@ router.post('/', asyncHandler(async (req, res, next) => {
     const { title, description,
         user_id, type,
         body_part, difficulty,
-        equipment } = req.body;
+        equipment, video_url } = req.body;
+
+    console.log(req.body);
 
     const exercise = await Exercise.create({
         title, description,
         user_id, type,
         body_part, difficulty,
-        equipment
+        equipment, video_url
     });
 
     if (exercise) {
