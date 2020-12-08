@@ -90,6 +90,7 @@ function Exercises() {
                                     : null }</div>
                             <div>Difficulty: { exercise.difficulty }</div>
                             <div>Equipment: { exercise.equipment }</div>
+                            <div><a href={ exercise.video_url } target="_blank" style={ { color: 'red' } }>YouTube Video Link</a></div>
                             <br></br>
                             {descriptionSteps.map(step => (
                                 <div>{ step }</div>
