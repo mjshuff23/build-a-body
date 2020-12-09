@@ -2,7 +2,78 @@
     background-color: var(--primary-bg-color);
     display: flex;
     flex-direction: column;
-    padding-bottom: 20px;
+    padding: 20px 10%;
     align-items: center;
     background-image: url('https://body-builder-project.s3.us-east-2.amazonaws.com/bg-logged-in-3.jpg');
+}
+
+.addExerciseIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 20px;
+    padding: 5px 10px;
+    background-color: rgb(94 213 218 / 50%);
+    margin-bottom: 10px;
+}
+
+.addExerciseIcon:hover {
+    background-color: rgb(94 213 218 / 100%);
+    color: black;
+}
+
+.exercise__title {
+    font-weight: bold;
+    color: darksalmon;
+    padding-right: 10px;
+}
+
+.exercise__difficulty, .exercise__equipment {
+    font-weight: bold;
+    color: darksalmon;
+}
+
+.exercise__info {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.exercise__steps {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.exercise__stepNumber {
+    color: aquamarine;
+    font-size: larger;
+}
+
+.exercise__step {
+    padding: 0px 5px 2px;
+}
+
+.exercise__step:hover {
+    background-color: rgba(64, 64, 64, 0.5)
+}
+
+.exercise__video {
+    padding-bottom: 10px;
+}
+
+.exercise__end {
+    width: 130%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px dotted rgb(248, 248, 248);
 }

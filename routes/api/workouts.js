@@ -43,6 +43,33 @@ router.get('/', asyncHandler(async (req, res, next) => {
     res.json(workoutsObject);
 }));
 
+router.post('/', asyncHandler(async (req, res, next) => {
+    const { title, description,
+        user_id, type,
+        exerciseList } = req.body;
+
+    console.log(req.body);
+
+    const workout = await Workout.create({
+        title, description,
+        user_id, type
+    });
+
+    exerciseList.map(async (exerciseId) => {
+        // Add every exercise to the WorkoutExercises table
+        const workoutExercise = await WorkoutExercise.create({
+            workout_id: workout.id,
+            exercise_id: exerciseId
+        });
+        console.log(`added workoutExercise ${workoutExercise}`);
+    });
+
+    if (workout) {
+        return res.json(workout);
+    }
+
+    res.json(`An error occured trying to create that workout!`);
+}));
 
 router.delete('/:workoutId', asyncHandler(async (req, res, next) => {
     const workoutId = parseInt(req.params.workoutId);
