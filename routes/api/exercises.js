@@ -84,4 +84,31 @@ router.post('/', asyncHandler(async (req, res, next) => {
     res.json(`An error occured trying to create that exercise!`);
 }));
 
+router.put(`/:exerciseId`, asyncHandler(async (req, res, next) => {
+    const { title, description,
+        user_id, type,
+        body_part, difficulty,
+        equipment, video_url } = req.body;
+
+    console.log(req.body);
+
+    const exercise = await Exercise.findByPk(parseInt(req.params.exerciseId));
+
+    exercise.title = title;
+    exercise.description = description;
+    exercise.type = type;
+    exercise.body_part = body_part;
+    exercise.difficulty = difficulty;
+    exercise.equipment = equipment;
+    exercise.video_url = video_url;
+
+    await exercise.save();
+
+    if (exercise) {
+        return res.json(exercise);
+    }
+
+    res.json(`An error occured trying to edit that exercise!`);
+}));
+
 module.exports = router;

@@ -4,17 +4,17 @@ import { backendUrl } from '../config';
 import { addExercise } from '../store/actions/exercises';
 import './stylesheets/ExerciseForm.css';
 
-function ExerciseForm(props) {
+function ExerciseFormEdit(props) {
     const dispatch = useDispatch();
     const exerciseList = useSelector(state => state.exercises.list);
 
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [bodyPart, setBodyPart] = useState("");
-    const [type, setType] = useState(props.type || "");
-    const [difficulty, setDifficulty] = useState("");
-    const [equipment, setEquipment] = useState("");
-    const [videoUrl, setVideoUrl] = useState("");
+    const [title, setTitle] = useState(exerciseList[props.exerciseId].title);
+    const [description, setDescription] = useState(exerciseList[props.exerciseId].description);
+    const [bodyPart, setBodyPart] = useState(exerciseList[props.exerciseId].body_part);
+    const [type, setType] = useState(exerciseList[props.exerciseId].type);
+    const [difficulty, setDifficulty] = useState(exerciseList[props.exerciseId].difficulty);
+    const [equipment, setEquipment] = useState(exerciseList[props.exerciseId].equipment);
+    const [videoUrl, setVideoUrl] = useState(exerciseList[props.exerciseId].video_url);
 
 
     const token = localStorage.getItem('build-a-body/authentication/token');
@@ -23,11 +23,11 @@ function ExerciseForm(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        async function createExercise() {
+        async function editExercise() {
             if (!userId) return;
 
-            const response = await fetch(`${backendUrl}/api/exercises`, {
-                method: 'POST',
+            const response = await fetch(`${backendUrl}/api/exercises/${props.exerciseId}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -37,11 +37,11 @@ function ExerciseForm(props) {
 
             if (response.ok) {
                 const exercise = await response.json();
-                // TODO: Dispatch addition of exercise to Redux
+                // TODO: Dispatch Edit Exercise
                 dispatch(addExercise(exercise));
             }
         }
-        createExercise();
+        editExercise();
     };
 
     const updateProperty = (callback) => (e) => {
@@ -104,10 +104,10 @@ function ExerciseForm(props) {
                         <option key={ type }>{ type }</option>
                     )) }
                 </select> */}
-                <button type="submit" className="exerciseForm__button">Create new Exercise</button>
+                <button type="submit" className="exerciseForm__button">Update Exercise</button>
             </form>
         </div>
     );
 }
 
-export default ExerciseForm;
+export default ExerciseFormEdit;
