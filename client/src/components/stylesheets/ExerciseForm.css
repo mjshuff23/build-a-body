@@ -1,0 +1,45 @@
+.exerciseForm__button {
+    border-radius: 20px;
+    background-color: powderblue;
+    margin-top: 10px;
+    font-weight: 500;
+    padding: 5px 10px;
+}
+
+.exerciseForm__button:hover {
+    background-color: rgb(140, 242, 255);
+}
+
+.newExerciseForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(0 0 0 / 80%);
+    height: auto;
+    width: 300px;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.newExerciseForm>input {
+    margin: 5px 0;
+    width: 80%;
+    border-radius: 10px;
+    padding: 0 5px;
+}
+
+.newExerciseForm>input:hover {
+    background-color: rgb(68, 68, 68);
+}
+
+.newExerciseForm>input:hover::placeholder {
+    color: white;
+}
+
+.MuiPaper-root {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.MuiPaper-root::-webkit-scrollbar {
+    display: none;
+}

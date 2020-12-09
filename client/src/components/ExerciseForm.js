@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { backendUrl } from '../config';
 import { addExercise } from '../store/actions/exercises';
+import './stylesheets/ExerciseForm.css';
 
 function ExerciseForm() {
     const dispatch = useDispatch();
@@ -57,7 +58,7 @@ function ExerciseForm() {
                 />
                 <input
                     type="text"
-                    placeholder="Description"
+                    placeholder="Separate Steps with \n"
                     required
                     value={ description }
                     onChange={ updateProperty(setDescription) }
@@ -100,7 +101,7 @@ function ExerciseForm() {
                         <option key={ type }>{ type }</option>
                     )) }
                 </select> */}
-                <button type="submit">Create new Exercise</button>
+                <button type="submit" className="exerciseForm__button">Create new Exercise</button>
             </form>
         </div>
     );
