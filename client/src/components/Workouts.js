@@ -79,10 +79,10 @@ function Workouts() {
                             </div>
                             <div>{ workout.description }</div>
                             <ul>
-                                { workout.WorkoutExercises ? workout.WorkoutExercises.map(exercise => (
+                                { workout.WorkoutExercises ? workout.WorkoutExercises.map((exercise, idx) => (
                                     <div>{ exercisesState.list[exercise.exercise_id] ?
                                         <>
-                                            <li>{ exercisesState.list[exercise.exercise_id].title } - { exercisesState.list[exercise.exercise_id].type }</li>
+                                            <li key={ idx }>{ exercisesState.list[exercise.exercise_id].title } - { exercisesState.list[exercise.exercise_id].type }</li>
                                             <div></div>
                                         </>
 

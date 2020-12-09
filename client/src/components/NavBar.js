@@ -12,6 +12,7 @@ function NavBar() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
+                    {/* <Nav.Link href={ `${baseUrl}/` }>Home</Nav.Link> */ }
                     <Nav.Link href={ `${baseUrl}/` }>Home</Nav.Link>
                     <Nav.Link href={ `${baseUrl}/exercises` }>Exercises</Nav.Link>
                     <Nav.Link href={ `${baseUrl}/workouts` }>Workouts</Nav.Link>

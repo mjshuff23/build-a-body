@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/Exercises.css';
-import { Checkbox } from '@material-ui/core';
+import ReactPlayer from 'react-player/youtube';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { backendUrl } from '../config';
@@ -50,7 +50,7 @@ function Exercises() {
     return (
         <div className="exercises">
 
-            <div className="addExerciseIcon">Add A New Exercise<AddIcon style={ { fontSize: 40 } } onClick={ handleClick } /></div>
+            <div className="addExerciseIcon" onClick={ handleClick }>Add A New Exercise<AddIcon style={ { fontSize: 40 } } /></div>
             <Popover
                 open={ open }
                 anchorEl={ anchorEl }
@@ -75,21 +75,22 @@ function Exercises() {
                     }
                     return (
                         <>
-                            <br></br>
-                            <div>{ exercise.title } - { exercise.type }
-                                { userId == exercise.user_id ?
-                                    <DeleteIcon onClick={ () => {
-                                        handleDelete(exercise.id);
-                                    } } />
-                                    : null }</div>
-                            <div>Difficulty: { exercise.difficulty }</div>
-                            <div>Equipment: { exercise.equipment }</div>
-                            <div><a href={ exercise.video_url } target="_blank" style={ { color: 'red' } }>YouTube Video Link</a></div>
-                            <br></br>
-                            {descriptionSteps.map(step => (
-                                <div>{ step }</div>
-                            )) }
-                            <hr></hr>
+                            <div className="exercise__info">
+                                <div><span className="exercise__title">{ exercise.title } - { exercise.type }</span>
+                                    { userId == exercise.user_id ?
+                                        <DeleteIcon onClick={ () => {
+                                            handleDelete(exercise.id);
+                                        } } />
+                                        : null }</div>
+                                <div><span className="exercise__difficulty" >Difficulty:</span> { exercise.difficulty }</div>
+                                <div><span className="exercise__equipment">Equipment:</span> { exercise.equipment }</div></div>
+                            <div className="exercise__steps">
+                                { descriptionSteps.map((step, idx) => (
+                                    <div className="exercise__step"><span className="exercise__stepNumber">{ idx + 1 }. </span>{ step }</div>
+                                )) }
+                            </div>
+                            <div><ReactPlayer className="exercise__video" url={ exercise.video_url } /></div>
+                            <span className="exercise__end"></span>
                         </>
                     );
                 })
