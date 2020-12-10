@@ -68,7 +68,7 @@ function Workouts() {
                     return (
                         <React.Fragment key={ index } >
                             <br></br>
-                            <div>
+                            <div className="workout__info">
                                 { workout.title } - { workout.type }
                                 { Number(userId) === workout.user_id ?
                                     <DeleteIcon onClick={ () => {

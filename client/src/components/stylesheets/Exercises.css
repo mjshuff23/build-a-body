@@ -29,7 +29,7 @@
 }
 
 .exercise__ratings {
-    cursor: pointer;
+    border-top: 1px dotted white;
     min-width: 225px;
     display: flex;
     align-items: center;
@@ -41,6 +41,7 @@
 }
 
 .exercise__owner {
+    cursor: pointer;
     padding-left: 60px;
 }
 

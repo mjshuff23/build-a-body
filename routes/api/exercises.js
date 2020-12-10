@@ -29,7 +29,9 @@ router.get('/', asyncHandler(async (req, res, next) => {
     for (let exercise of exercises) {
         let ratingCount = 0;
         let ratingSum = 0;
+        exercise.dataValues.voterIds = [];
         for (let rating of exercise.Ratings) {
+            exercise.dataValues.voterIds.push([rating.user_id, rating.score]);
             ratingSum += rating.score;
             ratingCount++;
         }

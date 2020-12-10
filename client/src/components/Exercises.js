@@ -24,6 +24,8 @@ function Exercises() {
 
     const ratingChanged = (newRating) => {
         console.log(newRating);
+        // Create or Update Rating
+
     };
 
     const handleDelete = async (exerciseId) => {
@@ -94,13 +96,56 @@ function Exercises() {
                     return (
                         <React.Fragment key={ index }>
                             <div className="exercise__info">
+                                {
+                                    exercise.voterIds && exercise.voterIds.length ? exercise.voterIds.map((vote, index) => {
+                                        // If the userId has voted, put his vote in ReactStar, uneditable
+                                        if (Number(userId) === vote[0]) {
+                                            return (
+                                                <React.Fragment key={ index }>
+                                                    Thanks for rating!
+                                                    <ReactStars
+                                                        count={ 5 }
+                                                        edit={ false }
+                                                        value={ vote[1] }
+                                                        size={ 24 }
+                                                        color2={ '#ffd700' } />
+                                                </React.Fragment>
+                                            );
+                                        } else {
+                                            return (
+                                                <React.Fragment key={ index }>
+                                                    Rate this exercise!
+                                                    <ReactStars
+                                                        count={ 5 }
+                                                        value={ 0 }
+                                                        onChange={ ratingChanged }
+                                                        size={ 24 }
+                                                        color2={ '#ffd700' } />
+                                                </React.Fragment>
+                                            );
+                                        }
+                                    }) : (
+                                            <React.Fragment key={ index }>
+                                                Rate this exercise!
+                                                <ReactStars
+                                                    count={ 5 }
+                                                    value={ 0 }
+                                                    onChange={ ratingChanged }
+                                                    size={ 24 }
+                                                    color2={ '#ffd700' } />
+                                            </React.Fragment>
+                                        )
+                                }
+
                                 <div className="exercise__ratings">
+
                                     <span className="exercise__stars">
                                         <ReactStars
                                             count={ 5 }
                                             onChange={ ratingChanged }
                                             value={ exercise.averageRating }
                                             size={ 24 }
+                                            edit={ false }
                                             color2={ '#ffd700' } />
                                         ({ exercise.ratingCount })
                                     </span>
