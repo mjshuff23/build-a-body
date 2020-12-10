@@ -24,6 +24,22 @@
     color: black;
 }
 
+.exercise__ratings {
+    cursor: pointer;
+    min-width: 225px;
+    display: flex;
+    align-items: center;
+}
+
+.exercise__stars {
+    display: flex;
+    align-items: center;
+}
+
+.exercise__owner {
+    padding-left: 60px;
+}
+
 .exercise__title {
     font-weight: bold;
     color: darksalmon;

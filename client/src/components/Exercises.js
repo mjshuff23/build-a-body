@@ -10,6 +10,7 @@ import { Popover } from '@material-ui/core';
 import ExerciseForm from './ExerciseForm';
 import ExerciseFormEdit from './ExerciseFormEdit';
 import EditIcon from '@material-ui/icons/Edit';
+import ReactStars from 'react-stars';
 
 function Exercises() {
     const exerciseState = useSelector(state => state.exercises);
@@ -20,6 +21,10 @@ function Exercises() {
     const [currentExerciseId, setCurrentExerciseId] = useState('');
 
     const dispatch = useDispatch();
+
+    const ratingChanged = (newRating) => {
+        console.log(newRating);
+    };
 
     const handleDelete = async (exerciseId) => {
         async function deleteExercise(exerciseId) {
@@ -89,17 +94,31 @@ function Exercises() {
                     return (
                         <React.Fragment key={ index }>
                             <div className="exercise__info">
+                                <div className="exercise__ratings">
+                                    <span className="exercise__stars">
+                                        <ReactStars
+                                            count={ 5 }
+                                            onChange={ ratingChanged }
+                                            value={ exercise.averageRating }
+                                            size={ 24 }
+                                            color2={ '#ffd700' } />
+                                        ({ exercise.ratingCount })
+                                    </span>
+                                    <span className="exercise__owner">
+                                        { Number(userId) === exercise.user_id ?
+                                            <>
+                                                <DeleteIcon onClick={ () => {
+                                                    handleDelete(exercise.id);
+                                                } } /> <EditIcon value={ exercise.id } onClick={ (e) => {
+                                                    handleClickEdit(e, exercise.id);
+                                                }
+                                                } />
+                                            </>
+                                            : null }
+                                    </span>
+                                </div>
                                 <div><span className="exercise__title">{ exercise.title } - { exercise.type }</span>
-                                    { Number(userId) === exercise.user_id ?
-                                        <>
-                                            <DeleteIcon onClick={ () => {
-                                                handleDelete(exercise.id);
-                                            } } /> <EditIcon value={ exercise.id } onClick={ (e) => {
-                                                handleClickEdit(e, exercise.id);
-                                            }
-                                            } />
-                                        </>
-                                        : null }</div>
+                                </div>
                                 <Popover
                                     open={ openEdit }
                                     anchorEl={ anchorElEdit }
