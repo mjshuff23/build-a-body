@@ -1,4 +1,4 @@
-import { SET_EXERCISES, ADD_EXERCISE, REMOVE_EXERCISE, SET_CURRENT_BODY_PART } from '../actions/exercises';
+import { SET_EXERCISES, ADD_EXERCISE, REMOVE_EXERCISE, SET_CURRENT_BODY_PART, ADD_RATING } from '../actions/exercises';
 
 const initialState = {
     list: {},
@@ -37,6 +37,22 @@ export default function reducer(state = initialState, action) {
                 newBodyPartsList.add(newState.list[listItem].body_part);
             }
             newState.bodyParts = Array.from(newBodyPartsList);
+            return newState;
+        case ADD_RATING:
+            // Push rating onto exercise
+            newState.list[action.exerciseId].Ratings = [...newState.list[action.exerciseId].Ratings, action.rating];
+            // Add user to voterIds of exercise
+            newState.list[action.exerciseId].voterIds = [...newState.list[action.exerciseId].voterIds, [Number(action.userId), action.rating.score]];
+            // If averageRating is null, set it to 0
+            if (!newState.list[action.exerciseId].averageRating) {
+                newState.list[action.exerciseId].averageRating = 0;
+            }
+            // Calculate old total score
+            let oldScore = newState.list[action.exerciseId].averageRating * newState.list[action.exerciseId].ratingCount;
+            // Increase rating count
+            newState.list[action.exerciseId].ratingCount += 1;
+            // Add new score to old total score, and divide by new rating count
+            newState.list[action.exerciseId].averageRating = (oldScore + action.rating.score) / newState.list[action.exerciseId].ratingCount;
             return newState;
         default:
             return state;

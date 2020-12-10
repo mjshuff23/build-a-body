@@ -52,16 +52,6 @@ router.get('/', asyncHandler(async (req, res, next) => {
     res.json({ exerciseObject, bodyPartsArray });
 }));
 
-router.delete('/:exerciseId', asyncHandler(async (req, res) => {
-    const exerciseId = parseInt(req.params.exerciseId);
-    const exercise = await Exercise.findByPk(exerciseId);
-    if (exercise) {
-        await exercise.destroy();
-        return res.json(`Exercise ${exerciseId} destroyed.`);
-    }
-    res.json(`An error occurred trying to delete Exercise ${exerciseId}`);
-}));
-
 router.post('/', asyncHandler(async (req, res) => {
     const { title, description,
         user_id, type,
@@ -75,12 +65,29 @@ router.post('/', asyncHandler(async (req, res) => {
         equipment, video_url
     });
 
+    exercise.dataValues.voterIds = [];
+    exercise.dataValues.averageRating = 0;
+    exercise.dataValues.ratingCount = 0;
+    exercise.dataValues.Ratings = [];
+
     if (exercise) {
         return res.json(exercise);
     }
 
     res.json(`An error occured trying to create that exercise!`);
 }));
+
+
+router.delete('/:exerciseId', asyncHandler(async (req, res) => {
+    const exerciseId = parseInt(req.params.exerciseId);
+    const exercise = await Exercise.findByPk(exerciseId);
+    if (exercise) {
+        await exercise.destroy();
+        return res.json(`Exercise ${exerciseId} destroyed.`);
+    }
+    res.json(`An error occurred trying to delete Exercise ${exerciseId}`);
+}));
+
 
 router.put(`/:exerciseId`, asyncHandler(async (req, res) => {
     const { title, description, type, body_part,

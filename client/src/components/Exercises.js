@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/Exercises.css';
 import ReactPlayer from 'react-player/youtube';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { backendUrl } from '../config';
-import { removeExercise } from '../store/actions/exercises';
+import { addRating, removeExercise, setExercises } from '../store/actions/exercises';
 import { Popover } from '@material-ui/core';
 import ExerciseForm from './ExerciseForm';
 import ExerciseFormEdit from './ExerciseFormEdit';
@@ -16,13 +16,31 @@ function Exercises() {
     const exerciseState = useSelector(state => state.exercises);
     const exercises = Object.values(exerciseState.list);
     const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("build-a-body/authentication/token");
     const [anchorEl, setAnchorEl] = useState(null);
     const [anchorElEdit, setAnchorElEdit] = useState(null);
     const [currentExerciseId, setCurrentExerciseId] = useState('');
 
     const dispatch = useDispatch();
 
-    const ratingChanged = async (rating, exerciseId) => {
+    useEffect(() => {
+        async function fetchExercises() {
+            const response = await fetch(`${backendUrl}/api/exercises`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const { exerciseObject, bodyPartsArray } = await response.json();
+                dispatch(setExercises(exerciseObject, bodyPartsArray));
+            }
+        }
+        fetchExercises();
+    }, []);
+
+    const ratingChanged = async (score, exerciseId) => {
         // Add rating
         console.log(exerciseId);
         const response = await fetch(`${backendUrl}/api/exercises/${exerciseId}/ratings`, {
@@ -30,11 +48,14 @@ function Exercises() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ score: rating, userId })
+            body: JSON.stringify({ score, userId })
         });
 
         if (response.ok) {
+            const rating = await response.json();
             console.log('Successfully added rating');
+            // Push userId to exercise so we get a re-render
+            dispatch(addRating(exerciseId, rating, userId));
             return true;
         }
     };
@@ -77,6 +98,7 @@ function Exercises() {
     };
 
     const mapRatings = (exercise) => {
+        console.log('inside voterIds');
         for (let i = 0; i < exercise.voterIds.length; i++) {
             let vote = exercise.voterIds[i];
             if (Number(userId) === vote[0]) {
@@ -112,7 +134,6 @@ function Exercises() {
     const openEdit = Boolean(anchorElEdit);
     return (
         <div className="exercises">
-
             <div className="addExerciseIcon" onClick={ handleClick }>Add A New Exercise<AddIcon style={ { fontSize: 40 } } /></div>
             <Popover
                 open={ open }
