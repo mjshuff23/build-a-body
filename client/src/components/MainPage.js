@@ -1,23 +1,22 @@
 import React, { useEffect } from 'react';
-import './stylesheets/MainPage.css';
-import { Redirect, Route, Switch } from 'react-router-dom';
-// import SideBar from './SideBar';
+import { Route, Switch } from 'react-router-dom';
 import Exercises from './Exercises';
 import NavBar from './NavBar';
 import Feed from './Feed';
 import Workouts from './Workouts';
 import User from './User';
-import { useDispatch, useSelector } from 'react-redux';
-import { addExercise } from '../store/actions/exercises';
-import { setCurrentExerciseGroup, setExercises } from '../store/actions/exercises';
+import { useDispatch } from 'react-redux';
+import { setExercises } from '../store/actions/exercises';
 import { setWorkouts } from '../store/actions/workouts';
 import { backendUrl } from '../config';
+import './stylesheets/MainPage.css';
+
+
 function MainPage() {
     const dispatch = useDispatch();
-    const exercises = useSelector(state => state.exercises);
 
     useEffect(() => {
-        // Load Body Parts for menu
+        // Load Exercises and Body Parts for Redux
         const token = localStorage.getItem("build-a-body/authentication/token");
         async function fetchExercises() {
             const response = await fetch(`${backendUrl}/api/exercises`, {
@@ -33,7 +32,7 @@ function MainPage() {
             }
         }
         fetchExercises();
-
+        // Load Workouts for Redux
         async function fetchWorkouts() {
             const response = await fetch(`${backendUrl}/api/workouts`, {
                 headers: {
@@ -48,12 +47,11 @@ function MainPage() {
             }
         }
         fetchWorkouts();
-    }, []);
+    }, [dispatch]);
 
 
     return (
         <div className="mainPage">
-            {/* <SideBar /> */ }
             <NavBar />
             <Switch>
                 <Route exact path='/exercises'><Exercises /></Route>
@@ -61,8 +59,6 @@ function MainPage() {
                 <Route path={ `/user/` }><User /></Route>
                 <Route exact path='/'><Feed /></Route>
             </Switch>
-            {/* Workouts */ }
-            {/* Footer */ }
         </div>
     );
 }

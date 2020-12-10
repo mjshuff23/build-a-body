@@ -71,7 +71,6 @@ const validateSignUp = [
 router.post(
     "/login",
     asyncHandler(async (req, res, next) => {
-        console.log('test');
         const { email, password } = req.body;
         const user = await User.findOne({
             where: {
@@ -138,9 +137,8 @@ router.post(
 router.get(
     '/',
     requireAuth,
-    asyncHandler(async function (req, res, next) {
+    asyncHandler(async function (req, res) {
         const users = await User.findAll();
-        console.log(users);
         res.json({ users });
     })
 );

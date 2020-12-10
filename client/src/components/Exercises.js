@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/Exercises.css';
 import ReactPlayer from 'react-player/youtube';
@@ -29,10 +29,9 @@ function Exercises() {
                     'Content-Type': 'application/json',
                 }
             });
-            if (response.ok) {
-                const data = await response.json();
-                return true;
-            }
+
+            if (response.ok) return true;
+
             console.log(`Error trying to delete exercise ${exerciseId}`);
         }
         const deleted = await deleteExercise(exerciseId);
@@ -47,15 +46,9 @@ function Exercises() {
 
     const handleClickEdit = (e, exerciseId) => {
         setAnchorElEdit(e.currentTarget);
-        console.log(`Setting current exercise Id to ${exerciseId}`);
         setCurrentExerciseId(exerciseId);
     };
 
-
-    const handleEdit = async (exerciseId) => {
-        // Fill a popover with exercise info for updating
-
-    };
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -88,16 +81,16 @@ function Exercises() {
             </Popover>
 
             {exercises ?
-                exercises.map(exercise => {
+                exercises.map((exercise, index) => {
                     let descriptionSteps;
                     if (exercise.description) {
                         descriptionSteps = exercise.description.split(`\n`);
                     }
                     return (
-                        <>
+                        <React.Fragment key={ index }>
                             <div className="exercise__info">
                                 <div><span className="exercise__title">{ exercise.title } - { exercise.type }</span>
-                                    { userId == exercise.user_id ?
+                                    { Number(userId) === exercise.user_id ?
                                         <>
                                             <DeleteIcon onClick={ () => {
                                                 handleDelete(exercise.id);
@@ -125,13 +118,13 @@ function Exercises() {
                                 <div><span className="exercise__difficulty" >Difficulty:</span> { exercise.difficulty }</div>
                                 <div><span className="exercise__equipment">Equipment:</span> { exercise.equipment }</div></div>
                             <div className="exercise__steps">
-                                { descriptionSteps.map((step, idx) => (
-                                    <div className="exercise__step"><span className="exercise__stepNumber">{ idx + 1 }. </span>{ step }</div>
+                                { descriptionSteps.map((step, index) => (
+                                    <div key={ index } className="exercise__step"><span className="exercise__stepNumber">{ index + 1 }. </span>{ step }</div>
                                 )) }
                             </div>
                             <div><ReactPlayer className="exercise__video" url={ exercise.video_url } controls={ true } /></div>
                             <span className="exercise__end"></span>
-                        </>
+                        </React.Fragment >
                     );
                 })
                 : null }

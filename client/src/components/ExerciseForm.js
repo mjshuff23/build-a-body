@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { backendUrl } from '../config';
 import { addExercise } from '../store/actions/exercises';
 import './stylesheets/ExerciseForm.css';
 
 function ExerciseForm(props) {
-    const dispatch = useDispatch();
-    const exerciseList = useSelector(state => state.exercises.list);
-
+    const token = localStorage.getItem('build-a-body/authentication/token');
+    const userId = localStorage.getItem('userId');
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [bodyPart, setBodyPart] = useState("");
@@ -16,9 +15,8 @@ function ExerciseForm(props) {
     const [equipment, setEquipment] = useState("");
     const [videoUrl, setVideoUrl] = useState("");
 
+    const dispatch = useDispatch();
 
-    const token = localStorage.getItem('build-a-body/authentication/token');
-    const userId = localStorage.getItem('userId');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,7 +35,6 @@ function ExerciseForm(props) {
 
             if (response.ok) {
                 const exercise = await response.json();
-                // TODO: Dispatch addition of exercise to Redux
                 dispatch(addExercise(exercise));
             }
         }

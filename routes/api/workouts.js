@@ -5,11 +5,9 @@ const { getUserToken, requireAuth } = require('../../auth');
 const { User, Exercise, Workout, WorkoutExercise, Rating, Comment } = require('../../db/models');
 
 const router = express.Router();
-// router.use(requireAuth);
 
 // Get All Workouts
 router.get('/', asyncHandler(async (req, res, next) => {
-    // Get All Exercises, Ratings, and Comments
     const workouts = await Workout.findAll({
         include: [{
             model: User, attributes: ['username']
@@ -48,20 +46,16 @@ router.post('/', asyncHandler(async (req, res, next) => {
         user_id, type,
         exerciseList } = req.body;
 
-    console.log(req.body);
-
     const workout = await Workout.create({
         title, description,
         user_id, type
     });
 
     exerciseList.map(async (exerciseId) => {
-        // Add every exercise to the WorkoutExercises table
-        const workoutExercise = await WorkoutExercise.create({
+        await WorkoutExercise.create({
             workout_id: workout.id,
             exercise_id: exerciseId
         });
-        console.log(`added workoutExercise ${workoutExercise}`);
     });
 
     if (workout) {
@@ -71,7 +65,7 @@ router.post('/', asyncHandler(async (req, res, next) => {
     res.json(`An error occured trying to create that workout!`);
 }));
 
-router.delete('/:workoutId', asyncHandler(async (req, res, next) => {
+router.delete('/:workoutId', asyncHandler(async (req, res) => {
     const workoutId = parseInt(req.params.workoutId);
     const workout = await Workout.findByPk(workoutId);
     if (workout) {

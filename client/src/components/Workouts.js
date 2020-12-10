@@ -24,10 +24,9 @@ function Workouts() {
                     'Content-Type': 'application/json',
                 }
             });
-            if (response.ok) {
-                const data = await response.json();
-                return true;
-            }
+
+            if (response.ok) return true;
+
             console.log(`Error trying to delete exercise ${workoutId}`);
         }
         const deleted = await deleteWorkout(workoutId);
@@ -65,13 +64,13 @@ function Workouts() {
                 <WorkoutForm />
             </Popover>
             {workouts ?
-                workouts.map(workout => {
+                workouts.map((workout, index) => {
                     return (
-                        <>
+                        <React.Fragment key={ index } >
                             <br></br>
                             <div>
                                 { workout.title } - { workout.type }
-                                { userId == workout.user_id ?
+                                { Number(userId) === workout.user_id ?
                                     <DeleteIcon onClick={ () => {
                                         handleDelete(workout.id);
                                     } } />
@@ -79,10 +78,10 @@ function Workouts() {
                             </div>
                             <div>{ workout.description }</div>
                             <ul>
-                                { workout.WorkoutExercises ? workout.WorkoutExercises.map((exercise, idx) => (
-                                    <div>{ exercisesState.list[exercise.exercise_id] ?
+                                { workout.WorkoutExercises ? workout.WorkoutExercises.map((exercise, index) => (
+                                    <div key={ index }>{ exercisesState.list[exercise.exercise_id] ?
                                         <>
-                                            <li key={ idx }>{ exercisesState.list[exercise.exercise_id].title } - { exercisesState.list[exercise.exercise_id].type }</li>
+                                            <li>{ exercisesState.list[exercise.exercise_id].title } - { exercisesState.list[exercise.exercise_id].type }</li>
                                             <div></div>
                                         </>
 
@@ -90,7 +89,7 @@ function Workouts() {
                                 )) : null }
                             </ul>
                             <hr></hr>
-                        </>
+                        </React.Fragment>
                     );
                 })
                 : null }

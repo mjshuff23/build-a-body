@@ -38,7 +38,6 @@ router.get('/', asyncHandler(async (req, res, next) => {
 
         exerciseObject[exercise.id] = exercise;
     }
-    console.log(`Exercise Object:`, exerciseObject);
 
     // Loop through Exercises to build a list of body parts
     let bodyParts = new Set();
@@ -51,24 +50,21 @@ router.get('/', asyncHandler(async (req, res, next) => {
     res.json({ exerciseObject, bodyPartsArray });
 }));
 
-router.delete('/:exerciseId', asyncHandler(async (req, res, next) => {
+router.delete('/:exerciseId', asyncHandler(async (req, res) => {
     const exerciseId = parseInt(req.params.exerciseId);
     const exercise = await Exercise.findByPk(exerciseId);
     if (exercise) {
         await exercise.destroy();
-        // console.log(exercise);
         return res.json(`Exercise ${exerciseId} destroyed.`);
     }
     res.json(`An error occurred trying to delete Exercise ${exerciseId}`);
 }));
 
-router.post('/', asyncHandler(async (req, res, next) => {
+router.post('/', asyncHandler(async (req, res) => {
     const { title, description,
         user_id, type,
         body_part, difficulty,
         equipment, video_url } = req.body;
-
-    console.log(req.body);
 
     const exercise = await Exercise.create({
         title, description,
@@ -84,13 +80,9 @@ router.post('/', asyncHandler(async (req, res, next) => {
     res.json(`An error occured trying to create that exercise!`);
 }));
 
-router.put(`/:exerciseId`, asyncHandler(async (req, res, next) => {
-    const { title, description,
-        user_id, type,
-        body_part, difficulty,
-        equipment, video_url } = req.body;
-
-    console.log(req.body);
+router.put(`/:exerciseId`, asyncHandler(async (req, res) => {
+    const { title, description, type, body_part,
+        difficulty, equipment, video_url } = req.body;
 
     const exercise = await Exercise.findByPk(parseInt(req.params.exerciseId));
 
