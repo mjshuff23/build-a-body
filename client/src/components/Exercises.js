@@ -1,25 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/Exercises.css';
 import ReactPlayer from 'react-player/youtube';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { backendUrl } from '../config';
-import { removeExercise } from '../store/actions/exercises';
+import { addRating, removeExercise, setExercises } from '../store/actions/exercises';
 import { Popover } from '@material-ui/core';
 import ExerciseForm from './ExerciseForm';
 import ExerciseFormEdit from './ExerciseFormEdit';
 import EditIcon from '@material-ui/icons/Edit';
+import ReactStars from 'react-stars';
 
 function Exercises() {
     const exerciseState = useSelector(state => state.exercises);
     const exercises = Object.values(exerciseState.list);
     const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("build-a-body/authentication/token");
     const [anchorEl, setAnchorEl] = useState(null);
     const [anchorElEdit, setAnchorElEdit] = useState(null);
     const [currentExerciseId, setCurrentExerciseId] = useState('');
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        async function fetchExercises() {
+            const response = await fetch(`${backendUrl}/api/exercises`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const { exerciseObject, bodyPartsArray } = await response.json();
+                dispatch(setExercises(exerciseObject, bodyPartsArray));
+            }
+        }
+        fetchExercises();
+    }, []);
+
+    const ratingChanged = async (score, exerciseId) => {
+        // Add rating
+        console.log(exerciseId);
+        const response = await fetch(`${backendUrl}/api/exercises/${exerciseId}/ratings`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ score, userId })
+        });
+
+        if (response.ok) {
+            const rating = await response.json();
+            console.log('Successfully added rating');
+            // Push userId to exercise so we get a re-render
+            dispatch(addRating(exerciseId, rating, userId));
+            return true;
+        }
+    };
 
     const handleDelete = async (exerciseId) => {
         async function deleteExercise(exerciseId) {
@@ -58,11 +97,43 @@ function Exercises() {
         setAnchorElEdit(null);
     };
 
+    const mapRatings = (exercise) => {
+        console.log('inside voterIds');
+        for (let i = 0; i < exercise.voterIds.length; i++) {
+            let vote = exercise.voterIds[i];
+            if (Number(userId) === vote[0]) {
+                return (
+                    <React.Fragment key={ i }>
+                        Thanks for rating!
+                        <ReactStars
+                            count={ 5 }
+                            edit={ false }
+                            value={ vote[1] }
+                            size={ 24 }
+                            color2={ '#ffd700' } />
+                    </React.Fragment>
+                );
+            }
+        }
+        return (
+            <React.Fragment key={ Math.random() }>
+                Rate this exercise!
+                <ReactStars
+                    count={ 5 }
+                    value={ 0 }
+                    onChange={ (rating) => {
+                        ratingChanged(rating, exercise.id);
+                    } }
+                    size={ 24 }
+                    color2={ '#ffd700' } />
+            </React.Fragment>
+        );
+    };
+
     const open = Boolean(anchorEl);
     const openEdit = Boolean(anchorElEdit);
     return (
         <div className="exercises">
-
             <div className="addExerciseIcon" onClick={ handleClick }>Add A New Exercise<AddIcon style={ { fontSize: 40 } } /></div>
             <Popover
                 open={ open }
@@ -89,17 +160,50 @@ function Exercises() {
                     return (
                         <React.Fragment key={ index }>
                             <div className="exercise__info">
+                                {
+                                    exercise.voterIds && exercise.voterIds.length ? (
+                                        mapRatings(exercise)
+                                    ) : (
+                                            <React.Fragment key={ index }>
+                                                Rate this exercise!
+                                                <ReactStars
+                                                    count={ 5 }
+                                                    value={ 0 }
+                                                    onChange={ (rating) => {
+                                                        ratingChanged(rating, exercise.id);
+                                                    } }
+                                                    size={ 24 }
+                                                    color2={ '#ffd700' } />
+                                            </React.Fragment>
+                                        )
+                                }
+
+                                <div className="exercise__ratings">
+
+                                    <span className="exercise__stars">
+                                        <ReactStars
+                                            count={ 5 }
+                                            value={ exercise.averageRating }
+                                            size={ 24 }
+                                            edit={ false }
+                                            color2={ '#ffd700' } />
+                                        ({ exercise.ratingCount })
+                                    </span>
+                                    <span className="exercise__owner">
+                                        { Number(userId) === exercise.user_id ?
+                                            <>
+                                                <DeleteIcon onClick={ () => {
+                                                    handleDelete(exercise.id);
+                                                } } /> <EditIcon value={ exercise.id } onClick={ (e) => {
+                                                    handleClickEdit(e, exercise.id);
+                                                }
+                                                } />
+                                            </>
+                                            : null }
+                                    </span>
+                                </div>
                                 <div><span className="exercise__title">{ exercise.title } - { exercise.type }</span>
-                                    { Number(userId) === exercise.user_id ?
-                                        <>
-                                            <DeleteIcon onClick={ () => {
-                                                handleDelete(exercise.id);
-                                            } } /> <EditIcon value={ exercise.id } onClick={ (e) => {
-                                                handleClickEdit(e, exercise.id);
-                                            }
-                                            } />
-                                        </>
-                                        : null }</div>
+                                </div>
                                 <Popover
                                     open={ openEdit }
                                     anchorEl={ anchorElEdit }

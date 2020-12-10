@@ -47,7 +47,7 @@ function Workouts() {
 
     return (
         <div className='workouts'>
-            <div className="addWorkoutIcon">Add A New Workout<AddIcon style={ { fontSize: 40 } } onClick={ handleClick } /></div>
+            <div className="addWorkoutIcon" onClick={ handleClick }>Add A New Workout<AddIcon style={ { fontSize: 40 } } /></div>
             <Popover
                 open={ open }
                 anchorEl={ anchorEl }
@@ -68,7 +68,7 @@ function Workouts() {
                     return (
                         <React.Fragment key={ index } >
                             <br></br>
-                            <div>
+                            <div className="workout__info">
                                 { workout.title } - { workout.type }
                                 { Number(userId) === workout.user_id ?
                                     <DeleteIcon onClick={ () => {

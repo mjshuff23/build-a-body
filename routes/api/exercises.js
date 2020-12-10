@@ -29,7 +29,9 @@ router.get('/', asyncHandler(async (req, res, next) => {
     for (let exercise of exercises) {
         let ratingCount = 0;
         let ratingSum = 0;
+        exercise.dataValues.voterIds = [];
         for (let rating of exercise.Ratings) {
+            exercise.dataValues.voterIds.push([rating.user_id, rating.score]);
             ratingSum += rating.score;
             ratingCount++;
         }
@@ -50,16 +52,6 @@ router.get('/', asyncHandler(async (req, res, next) => {
     res.json({ exerciseObject, bodyPartsArray });
 }));
 
-router.delete('/:exerciseId', asyncHandler(async (req, res) => {
-    const exerciseId = parseInt(req.params.exerciseId);
-    const exercise = await Exercise.findByPk(exerciseId);
-    if (exercise) {
-        await exercise.destroy();
-        return res.json(`Exercise ${exerciseId} destroyed.`);
-    }
-    res.json(`An error occurred trying to delete Exercise ${exerciseId}`);
-}));
-
 router.post('/', asyncHandler(async (req, res) => {
     const { title, description,
         user_id, type,
@@ -73,12 +65,29 @@ router.post('/', asyncHandler(async (req, res) => {
         equipment, video_url
     });
 
+    exercise.dataValues.voterIds = [];
+    exercise.dataValues.averageRating = 0;
+    exercise.dataValues.ratingCount = 0;
+    exercise.dataValues.Ratings = [];
+
     if (exercise) {
         return res.json(exercise);
     }
 
     res.json(`An error occured trying to create that exercise!`);
 }));
+
+
+router.delete('/:exerciseId', asyncHandler(async (req, res) => {
+    const exerciseId = parseInt(req.params.exerciseId);
+    const exercise = await Exercise.findByPk(exerciseId);
+    if (exercise) {
+        await exercise.destroy();
+        return res.json(`Exercise ${exerciseId} destroyed.`);
+    }
+    res.json(`An error occurred trying to delete Exercise ${exerciseId}`);
+}));
+
 
 router.put(`/:exerciseId`, asyncHandler(async (req, res) => {
     const { title, description, type, body_part,
@@ -101,6 +110,37 @@ router.put(`/:exerciseId`, asyncHandler(async (req, res) => {
     }
 
     res.json(`An error occured trying to edit that exercise!`);
+}));
+
+router.post(`/:exerciseId/ratings/`, asyncHandler(async (req, res) => {
+    // Create Rating for exercise and return it
+    const exerciseId = parseInt(req.params.exerciseId);
+    const { score, userId } = req.body;
+
+    const ratings = await Rating.findAll({
+        where: {
+            user_id: userId,
+            ratableId: exerciseId,
+            ratableType: 'Exercise'
+        }
+    });
+
+    if (ratings.length) {
+        return res.json("You've already voted on that exercise!");
+    }
+
+    const rating = await Rating.create({
+        score,
+        user_id: userId,
+        ratableId: exerciseId,
+        ratableType: 'Exercise',
+    });
+
+    if (rating) {
+        return res.json(rating);
+    }
+
+    res.json(`An error occured trying to add that rating!`);
 }));
 
 module.exports = router;

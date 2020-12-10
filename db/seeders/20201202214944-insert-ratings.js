@@ -23,6 +23,26 @@ module.exports = {
         ratableId: 1, ratableType: 'Exercise',
         createdAt: new Date(), updatedAt: new Date()
       },
+      {
+        score: 5, user_id: 3,
+        ratableId: 1, ratableType: 'Exercise',
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        score: 5, user_id: 2,
+        ratableId: 1, ratableType: 'Exercise',
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        score: 5, user_id: 2,
+        ratableId: 3, ratableType: 'Exercise',
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        score: 1, user_id: 3,
+        ratableId: 3, ratableType: 'Exercise',
+        createdAt: new Date(), updatedAt: new Date()
+      },
     ], {});
   },
 
