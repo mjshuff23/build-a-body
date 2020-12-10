@@ -105,4 +105,35 @@ router.put(`/:exerciseId`, asyncHandler(async (req, res) => {
     res.json(`An error occured trying to edit that exercise!`);
 }));
 
+router.post(`/:exerciseId/ratings/`, asyncHandler(async (req, res) => {
+    // Create Rating for exercise and return it
+    const exerciseId = parseInt(req.params.exerciseId);
+    const { score, userId } = req.body;
+
+    const ratings = await Rating.findAll({
+        where: {
+            user_id: userId,
+            ratableId: exerciseId,
+            ratableType: 'Exercise'
+        }
+    });
+
+    if (ratings.length) {
+        return res.json("You've already voted on that exercise!");
+    }
+
+    const rating = await Rating.create({
+        score,
+        user_id: userId,
+        ratableId: exerciseId,
+        ratableType: 'Exercise',
+    });
+
+    if (rating) {
+        return res.json(rating);
+    }
+
+    res.json(`An error occured trying to add that rating!`);
+}));
+
 module.exports = router;

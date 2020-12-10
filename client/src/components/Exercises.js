@@ -22,10 +22,20 @@ function Exercises() {
 
     const dispatch = useDispatch();
 
-    const ratingChanged = (newRating) => {
-        console.log(newRating);
-        // Create or Update Rating
+    const ratingChanged = async (rating, exerciseId) => {
+        // Add rating
+        const response = await fetch(`${backendUrl}/api/exercises/${exerciseId}/ratings`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.Stringify({ score: rating, userId })
+        });
 
+        if (response.ok) {
+            console.log('Successfully added rating');
+            return true;
+        }
     };
 
     const handleDelete = async (exerciseId) => {
@@ -118,7 +128,9 @@ function Exercises() {
                                                     <ReactStars
                                                         count={ 5 }
                                                         value={ 0 }
-                                                        onChange={ ratingChanged }
+                                                        onChange={ (rating) => {
+                                                            ratingChanged(rating, exercise.id);
+                                                        } }
                                                         size={ 24 }
                                                         color2={ '#ffd700' } />
                                                 </React.Fragment>
@@ -142,7 +154,6 @@ function Exercises() {
                                     <span className="exercise__stars">
                                         <ReactStars
                                             count={ 5 }
-                                            onChange={ ratingChanged }
                                             value={ exercise.averageRating }
                                             size={ 24 }
                                             edit={ false }
