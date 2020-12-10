@@ -24,12 +24,13 @@ function Exercises() {
 
     const ratingChanged = async (rating, exerciseId) => {
         // Add rating
+        console.log(exerciseId);
         const response = await fetch(`${backendUrl}/api/exercises/${exerciseId}/ratings`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.Stringify({ score: rating, userId })
+            body: JSON.stringify({ score: rating, userId })
         });
 
         if (response.ok) {
@@ -142,7 +143,9 @@ function Exercises() {
                                                 <ReactStars
                                                     count={ 5 }
                                                     value={ 0 }
-                                                    onChange={ ratingChanged }
+                                                    onChange={ (rating) => {
+                                                        ratingChanged(rating, exercise.id);
+                                                    } }
                                                     size={ 24 }
                                                     color2={ '#ffd700' } />
                                             </React.Fragment>
