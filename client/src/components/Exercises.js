@@ -76,6 +76,38 @@ function Exercises() {
         setAnchorElEdit(null);
     };
 
+    const mapRatings = (exercise) => {
+        for (let i = 0; i < exercise.voterIds.length; i++) {
+            let vote = exercise.voterIds[i];
+            if (Number(userId) === vote[0]) {
+                return (
+                    <React.Fragment key={ i }>
+                        Thanks for rating!
+                        <ReactStars
+                            count={ 5 }
+                            edit={ false }
+                            value={ vote[1] }
+                            size={ 24 }
+                            color2={ '#ffd700' } />
+                    </React.Fragment>
+                );
+            }
+        }
+        return (
+            <React.Fragment key={ Math.random() }>
+                Rate this exercise!
+                <ReactStars
+                    count={ 5 }
+                    value={ 0 }
+                    onChange={ (rating) => {
+                        ratingChanged(rating, exercise.id);
+                    } }
+                    size={ 24 }
+                    color2={ '#ffd700' } />
+            </React.Fragment>
+        );
+    };
+
     const open = Boolean(anchorEl);
     const openEdit = Boolean(anchorElEdit);
     return (
@@ -108,36 +140,9 @@ function Exercises() {
                         <React.Fragment key={ index }>
                             <div className="exercise__info">
                                 {
-                                    exercise.voterIds && exercise.voterIds.length ? exercise.voterIds.map((vote, index) => {
-                                        // If the userId has voted, put his vote in ReactStar, uneditable
-                                        if (Number(userId) === vote[0]) {
-                                            return (
-                                                <React.Fragment key={ index }>
-                                                    Thanks for rating!
-                                                    <ReactStars
-                                                        count={ 5 }
-                                                        edit={ false }
-                                                        value={ vote[1] }
-                                                        size={ 24 }
-                                                        color2={ '#ffd700' } />
-                                                </React.Fragment>
-                                            );
-                                        } else {
-                                            return (
-                                                <React.Fragment key={ index }>
-                                                    Rate this exercise!
-                                                    <ReactStars
-                                                        count={ 5 }
-                                                        value={ 0 }
-                                                        onChange={ (rating) => {
-                                                            ratingChanged(rating, exercise.id);
-                                                        } }
-                                                        size={ 24 }
-                                                        color2={ '#ffd700' } />
-                                                </React.Fragment>
-                                            );
-                                        }
-                                    }) : (
+                                    exercise.voterIds && exercise.voterIds.length ? (
+                                        mapRatings(exercise)
+                                    ) : (
                                             <React.Fragment key={ index }>
                                                 Rate this exercise!
                                                 <ReactStars
