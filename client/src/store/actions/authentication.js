@@ -54,7 +54,6 @@ export const register = (username, email, password, confirmPassword) => async (d
     if (response.ok) {
 
         const { token, user } = await response.json();
-        console.log(user);
         window.localStorage.setItem(TOKEN_KEY, token);
         window.localStorage.setItem('userId', user.id);
         dispatch(setToken(token));
