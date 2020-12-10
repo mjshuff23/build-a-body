@@ -26,14 +26,25 @@
     width: 80%;
     border-radius: 10px;
     padding: 0 5px;
+    transition: color 1s;
 }
 
 .newExerciseForm>input:hover {
-    background-color: rgb(68, 68, 68);
+    background-color: rgb(74, 74, 74);
+    color: white;
+}
+
+.newExerciseForm>input:focus {
+    background-color: rgb(74, 74, 74);
+    color: white;
+}
+
+.newExerciseForm>input:focus::placeholder {
+    color: rgb(255, 93, 93);
 }
 
 .newExerciseForm>input:hover::placeholder {
-    color: white;
+    color: rgb(255, 93, 93);
 }
 
 .MuiPaper-root {
