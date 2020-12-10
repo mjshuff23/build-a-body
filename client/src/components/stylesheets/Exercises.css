@@ -7,7 +7,7 @@
     background-image: url('https://body-builder-project.s3.us-east-2.amazonaws.com/bg-logged-in-3.jpg');
 }
 
-.addExerciseIcon {
+.addExerciseIcon, .addWorkoutIcon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,6 +17,10 @@
     padding: 5px 10px;
     background-color: rgb(94 213 218 / 50%);
     margin-bottom: 10px;
+}
+
+.addExerciseIcon {
+    transition: background-color 1s;
 }
 
 .addExerciseIcon:hover {
@@ -54,6 +58,7 @@
 .exercise__info {
     display: flex;
     flex-direction: column;
+    background-color: rgba(1, 10, 20, 50%);
     border: 2px solid white;
     border-radius: 10px;
     padding: 10px;
@@ -63,6 +68,7 @@
 
 .exercise__steps {
     display: flex;
+    background-color: rgba(1, 10, 20, 50%);
     flex-direction: column;
     border: 2px solid white;
     border-radius: 10px;
@@ -77,10 +83,13 @@
 
 .exercise__step {
     padding: 0px 5px 2px;
+    transition: background-color 1s;
+    border-radius: 10px;
 }
 
 .exercise__step:hover {
-    background-color: rgba(64, 64, 64, 0.5)
+    background-color: rgba(64, 64, 64, 0.5);
+    border-radius: 10px;
 }
 
 .exercise__video {

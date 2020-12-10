@@ -47,7 +47,7 @@ function Workouts() {
 
     return (
         <div className='workouts'>
-            <div className="addWorkoutIcon">Add A New Workout<AddIcon style={ { fontSize: 40 } } onClick={ handleClick } /></div>
+            <div className="addWorkoutIcon" onClick={ handleClick }>Add A New Workout<AddIcon style={ { fontSize: 40 } } /></div>
             <Popover
                 open={ open }
                 anchorEl={ anchorEl }
