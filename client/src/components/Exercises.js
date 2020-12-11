@@ -5,7 +5,7 @@ import ReactPlayer from 'react-player/youtube';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { backendUrl } from '../config';
-import { addRating, removeExercise, setExercises } from '../store/actions/exercises';
+import { addRating, removeExercise, updateRating } from '../store/actions/exercises';
 import { Popover } from '@material-ui/core';
 import ExerciseForm from './ExerciseForm';
 import ExerciseFormEdit from './ExerciseFormEdit';
@@ -23,27 +23,32 @@ function Exercises() {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        async function fetchExercises() {
-            const response = await fetch(`${backendUrl}/api/exercises`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+    const ratingChanged = async (score, exercise) => {
+        // Check if user has already voted on this exercise
+        for (let i = 0; i < exercise.voterIds.length; i++) {
+            let vote = exercise.voterIds[i];
+            if (Number(userId) === vote[0]) {
+                // Voter has voted, so we need to do a PUT and update
+                const response = await fetch(`${backendUrl}/api/exercises/${exercise.id}/ratings`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ score, userId })
+                });
 
-            if (response.ok) {
-                const { exerciseObject, bodyPartsArray } = await response.json();
-                dispatch(setExercises(exerciseObject, bodyPartsArray));
+                if (response.ok) {
+                    const { rating, oldScore } = await response.json();
+                    console.log('Successfully updated rating');
+                    console.log(rating);
+                    dispatch(updateRating(exercise.id, rating, userId, oldScore));
+                    return true;
+                }
             }
         }
-        fetchExercises();
-    }, []);
 
-    const ratingChanged = async (score, exerciseId) => {
-        // Add rating
-        console.log(exerciseId);
-        const response = await fetch(`${backendUrl}/api/exercises/${exerciseId}/ratings`, {
+        // If never rated, add rating
+        const response = await fetch(`${backendUrl}/api/exercises/${exercise.id}/ratings`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,7 +60,7 @@ function Exercises() {
             const rating = await response.json();
             console.log('Successfully added rating');
             // Push userId to exercise so we get a re-render
-            dispatch(addRating(exerciseId, rating, userId));
+            dispatch(addRating(exercise.id, rating, userId));
             return true;
         }
     };
@@ -101,14 +106,17 @@ function Exercises() {
         console.log('inside voterIds');
         for (let i = 0; i < exercise.voterIds.length; i++) {
             let vote = exercise.voterIds[i];
+            console.log(`vote[1] ${vote[1]}`);
             if (Number(userId) === vote[0]) {
                 return (
                     <React.Fragment key={ i }>
                         Thanks for rating!
                         <ReactStars
                             count={ 5 }
-                            edit={ false }
                             value={ vote[1] }
+                            onChange={ (rating) => {
+                                ratingChanged(rating, exercise);
+                            } }
                             size={ 24 }
                             color2={ '#ffd700' } />
                     </React.Fragment>
@@ -122,7 +130,7 @@ function Exercises() {
                     count={ 5 }
                     value={ 0 }
                     onChange={ (rating) => {
-                        ratingChanged(rating, exercise.id);
+                        ratingChanged(rating, exercise);
                     } }
                     size={ 24 }
                     color2={ '#ffd700' } />
@@ -170,7 +178,7 @@ function Exercises() {
                                                     count={ 5 }
                                                     value={ 0 }
                                                     onChange={ (rating) => {
-                                                        ratingChanged(rating, exercise.id);
+                                                        ratingChanged(rating, exercise);
                                                     } }
                                                     size={ 24 }
                                                     color2={ '#ffd700' } />
