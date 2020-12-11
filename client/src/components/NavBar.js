@@ -13,10 +13,10 @@ function NavBar() {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     {/* <Nav.Link href={ `${baseUrl}/` }>Home</Nav.Link> */ }
-                    <Nav.Link href={ `${baseUrl}/` }>Home</Nav.Link>
-                    <Nav.Link href={ `${baseUrl}/exercises` }>Exercises</Nav.Link>
-                    <Nav.Link href={ `${baseUrl}/workouts` }>Workouts</Nav.Link>
-                    <Nav.Link href={ `${baseUrl}/user/` }>{ `${userState.user.email}` }</Nav.Link>
+                    <Nav.Link href={ `/` }>Home</Nav.Link>
+                    <Nav.Link href={ `/exercises` }>Exercises</Nav.Link>
+                    <Nav.Link href={ `/workouts` }>Workouts</Nav.Link>
+                    <Nav.Link href={ `/user/` }>{ `${userState.user.email}` }</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
