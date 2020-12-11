@@ -143,4 +143,23 @@ router.post(`/:exerciseId/ratings/`, asyncHandler(async (req, res) => {
     res.json(`An error occured trying to add that rating!`);
 }));
 
+router.put('/:exerciseId/ratings/', asyncHandler(async (req, res, next) => {
+    const exerciseId = parseInt(req.params.exerciseId);
+    const { score, userId } = req.body;
+
+    const rating = await Rating.findOne({
+        where: {
+            user_id: userId,
+            ratableId: exerciseId,
+            ratableType: 'Exercise',
+        }
+    });
+
+    if (!rating) return res.json('Cannot find rating to update!');
+    const oldScore = rating.score;
+    rating.score = score;
+    await rating.save();
+    res.json({ rating, oldScore });
+}));
+
 module.exports = router;

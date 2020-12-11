@@ -20,20 +20,20 @@ function MainPage() {
     useEffect(() => {
         // Load Exercises and Body Parts for Redux
         const token = localStorage.getItem("build-a-body/authentication/token");
-        // async function fetchExercises() {
-        //     const response = await fetch(`${backendUrl}/api/exercises`, {
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${token}`
-        //         }
-        //     });
+        async function fetchExercises() {
+            const response = await fetch(`${backendUrl}/api/exercises`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
 
-        //     if (response.ok) {
-        //         const { exerciseObject, bodyPartsArray } = await response.json();
-        //         dispatch(setExercises(exerciseObject, bodyPartsArray));
-        //     }
-        // }
-        // fetchExercises();
+            if (response.ok) {
+                const { exerciseObject, bodyPartsArray } = await response.json();
+                dispatch(setExercises(exerciseObject, bodyPartsArray));
+            }
+        }
+        fetchExercises();
         // Load Workouts for Redux
         async function fetchWorkouts() {
             const response = await fetch(`${backendUrl}/api/workouts`, {
