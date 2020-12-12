@@ -185,8 +185,8 @@ router.post('/:exerciseId/comments', asyncHandler(async (req, res, next) => {
 
 router.put('/:exerciseId/comments', asyncHandler(async (req, res, next) => {
     const exerciseId = parseInt(req.params.exerciseId);
-    const { userId, comment, commentId } = req.body;
-    console.log(req.body);
+    const { userId, editComment, commentId } = req.body;
+
     const updatedComment = await Comment.findOne({
         where: {
             user_id: userId,
@@ -198,14 +198,13 @@ router.put('/:exerciseId/comments', asyncHandler(async (req, res, next) => {
             attributes: ['username']
         }
     });
-    console.log(updatedComment);
+
 
     if (updatedComment) {
-        updatedComment.content = comment;
+        updatedComment.content = editComment;
         updatedComment.updatedAt = new Date();
         await updatedComment.save();
-        console.log(`*********************************************************`);
-        console.log(updatedComment);
+
         return res.json({ updatedComment, exerciseId });
     }
 

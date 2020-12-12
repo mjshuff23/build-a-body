@@ -21,7 +21,6 @@ function Exercises() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [anchorElEdit, setAnchorElEdit] = useState(null);
     const [currentExerciseId, setCurrentExerciseId] = useState('');
-    const [comment, setComment] = useState('');
 
     const dispatch = useDispatch();
 
@@ -58,7 +57,7 @@ function Exercises() {
 
         if (response.ok) {
             const rating = await response.json();
-            console.log('Successfully added rating');
+
             // Push userId to exercise so we get a re-render
             dispatch(addRating(exercise.id, rating, userId));
             return true;
@@ -102,13 +101,10 @@ function Exercises() {
         setAnchorElEdit(null);
     };
 
-    const updateComment = (e) => {
-        // setComment(e.target.value);
-    };
 
     const handleSubmit = async (exerciseId, commentInput) => {
         // Create Comment on Exercise
-        console.log(commentInput);
+
         const response = await fetch(`${backendUrl}/api/exercises/${exerciseId}/comments`, {
             method: 'POST',
             headers: {
@@ -288,7 +284,6 @@ function Exercises() {
                                         e.target[0].value = '';
                                     } }>
                                         <input type="text" className="exercise__commentsInputText" placeholder="Leave A Comment!"
-                                            onChange={ updateComment }
                                         />
                                     </form>
                                 </div>

@@ -5,6 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Popover } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { backendUrl } from '../config';
+import { updateComment } from '../store/actions/exercises';
 
 function Comment({ author, authorId, content, date, id, commentId, type }) {
     const userId = localStorage.getItem("userId");
@@ -21,7 +22,8 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
         setAnchorEl(null);
     };
 
-    const updateComment = (e) => {
+    const updateCurrentComment = (e) => {
+        if (!e.target) return;
         setEditComment(e.target.value);
     };
 
@@ -37,8 +39,8 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
 
         if (response.ok) {
             const { updatedComment, exerciseId } = await response.json();
-            console.log(updatedComment);
-            // dispatch(updateComment(updatedComment));
+
+            dispatch(updateComment(updatedComment, exerciseId));
             return true;
         }
     };
@@ -74,7 +76,7 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
                                         } }>
                                             <input type="text" className="comment__editText" placeholder="Enter a new comment or delete with trash can"
                                                 value={ editComment }
-                                                onChange={ updateComment }
+                                                onChange={ updateCurrentComment }
                                             />
                                         </form>
                                     </div>
