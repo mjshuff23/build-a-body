@@ -1,10 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './stylesheets/Comment.css';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import { Popover } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { backendUrl } from '../config';
 
-function Comment({ author, authorId, content, date }) {
+function Comment({ author, authorId, content, date, id, type }) {
     const userId = localStorage.getItem("userId");
+    const [anchorEl, setAnchorEl] = useState(null);
+    const dispatch = useDispatch();
+    const open = Boolean(anchorEl);
+    const [comment, setComment] = useState(content);
+
+    const handleClick = (e) => {
+        setAnchorEl(e.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const updateComment = (e) => {
+        setComment(e.target.value);
+    };
+
+    const handleSubmit = async () => {
+        // Update a comment on exercise
+        const response = await fetch(`${backendUrl}/api/exercises/${id}/comments`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId, comment })
+        });
+
+        if (response.ok) {
+            const comment = await response.json();
+            dispatch(updateComment(comment));
+            return true;
+        }
+    };
 
     return (
         <div className="comment">
@@ -20,7 +56,28 @@ function Comment({ author, authorId, content, date }) {
                         (
                             <span className="comment__icons">
                                 <DeleteIcon />
-                                <EditIcon className="comment__editIcon" />
+                                <EditIcon className="comment__editIcon" onClick={ handleClick } />
+                                {/* <Popover
+                                    open={ open }
+                                    anchorEl={ anchorEl }
+                                    onClose={ handleClose }
+                                    anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
+                                    transformOrigin={ { vertical: 'top', horizontal: 'left' } }>
+                                    <div className="comment__editTextDiv">
+                                        <form onSubmit={ (e) => {
+                                            e.preventDefault();
+                                            if (type === 'Exercise') {
+                                                handleSubmit();
+                                                e.target[0].value = '';
+                                            }
+                                        } }>
+                                            <input type="text" className="comment__editText" placeholder="Enter a new comment or delete with trash can"
+                                                value={ comment }
+                                                onChange={ updateComment }
+                                            />
+                                        </form>
+                                    </div>
+                                </Popover> */}
                             </span>
                         )
                         : null
