@@ -24,14 +24,13 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
 
     const handleDelete = async () => {
         if (Number(userId) !== authorId) return;
+        console.log(type);
         // Delete comment on exercise
         const response = await fetch(`${backendUrl}/api/exercises/${id}/comments/${commentId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
             },
-            body: JSON.stringify(type)
         });
 
         if (response.ok) {
