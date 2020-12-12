@@ -11,8 +11,8 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const dispatch = useDispatch();
     const open = Boolean(anchorEl);
-    const [comment, setComment] = useState(content);
-    console.log(id);
+    const [editComment, setEditComment] = useState(content);
+
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);
     };
@@ -22,7 +22,7 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
     };
 
     const updateComment = (e) => {
-        if (e.target) setComment(e.target.value);
+        setEditComment(e.target.value);
     };
 
     const handleSubmit = async () => {
@@ -32,7 +32,7 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ userId, comment, commentId })
+            body: JSON.stringify({ userId, editComment, commentId })
         });
 
         if (response.ok) {
@@ -73,7 +73,7 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
                                             }
                                         } }>
                                             <input type="text" className="comment__editText" placeholder="Enter a new comment or delete with trash can"
-                                                value={ comment }
+                                                value={ editComment }
                                                 onChange={ updateComment }
                                             />
                                         </form>

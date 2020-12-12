@@ -164,12 +164,12 @@ router.put('/:exerciseId/ratings/', asyncHandler(async (req, res, next) => {
 
 router.post('/:exerciseId/comments', asyncHandler(async (req, res, next) => {
     const exerciseId = parseInt(req.params.exerciseId);
-    const { userId, comment } = req.body;
+    const { userId, commentInput } = req.body;
 
     const author = await User.findByPk(userId);
 
     const newComment = await Comment.create({
-        content: comment,
+        content: commentInput,
         user_id: userId,
         commentableId: exerciseId,
         commentableType: 'Exercise'

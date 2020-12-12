@@ -23,7 +23,6 @@ function Exercises() {
     const [currentExerciseId, setCurrentExerciseId] = useState('');
     const [comment, setComment] = useState('');
 
-
     const dispatch = useDispatch();
 
     const ratingChanged = async (score, exercise) => {
@@ -104,17 +103,18 @@ function Exercises() {
     };
 
     const updateComment = (e) => {
-        setComment(e.target.value);
+        // setComment(e.target.value);
     };
 
-    const handleSubmit = async (exerciseId) => {
+    const handleSubmit = async (exerciseId, commentInput) => {
         // Create Comment on Exercise
+        console.log(commentInput);
         const response = await fetch(`${backendUrl}/api/exercises/${exerciseId}/comments`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ userId, comment })
+            body: JSON.stringify({ userId, commentInput })
         });
 
         if (response.ok) {
@@ -284,7 +284,7 @@ function Exercises() {
                                 <div className="exercise__commentsInput">
                                     <form onSubmit={ (e) => {
                                         e.preventDefault();
-                                        handleSubmit(exercise.id);
+                                        handleSubmit(exercise.id, e.target[0].value);
                                         e.target[0].value = '';
                                     } }>
                                         <input type="text" className="exercise__commentsInputText" placeholder="Leave A Comment!"
