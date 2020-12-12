@@ -162,4 +162,73 @@ router.put('/:exerciseId/ratings/', asyncHandler(async (req, res, next) => {
     res.json({ rating, oldScore });
 }));
 
+router.post('/:exerciseId/comments', asyncHandler(async (req, res, next) => {
+    const exerciseId = parseInt(req.params.exerciseId);
+    const { userId, commentInput } = req.body;
+
+    const author = await User.findByPk(userId);
+
+    const newComment = await Comment.create({
+        content: commentInput,
+        user_id: userId,
+        commentableId: exerciseId,
+        commentableType: 'Exercise'
+    });
+
+    if (newComment) {
+        newComment.dataValues.User = { username: author.username };
+        return res.json(newComment);
+    }
+
+    res.json(`Something went wrong trying to create comment!`);
+}));
+
+router.put('/:exerciseId/comments', asyncHandler(async (req, res, next) => {
+    const exerciseId = parseInt(req.params.exerciseId);
+    const { userId, editComment, commentId } = req.body;
+
+    const updatedComment = await Comment.findOne({
+        where: {
+            id: commentId,
+            user_id: userId,
+            commentableId: exerciseId,
+            commentableType: 'Exercise',
+        },
+        include: {
+            model: User,
+            attributes: ['username']
+        }
+    });
+
+
+    if (updatedComment) {
+        updatedComment.content = editComment;
+        updatedComment.updatedAt = new Date();
+        await updatedComment.save();
+
+        return res.json({ updatedComment, exerciseId });
+    }
+
+    res.json('Cannot find comment!');
+}));
+
+router.delete('/:exerciseId/comments/:commentId', asyncHandler(async (req, res, next) => {
+    const exerciseId = parseInt(req.params.exerciseId);
+    const commentId = parseInt(req.params.commentId);
+    const { type } = req.body;
+
+    const comment = await Comment.findByPk(commentId);
+
+    if (comment) {
+        await comment.destroy();
+        return res.json({ deletedCommentId: commentId, exerciseId });
+    }
+
+    return res.json(`Something went wrong deleting the comment!`);
+}));
+
+router.get('/:exerciseId/comments/:commentId', asyncHandler(async (req, res, next) => {
+    return res.json('test');
+}));
+
 module.exports = router;

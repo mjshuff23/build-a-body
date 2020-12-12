@@ -1,10 +1,24 @@
 'use strict';
+const moment = require('moment');
+
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
     content: DataTypes.STRING,
     user_id: DataTypes.INTEGER,
     commentableId: DataTypes.INTEGER,
-    commentableType: DataTypes.STRING
+    commentableType: DataTypes.STRING,
+    createdAt: {
+      type: DataTypes.DATE,
+      get() {
+        return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss a');
+      }
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      get() {
+        return moment(this.getDataValue('updatedAt')).format('DD/MM/YYYY h:mm:ss a');
+      }
+    },
   }, {});
 
   Comment.associate = function (models) {

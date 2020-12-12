@@ -65,7 +65,7 @@ module.exports = {
         createdAt: new Date(), updatedAt: new Date()
       },
       {
-        title: 'Treadmill', description: 'Every treadmill is different, but should be pretty straight forward to start. \n\nKeep a pace between 3 and 4 mph for as long as you have alloted for yourself. \nCool down for 5 minutes, by slowly lowering your pace each minute. \nExperiment with inclines and faster speeds after the first 1 to 2 weeks.',
+        title: 'Treadmill', description: 'Every treadmill is different, but should be pretty straight forward to start. \nKeep a pace between 3 and 4 mph for as long as you have alloted for yourself. \nCool down for 5 minutes, by slowly lowering your pace each minute. \nExperiment with inclines and faster speeds after the first 1 to 2 weeks.',
         user_id: 1,
         type: 'Cardiovascular',
         body_part: 'Legs',

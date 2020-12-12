@@ -1,0 +1,32 @@
+.comment__header {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    width: 100%;
+    color: rgb(186, 186, 186);
+    border-top: 2px dotted;
+    padding: 2px 2px 0 10px;
+}
+
+.comment__author {
+    font-style: italic;
+}
+
+.comment__date {
+    font-style: italic;
+}
+
+.comment__content {
+    padding: 5px 5px 15px 10px;
+    margin-bottom: 15px;
+}
+
+.comment__editIcon {
+    margin-left: 10px;
+}
+
+.comment__editText {
+    width: 300px;
+    background-color: rgba(1, 10, 20, 90%);
+    color: white;
+}

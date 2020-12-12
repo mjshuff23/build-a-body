@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/Exercises.css';
 import ReactPlayer from 'react-player/youtube';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
-import { backendUrl } from '../config';
-import { addRating, removeExercise, updateRating } from '../store/actions/exercises';
 import { Popover } from '@material-ui/core';
+import { backendUrl } from '../config';
+import { addComment, addRating, removeExercise, updateRating } from '../store/actions/exercises';
 import ExerciseForm from './ExerciseForm';
 import ExerciseFormEdit from './ExerciseFormEdit';
-import EditIcon from '@material-ui/icons/Edit';
 import ReactStars from 'react-stars';
+import Comment from './Comment';
 
 function Exercises() {
     const exerciseState = useSelector(state => state.exercises);
@@ -39,8 +40,6 @@ function Exercises() {
 
                 if (response.ok) {
                     const { rating, oldScore } = await response.json();
-                    console.log('Successfully updated rating');
-                    console.log(rating);
                     dispatch(updateRating(exercise.id, rating, userId, oldScore));
                     return true;
                 }
@@ -58,7 +57,7 @@ function Exercises() {
 
         if (response.ok) {
             const rating = await response.json();
-            console.log('Successfully added rating');
+
             // Push userId to exercise so we get a re-render
             dispatch(addRating(exercise.id, rating, userId));
             return true;
@@ -102,15 +101,31 @@ function Exercises() {
         setAnchorElEdit(null);
     };
 
+
+    const handleSubmit = async (exerciseId, commentInput) => {
+        // Create Comment on Exercise
+
+        const response = await fetch(`${backendUrl}/api/exercises/${exerciseId}/comments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId, commentInput })
+        });
+
+        if (response.ok) {
+            const comment = await response.json();
+            dispatch(addComment(comment));
+            return true;
+        }
+    };
+
     const mapRatings = (exercise) => {
-        console.log('inside voterIds');
         for (let i = 0; i < exercise.voterIds.length; i++) {
             let vote = exercise.voterIds[i];
-            console.log(`vote[1] ${vote[1]}`);
             if (Number(userId) === vote[0]) {
                 return (
                     <React.Fragment key={ i }>
-                        Thanks for rating!
                         <ReactStars
                             count={ 5 }
                             value={ vote[1] }
@@ -119,13 +134,13 @@ function Exercises() {
                             } }
                             size={ 24 }
                             color2={ '#ffd700' } />
+                        💪💪💪Thanks for rating!💪💪💪
                     </React.Fragment>
                 );
             }
         }
         return (
             <React.Fragment key={ Math.random() }>
-                Rate this exercise!
                 <ReactStars
                     count={ 5 }
                     value={ 0 }
@@ -134,33 +149,31 @@ function Exercises() {
                     } }
                     size={ 24 }
                     color2={ '#ffd700' } />
+                Rate this exercise!
             </React.Fragment>
         );
     };
 
     const open = Boolean(anchorEl);
     const openEdit = Boolean(anchorElEdit);
+
+
     return (
         <div className="exercises">
-            <div className="addExerciseIcon" onClick={ handleClick }>Add A New Exercise<AddIcon style={ { fontSize: 40 } } /></div>
+            <div className="addExerciseIcon" onClick={ handleClick }>
+                Add A New Exercise <AddIcon style={ { fontSize: 40 } } />
+            </div>
             <Popover
                 open={ open }
                 anchorEl={ anchorEl }
                 onClose={ handleClose }
-                anchorOrigin={ {
-                    vertical: 'top',
-                    horizontal: 'left',
-                } }
-                transformOrigin={ {
-                    vertical: 'top',
-                    horizontal: 'left',
-                } }
-            >
+                anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
+                transformOrigin={ { vertical: 'top', horizontal: 'left' } }>
                 <ExerciseForm />
             </Popover>
 
-            {exercises ?
-                exercises.map((exercise, index) => {
+            {
+                exercises ? exercises.map((exercise, index) => {
                     let descriptionSteps;
                     if (exercise.description) {
                         descriptionSteps = exercise.description.split(`\n`);
@@ -173,7 +186,6 @@ function Exercises() {
                                         mapRatings(exercise)
                                     ) : (
                                             <React.Fragment key={ index }>
-                                                Rate this exercise!
                                                 <ReactStars
                                                     count={ 5 }
                                                     value={ 0 }
@@ -182,12 +194,11 @@ function Exercises() {
                                                     } }
                                                     size={ 24 }
                                                     color2={ '#ffd700' } />
+                                                Rate this exercise!
                                             </React.Fragment>
                                         )
                                 }
-
                                 <div className="exercise__ratings">
-
                                     <span className="exercise__stars">
                                         <ReactStars
                                             count={ 5 }
@@ -198,48 +209,90 @@ function Exercises() {
                                         ({ exercise.ratingCount })
                                     </span>
                                     <span className="exercise__owner">
-                                        { Number(userId) === exercise.user_id ?
-                                            <>
-                                                <DeleteIcon onClick={ () => {
-                                                    handleDelete(exercise.id);
-                                                } } /> <EditIcon value={ exercise.id } onClick={ (e) => {
-                                                    handleClickEdit(e, exercise.id);
-                                                }
-                                                } />
-                                            </>
-                                            : null }
+                                        {
+                                            Number(userId) === exercise.user_id ?
+                                                <>
+                                                    <DeleteIcon onClick={ () => {
+                                                        handleDelete(exercise.id);
+                                                    } } /> <EditIcon value={ exercise.id } onClick={ (e) => {
+                                                        handleClickEdit(e, exercise.id);
+                                                    }
+                                                    } />
+                                                </>
+                                                : null
+                                        }
                                     </span>
                                 </div>
-                                <div><span className="exercise__title">{ exercise.title } - { exercise.type }</span>
+                                <div>
+                                    <span className="exercise__title">
+                                        { exercise.title } - { exercise.type }
+                                    </span>
                                 </div>
                                 <Popover
                                     open={ openEdit }
                                     anchorEl={ anchorElEdit }
                                     onClose={ handleCloseEdit }
-                                    anchorOrigin={ {
-                                        vertical: 'top',
-                                        horizontal: 'left',
-                                    } }
-                                    transformOrigin={ {
-                                        vertical: 'top',
-                                        horizontal: 'left',
-                                    } }
-                                >
+                                    anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
+                                    transformOrigin={ { vertical: 'top', horizontal: 'left' } }>
                                     <ExerciseFormEdit exerciseId={ currentExerciseId } />
                                 </Popover>
-                                <div><span className="exercise__difficulty" >Difficulty:</span> { exercise.difficulty }</div>
-                                <div><span className="exercise__equipment">Equipment:</span> { exercise.equipment }</div></div>
+                                <div>
+                                    <span className="exercise__difficulty">
+                                        Difficulty:
+                                    </span>
+                                    { exercise.difficulty }
+                                </div>
+                                <div>
+                                    <span className="exercise__equipment">
+                                        Equipment:
+                                    </span>
+                                    { exercise.equipment }
+                                </div>
+                            </div>
                             <div className="exercise__steps">
                                 { descriptionSteps.map((step, index) => (
-                                    <div key={ index } className="exercise__step"><span className="exercise__stepNumber">{ index + 1 }. </span>{ step }</div>
+                                    <div key={ index } className="exercise__step">
+                                        <span className="exercise__stepNumber">
+                                            { index + 1 }.
+                                        </span>
+                                        { step }
+                                    </div>
                                 )) }
                             </div>
-                            <div><ReactPlayer className="exercise__video" url={ exercise.video_url } controls={ true } /></div>
+                            <div>
+                                <ReactPlayer className="exercise__video" url={ exercise.video_url } controls={ true } />
+                            </div>
+                            <div className="exercise__comments">
+                                <span className="exercise__commentsHeader">
+                                    Comments
+                                </span>
+                                {/* Map Through Comments */ }
+                                {
+                                    exercise.Comments ?
+                                        exercise.Comments.map((comment) => {
+                                            {
+                                                if (comment.User.username)
+                                                    return (<Comment author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } id={ comment.commentableId } commentId={ comment.id } type='Exercise' />);
+                                            }
+                                        })
+                                        : null
+                                }
+                                <div className="exercise__commentsInput">
+                                    <form onSubmit={ (e) => {
+                                        e.preventDefault();
+                                        handleSubmit(exercise.id, e.target[0].value);
+                                        e.target[0].value = '';
+                                    } }>
+                                        <input type="text" className="exercise__commentsInputText" placeholder="Leave A Comment!"
+                                        />
+                                    </form>
+                                </div>
+                            </div>
                             <span className="exercise__end"></span>
                         </React.Fragment >
                     );
-                })
-                : null }
+                }) : null
+            }
         </div>
     );
 }
