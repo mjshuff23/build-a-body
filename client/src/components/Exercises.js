@@ -266,17 +266,19 @@ function Exercises() {
                                 <span className="exercise__commentsHeader">
                                     Comments
                                 </span>
-                                {/* Map Through Comments */ }
-                                {
-                                    exercise.Comments ?
-                                        exercise.Comments.map((comment) => {
-                                            {
-                                                if (comment.User.username)
-                                                    return (<Comment author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } id={ comment.commentableId } commentId={ comment.id } type='Exercise' />);
-                                            }
-                                        })
-                                        : null
-                                }
+                                <div className="exercise__commentsContainer">
+                                    {/* Map Through Comments */ }
+                                    {
+                                        exercise.Comments ?
+                                            exercise.Comments.map((comment) => {
+                                                {
+                                                    if (comment.User.username)
+                                                        return (<Comment author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } id={ comment.commentableId } commentId={ comment.id } type='Exercise' />);
+                                                }
+                                            })
+                                            : null
+                                    }
+                                </div>
                                 <div className="exercise__commentsInput">
                                     <form onSubmit={ (e) => {
                                         e.preventDefault();

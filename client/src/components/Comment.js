@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './stylesheets/Comment.css';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -13,6 +13,15 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
     const dispatch = useDispatch();
     const open = Boolean(anchorEl);
     const [editComment, setEditComment] = useState(content);
+    const commentElement = useRef(null);
+
+    useEffect(() => {
+        if (commentElement.current) {
+            commentElement.current.scrollIntoView({
+                block: 'nearest',
+            });
+        }
+    }, []);
 
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);
@@ -65,7 +74,7 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
     };
 
     return (
-        <div className="comment">
+        <div ref={ commentElement } className="comment">
             <div className="comment__header">
                 <span className="comment__author">
                     { author }

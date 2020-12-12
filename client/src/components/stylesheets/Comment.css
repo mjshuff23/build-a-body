@@ -18,7 +18,6 @@
 
 .comment__content {
     padding: 5px 5px 15px 10px;
-    margin-bottom: 15px;
 }
 
 .comment__editIcon {
@@ -29,4 +28,8 @@
     width: 300px;
     background-color: rgba(1, 10, 20, 90%);
     color: white;
+}
+
+.comment__editIcon {
+    margin-right: 5px;
 }
