@@ -4,9 +4,8 @@
     justify-content: space-between;
     width: 500px;
     color: rgb(186, 186, 186);
-    padding: 5px 10px;
     border-top: 2px dotted;
-    padding-top: 5px;
+    padding: 5px 2px 5px 10px;
 }
 
 .comment__author {
@@ -20,4 +19,8 @@
 .comment__content {
     padding: 5px 5px 5px 10px;
     margin-bottom: 15px;
+}
+
+.comment__editIcon {
+    margin-left: 10px;
 }

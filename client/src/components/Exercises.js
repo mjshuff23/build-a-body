@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/Exercises.css';
 import ReactPlayer from 'react-player/youtube';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
+import { Popover } from '@material-ui/core';
 import { backendUrl } from '../config';
 import { addComment, addRating, removeExercise, updateRating } from '../store/actions/exercises';
-import { Popover, TextField } from '@material-ui/core';
 import ExerciseForm from './ExerciseForm';
 import ExerciseFormEdit from './ExerciseFormEdit';
-import EditIcon from '@material-ui/icons/Edit';
 import ReactStars from 'react-stars';
 import Comment from './Comment';
 
@@ -276,7 +276,7 @@ function Exercises() {
                                         exercise.Comments.map((comment) => {
                                             {
                                                 if (comment.User.username)
-                                                    return (<Comment author={ comment.User.username } content={ comment.content } date={ comment.createdAt } />);
+                                                    return (<Comment author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } />);
                                             }
                                         })
                                         : null
