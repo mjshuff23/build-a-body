@@ -189,6 +189,7 @@ router.put('/:exerciseId/comments', asyncHandler(async (req, res, next) => {
 
     const updatedComment = await Comment.findOne({
         where: {
+            id: commentId,
             user_id: userId,
             commentableId: exerciseId,
             commentableType: 'Exercise',
@@ -209,6 +210,25 @@ router.put('/:exerciseId/comments', asyncHandler(async (req, res, next) => {
     }
 
     res.json('Cannot find comment!');
+}));
+
+router.delete('/:exerciseId/comments/:commentId', asyncHandler(async (req, res, next) => {
+    const exerciseId = parseInt(req.params.exerciseId);
+    const commentId = parseInt(req.params.commentId);
+    const { type } = req.body;
+
+    const comment = await Comment.findByPk(commentId);
+
+    if (comment) {
+        await comment.destroy();
+        return res.json({ deletedCommentId: commentId, exerciseId });
+    }
+
+    return res.json(`Something went wrong deleting the comment!`);
+}));
+
+router.get('/:exerciseId/comments/:commentId', asyncHandler(async (req, res, next) => {
+    return res.json('test');
 }));
 
 module.exports = router;

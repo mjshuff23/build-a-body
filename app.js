@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 // Security Middleware
 app.use(cors({ origin: true }));
-app.use(helmet({ hsts: false }));
+app.use(helmet({ contentSecurityPolicy: false }));
 
 app.use(routes);
 

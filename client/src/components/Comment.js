@@ -5,7 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Popover } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { backendUrl } from '../config';
-import { updateComment } from '../store/actions/exercises';
+import { removeComment, updateComment } from '../store/actions/exercises';
 
 function Comment({ author, authorId, content, date, id, commentId, type }) {
     const userId = localStorage.getItem("userId");
@@ -22,6 +22,25 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
         setAnchorEl(null);
     };
 
+    const handleDelete = async () => {
+        if (Number(userId) !== authorId) return;
+        // Delete comment on exercise
+        const response = await fetch(`${backendUrl}/api/exercises/${id}/comments/${commentId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+            body: JSON.stringify(type)
+        });
+
+        if (response.ok) {
+            const { deletedCommentId, exerciseId } = await response.json();
+            dispatch(removeComment(deletedCommentId, exerciseId));
+            console.log('Removing Comment from Redux, delete was succesful');
+        }
+    };
+
     const updateCurrentComment = (e) => {
         if (!e.target) return;
         setEditComment(e.target.value);
@@ -36,10 +55,11 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
             },
             body: JSON.stringify({ userId, editComment, commentId })
         });
+        console.log(`Comment ID: ${commentId}`);
 
         if (response.ok) {
             const { updatedComment, exerciseId } = await response.json();
-
+            console.log(updatedComment, exerciseId);
             dispatch(updateComment(updatedComment, exerciseId));
             return true;
         }
@@ -58,7 +78,7 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
                     Number(userId) === authorId ?
                         (
                             <span className="comment__icons">
-                                <DeleteIcon />
+                                <DeleteIcon className="comment__deleteIcon" onClick={ handleDelete } />
                                 <EditIcon className="comment__editIcon" onClick={ handleClick } />
                                 <Popover
                                     open={ open }

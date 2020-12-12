@@ -7,6 +7,7 @@ import {
     ADD_COMMENT,
     UPDATE_COMMENT,
     UPDATE_RATING,
+    REMOVE_COMMENT,
 } from '../actions/exercises';
 
 const initialState = {
@@ -100,13 +101,22 @@ export default function reducer(state = initialState, action) {
         case UPDATE_COMMENT:
             // Find comment
             let comments = newState.list[action.updatedComment.commentableId].Comments;
+            console.log(comments.length);
             for (let i = 0; i < comments.length; i++) {
                 // If current comments id is the one we just updated
+                console.log(comments[i].id + '===' + action.updatedComment.id);
                 if (comments[i].id === action.updatedComment.id) {
                     comments[i] = action.updatedComment;
+                    break;
                 }
-                break;
             }
+            return newState;
+
+        case REMOVE_COMMENT:
+            // Find comment
+            comments = newState.list[action.exerciseId].Comments;
+            comments = comments.filter(comment => comment.id !== action.commentId);
+
             return newState;
         default:
             return state;
