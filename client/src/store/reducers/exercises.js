@@ -71,10 +71,8 @@ export default function reducer(state = initialState, action) {
                 }
             }
             // Recalculate Score
-            console.log(newState.list[action.exerciseId].Ratings);
             for (let i = 0; i < newState.list[action.exerciseId].Ratings.length; i++) {
                 // If current rating is the rating we updated, replace it
-                console.log(newState.list[action.exerciseId].Ratings[i].score);
                 totalScore += newState.list[action.exerciseId].Ratings[i].score;
             }
             // Update Average Rating, Rating Count remains the same
@@ -86,8 +84,6 @@ export default function reducer(state = initialState, action) {
                     newState.list[action.exerciseId].voterIds[i] = [user, action.rating.score];
                 }
             }
-
-
             return newState;
         default:
             return state;

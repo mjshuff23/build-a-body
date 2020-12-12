@@ -103,3 +103,14 @@
     padding-bottom: 10px;
     border-bottom: 2px dotted rgb(248, 248, 248);
 }
+
+.exercise__comments {
+    box-sizing: border-box;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    min-width: 400px;
+    border: 2px solid darkgrey;
+    border-radius: 15px;
+    background-color: rgba(1, 10, 20, 50%);
+}
