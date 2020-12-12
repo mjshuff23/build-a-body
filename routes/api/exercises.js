@@ -162,4 +162,25 @@ router.put('/:exerciseId/ratings/', asyncHandler(async (req, res, next) => {
     res.json({ rating, oldScore });
 }));
 
+router.post('/:exerciseId/comments', asyncHandler(async (req, res, next) => {
+    const exerciseId = parseInt(req.params.exerciseId);
+    const { userId, comment } = req.body;
+
+    const author = await User.findByPk(userId);
+
+    const newComment = await Comment.create({
+        content: comment,
+        user_id: userId,
+        commentableId: exerciseId,
+        commentableType: 'Exercise'
+    });
+
+    if (newComment) {
+        newComment.dataValues.User = { username: author.username };
+        return res.json(newComment);
+    }
+
+    res.json(`Something went wrong trying to create comment!`);
+}));
+
 module.exports = router;

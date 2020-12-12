@@ -5,14 +5,13 @@ import ReactPlayer from 'react-player/youtube';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { backendUrl } from '../config';
-import { addRating, removeExercise, updateRating } from '../store/actions/exercises';
-import { Popover } from '@material-ui/core';
+import { addComment, addRating, removeExercise, updateRating } from '../store/actions/exercises';
+import { Popover, TextField } from '@material-ui/core';
 import ExerciseForm from './ExerciseForm';
 import ExerciseFormEdit from './ExerciseFormEdit';
 import EditIcon from '@material-ui/icons/Edit';
 import ReactStars from 'react-stars';
 import Comment from './Comment';
-
 
 function Exercises() {
     const exerciseState = useSelector(state => state.exercises);
@@ -22,6 +21,8 @@ function Exercises() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [anchorElEdit, setAnchorElEdit] = useState(null);
     const [currentExerciseId, setCurrentExerciseId] = useState('');
+    const [comment, setComment] = useState('');
+
 
     const dispatch = useDispatch();
 
@@ -100,6 +101,27 @@ function Exercises() {
 
     const handleCloseEdit = () => {
         setAnchorElEdit(null);
+    };
+
+    const updateComment = (e) => {
+        setComment(e.target.value);
+    };
+
+    const handleSubmit = async (exerciseId) => {
+        // Create Comment on Exercise
+        const response = await fetch(`${backendUrl}/api/exercises/${exerciseId}/comments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId, comment })
+        });
+
+        if (response.ok) {
+            const comment = await response.json();
+            dispatch(addComment(comment));
+            return true;
+        }
     };
 
     const mapRatings = (exercise) => {
@@ -259,6 +281,17 @@ function Exercises() {
                                         })
                                         : null
                                 }
+                                <div className="exercise__commentsInput">
+                                    <form onSubmit={ (e) => {
+                                        e.preventDefault();
+                                        handleSubmit(exercise.id);
+                                        e.target[0].value = '';
+                                    } }>
+                                        <input type="text" className="exercise__commentsInputText" placeholder="Leave A Comment!"
+                                            onChange={ updateComment }
+                                        />
+                                    </form>
+                                </div>
                             </div>
                             <span className="exercise__end"></span>
                         </React.Fragment >

@@ -107,8 +107,7 @@
 
 .exercise__comments {
     box-sizing: border-box;
-    min-height: 25%;
-    height: 300px;
+    min-height: 40%;
     display: flex;
     flex-direction: column;
     min-width: 400px;
@@ -118,6 +117,7 @@
     border-radius: 15px;
     background-color: rgba(1, 10, 20, 50%);
     align-items: center;
+    justify-content: space-between;
     padding: 2px 5px;
 }
 
@@ -126,7 +126,35 @@
 }
 
 .exercise__commentsHeader {
-    padding-bottom: 5px;
     color: darksalmon;
+    padding-top: 10px;
     font-weight: 500;
+}
+
+.exercise__commentsInput {
+    padding-bottom: 5px;
+}
+
+.exercise__commentsInputText {
+    background-color: inherit;
+    width: 500px;
+    border-radius: 20px;
+    border-top: none;
+    color: white;
+    padding: 0 10px;
+    border-bottom-color: whitesmoke;
+    border-right: none;
+    border-left: none;
+}
+
+.exercise__commentsInputText::placeholder {
+    color: rgb(182, 182, 182);
+}
+
+.exercise__commentsInputText:focus {
+    outline: none;
+}
+
+.comment {
+    height: 62%;
 }

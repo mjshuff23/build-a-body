@@ -4,6 +4,7 @@ import {
     REMOVE_EXERCISE,
     SET_CURRENT_BODY_PART,
     ADD_RATING,
+    ADD_COMMENT,
     UPDATE_RATING,
 } from '../actions/exercises';
 
@@ -22,9 +23,11 @@ export default function reducer(state = initialState, action) {
             newState.bodyParts = [...action.bodyPartsArray];
             newState.ids = Object.keys(newState.list);
             return newState;
+
         case SET_CURRENT_BODY_PART:
             newState.currentBodyPart = action.bodyPart;
             return newState;
+
         case ADD_EXERCISE:
             newState.list[action.exercise.id] = action.exercise;
             newState.ids.push(action.exercise.id);
@@ -33,6 +36,7 @@ export default function reducer(state = initialState, action) {
                 newState.bodyParts.push(action.exercise.body_part);
             }
             return newState;
+
         case REMOVE_EXERCISE:
             delete newState.list[action.exerciseId];
 
@@ -45,6 +49,7 @@ export default function reducer(state = initialState, action) {
             }
             newState.bodyParts = Array.from(newBodyPartsList);
             return newState;
+
         case ADD_RATING:
             // Push rating onto exercise
             newState.list[action.exerciseId].Ratings = [...newState.list[action.exerciseId].Ratings, action.rating];
@@ -61,6 +66,7 @@ export default function reducer(state = initialState, action) {
             // Add new score to old total score, and divide by new rating count
             newState.list[action.exerciseId].averageRating = (oldScore + action.rating.score) / newState.list[action.exerciseId].ratingCount;
             return newState;
+
         case UPDATE_RATING:
             let totalScore = 0;
             // Loop through ratings to find the rating we changed
@@ -84,6 +90,10 @@ export default function reducer(state = initialState, action) {
                     newState.list[action.exerciseId].voterIds[i] = [user, action.rating.score];
                 }
             }
+            return newState;
+
+        case ADD_COMMENT:
+            newState.list[action.comment.commentableId].Comments.push(action.comment);
             return newState;
         default:
             return state;
