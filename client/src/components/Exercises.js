@@ -108,7 +108,6 @@ function Exercises() {
             if (Number(userId) === vote[0]) {
                 return (
                     <React.Fragment key={ i }>
-                        💪💪💪Thanks for rating!💪💪💪
                         <ReactStars
                             count={ 5 }
                             value={ vote[1] }
@@ -117,13 +116,13 @@ function Exercises() {
                             } }
                             size={ 24 }
                             color2={ '#ffd700' } />
+                        💪💪💪Thanks for rating!💪💪💪
                     </React.Fragment>
                 );
             }
         }
         return (
             <React.Fragment key={ Math.random() }>
-                Rate this exercise!
                 <ReactStars
                     count={ 5 }
                     value={ 0 }
@@ -132,6 +131,7 @@ function Exercises() {
                     } }
                     size={ 24 }
                     color2={ '#ffd700' } />
+                Rate this exercise!
             </React.Fragment>
         );
     };
@@ -168,7 +168,6 @@ function Exercises() {
                                         mapRatings(exercise)
                                     ) : (
                                             <React.Fragment key={ index }>
-                                                Rate this exercise!
                                                 <ReactStars
                                                     count={ 5 }
                                                     value={ 0 }
@@ -177,6 +176,7 @@ function Exercises() {
                                                     } }
                                                     size={ 24 }
                                                     color2={ '#ffd700' } />
+                                                Rate this exercise!
                                             </React.Fragment>
                                         )
                                 }

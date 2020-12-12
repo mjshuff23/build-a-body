@@ -80,6 +80,7 @@
 .exercise__stepNumber {
     color: aquamarine;
     font-size: larger;
+    padding-right: 5px;
 }
 
 .exercise__step {
