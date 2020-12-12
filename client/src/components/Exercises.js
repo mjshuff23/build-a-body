@@ -11,6 +11,8 @@ import ExerciseForm from './ExerciseForm';
 import ExerciseFormEdit from './ExerciseFormEdit';
 import EditIcon from '@material-ui/icons/Edit';
 import ReactStars from 'react-stars';
+import Comment from './Comment';
+
 
 function Exercises() {
     const exerciseState = useSelector(state => state.exercises);
@@ -136,6 +138,8 @@ function Exercises() {
 
     const open = Boolean(anchorEl);
     const openEdit = Boolean(anchorElEdit);
+
+
     return (
         <div className="exercises">
             <div className="addExerciseIcon" onClick={ handleClick }>
@@ -150,8 +154,8 @@ function Exercises() {
                 <ExerciseForm />
             </Popover>
 
-            {exercises ?
-                exercises.map((exercise, index) => {
+            {
+                exercises ? exercises.map((exercise, index) => {
                     let descriptionSteps;
                     if (exercise.description) {
                         descriptionSteps = exercise.description.split(`\n`);
@@ -187,16 +191,18 @@ function Exercises() {
                                         ({ exercise.ratingCount })
                                     </span>
                                     <span className="exercise__owner">
-                                        { Number(userId) === exercise.user_id ?
-                                            <>
-                                                <DeleteIcon onClick={ () => {
-                                                    handleDelete(exercise.id);
-                                                } } /> <EditIcon value={ exercise.id } onClick={ (e) => {
-                                                    handleClickEdit(e, exercise.id);
-                                                }
-                                                } />
-                                            </>
-                                            : null }
+                                        {
+                                            Number(userId) === exercise.user_id ?
+                                                <>
+                                                    <DeleteIcon onClick={ () => {
+                                                        handleDelete(exercise.id);
+                                                    } } /> <EditIcon value={ exercise.id } onClick={ (e) => {
+                                                        handleClickEdit(e, exercise.id);
+                                                    }
+                                                    } />
+                                                </>
+                                                : null
+                                        }
                                     </span>
                                 </div>
                                 <div>
@@ -239,15 +245,26 @@ function Exercises() {
                                 <ReactPlayer className="exercise__video" url={ exercise.video_url } controls={ true } />
                             </div>
                             <div className="exercise__comments">
-                                Comments
+                                <span className="exercise__commentsHeader">
+                                    Comments
+                                </span>
                                 {/* Map Through Comments */ }
-                                {/* <Comment id={ exercise.id } /> */ }
+                                {
+                                    exercise.Comments ?
+                                        exercise.Comments.map((comment) => {
+                                            {
+                                                if (comment.User.username)
+                                                    return (<Comment author={ comment.User.username } content={ comment.content } date={ comment.createdAt } />);
+                                            }
+                                        })
+                                        : null
+                                }
                             </div>
                             <span className="exercise__end"></span>
                         </React.Fragment >
                     );
-                })
-                : null }
+                }) : null
+            }
         </div>
     );
 }

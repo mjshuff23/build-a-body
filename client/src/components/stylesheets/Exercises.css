@@ -106,11 +106,26 @@
 
 .exercise__comments {
     box-sizing: border-box;
-    height: auto;
+    min-height: 25%;
+    height: 300px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     min-width: 400px;
+    /* width: 400px; */
+    overflow: scroll;
     border: 2px solid darkgrey;
     border-radius: 15px;
     background-color: rgba(1, 10, 20, 50%);
+    align-items: center;
+    padding: 2px 5px;
+}
+
+.exercise__comments::-webkit-scrollbar {
+    display: none;
+}
+
+.exercise__commentsHeader {
+    padding-bottom: 5px;
+    color: darksalmon;
+    font-weight: 500;
 }
