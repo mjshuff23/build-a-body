@@ -6,13 +6,13 @@ import { Popover } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { backendUrl } from '../config';
 
-function Comment({ author, authorId, content, date, id, type }) {
+function Comment({ author, authorId, content, date, id, commentId, type }) {
     const userId = localStorage.getItem("userId");
     const [anchorEl, setAnchorEl] = useState(null);
     const dispatch = useDispatch();
     const open = Boolean(anchorEl);
     const [comment, setComment] = useState(content);
-
+    console.log(id);
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);
     };
@@ -22,7 +22,7 @@ function Comment({ author, authorId, content, date, id, type }) {
     };
 
     const updateComment = (e) => {
-        setComment(e.target.value);
+        if (e.target) setComment(e.target.value);
     };
 
     const handleSubmit = async () => {
@@ -32,12 +32,13 @@ function Comment({ author, authorId, content, date, id, type }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ userId, comment })
+            body: JSON.stringify({ userId, comment, commentId })
         });
 
         if (response.ok) {
-            const comment = await response.json();
-            dispatch(updateComment(comment));
+            const { updatedComment, exerciseId } = await response.json();
+            console.log(updatedComment);
+            // dispatch(updateComment(updatedComment));
             return true;
         }
     };
@@ -57,7 +58,7 @@ function Comment({ author, authorId, content, date, id, type }) {
                             <span className="comment__icons">
                                 <DeleteIcon />
                                 <EditIcon className="comment__editIcon" onClick={ handleClick } />
-                                {/* <Popover
+                                <Popover
                                     open={ open }
                                     anchorEl={ anchorEl }
                                     onClose={ handleClose }
@@ -77,7 +78,7 @@ function Comment({ author, authorId, content, date, id, type }) {
                                             />
                                         </form>
                                     </div>
-                                </Popover> */}
+                                </Popover>
                             </span>
                         )
                         : null

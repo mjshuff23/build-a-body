@@ -3,6 +3,7 @@ export const ADD_EXERCISE = 'build-a-body/exercises/ADD_EXERCISE';
 export const REMOVE_EXERCISE = "build-a-body/exercises/REMOVE_EXERCISE";
 export const ADD_RATING = "build-a-body/exercises/ADD_RATING";
 export const ADD_COMMENT = "build-a-body/exercises/ADD_COMENT";
+export const UPDATE_COMMENT = "build-a-body/exercises/UPDATE_COMENT";
 export const UPDATE_RATING = "build-a-body/exercises/UPDATE_RATING";
 export const SET_CURRENT_BODY_PART = "build-a-body/exercises/CURRENT_BODY_PART";
 
@@ -16,3 +17,4 @@ export const addRating = (exerciseId, rating, userId) => ({ type: ADD_RATING, ex
 export const updateRating = (exerciseId, rating, userId, oldScore) => ({ type: UPDATE_RATING, exerciseId, rating, userId, oldScore });
 
 export const addComment = (comment) => ({ type: ADD_COMMENT, comment });
+export const updateComment = (updatedComment) => ({ type: ADD_COMMENT, updatedComment });

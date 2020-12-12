@@ -276,7 +276,7 @@ function Exercises() {
                                         exercise.Comments.map((comment) => {
                                             {
                                                 if (comment.User.username)
-                                                    return (<Comment author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } id={ comment.exercise_id } type='Exercise' />);
+                                                    return (<Comment author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } id={ comment.commentableId } commentId={ comment.id } type='Exercise' />);
                                             }
                                         })
                                         : null

@@ -183,4 +183,33 @@ router.post('/:exerciseId/comments', asyncHandler(async (req, res, next) => {
     res.json(`Something went wrong trying to create comment!`);
 }));
 
+router.put('/:exerciseId/comments', asyncHandler(async (req, res, next) => {
+    const exerciseId = parseInt(req.params.exerciseId);
+    const { userId, comment, commentId } = req.body;
+    console.log(req.body);
+    const updatedComment = await Comment.findOne({
+        where: {
+            user_id: userId,
+            commentableId: exerciseId,
+            commentableType: 'Exercise',
+        },
+        include: {
+            model: User,
+            attributes: ['username']
+        }
+    });
+    console.log(updatedComment);
+
+    if (updatedComment) {
+        updatedComment.content = comment;
+        updatedComment.updatedAt = new Date();
+        await updatedComment.save();
+        console.log(`*********************************************************`);
+        console.log(updatedComment);
+        return res.json({ updatedComment, exerciseId });
+    }
+
+    res.json('Cannot find comment!');
+}));
+
 module.exports = router;

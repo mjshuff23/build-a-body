@@ -5,6 +5,7 @@ import {
     SET_CURRENT_BODY_PART,
     ADD_RATING,
     ADD_COMMENT,
+    UPDATE_COMMENT,
     UPDATE_RATING,
 } from '../actions/exercises';
 
@@ -94,6 +95,18 @@ export default function reducer(state = initialState, action) {
 
         case ADD_COMMENT:
             newState.list[action.comment.commentableId].Comments.push(action.comment);
+            return newState;
+
+        case UPDATE_COMMENT:
+            // Find comment
+            let comments = newState.list[action.updatedComment.commentableId].Comments;
+            for (let i = 0; i < comments.length; i++) {
+                // If current comments id is the one we just updated
+                if (comments[i].id === action.updatedComment.id) {
+                    comments[i] = action.updatedComment;
+                }
+                break;
+            }
             return newState;
         default:
             return state;

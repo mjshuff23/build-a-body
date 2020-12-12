@@ -2,7 +2,7 @@
     display: flex;
     box-sizing: border-box;
     justify-content: space-between;
-    width: 500px;
+    width: 100%;
     color: rgb(186, 186, 186);
     border-top: 2px dotted;
     padding: 2px 2px 0 10px;
