@@ -60,9 +60,8 @@ function ExerciseFormEdit(props) {
                     value={ title }
                     onChange={ updateProperty(setTitle) }
                 />
-                <input
-                    type="text"
-                    placeholder="Separate Steps with \n"
+                <textarea
+                    placeholder="Description"
                     required
                     value={ description }
                     onChange={ updateProperty(setDescription) }
@@ -73,38 +72,55 @@ function ExerciseFormEdit(props) {
                     value={ videoUrl }
                     onChange={ updateProperty(setVideoUrl) }
                 />
-                <input
-                    type="text"
-                    placeholder="Type of Workout? (Strength, Cardio, Plyo, ...)"
-                    required
-                    value={ type }
-                    onChange={ updateProperty(setType) }
-                />
-                <input
-                    type="text"
-                    placeholder="Body Part"
-                    required
-                    value={ bodyPart }
-                    onChange={ updateProperty(setBodyPart) }
-                />
-                <input
-                    type="text"
-                    placeholder="Difficulty"
-                    required
-                    value={ difficulty }
-                    onChange={ updateProperty(setDifficulty) }
-                />
-                <input
-                    type="text"
-                    placeholder="Equipment"
-                    value={ equipment }
-                    onChange={ updateProperty(setEquipment) }
-                />
-                {/* <select onChange={ updateProperty(setType) }>
-                    { types.map((type) => (
-                        <option key={ type }>{ type }</option>
-                    )) }
-                </select> */}
+                <select onChange={ updateProperty(setType) }>
+                    <option selected>{ type }</option>
+                    <option disabled>--Type of Exercise--</option>
+                    <option>Strength</option>
+                    <option>Calisthenic</option>
+                    <option>Plyometric</option>
+                    <option>Cardiovascular</option>
+                </select>
+                <select onChange={ updateProperty(setBodyPart) }>
+                    <option selected>{ bodyPart }</option>
+                    <option disabled>--Arms--</option>
+                    <option>Biceps</option>
+                    <option>Triceps</option>
+                    <option>Forearms</option>
+                    <option disabled>--Chest--</option>
+                    <option>Pecs</option>
+                    <option disabled>--Back--</option>
+                    <option>Traps</option>
+                    <option>Rhomboids</option>
+                    <option>Lats</option>
+                    <option>Lower Back</option>
+                    <option disabled>--Shoulders--</option>
+                    <option>Deltoids</option>
+                    <option disabled>--Legs--</option>
+                    <option>Quads</option>
+                    <option>Hamstrings</option>
+                    <option>Calves</option>
+                    <option>Glutes</option>
+                </select>
+                <select onChange={ updateProperty(setDifficulty) }>
+                    <option selected>{ difficulty }</option>
+                    <option disabled>--Difficulty--</option>
+                    <option>Easy</option>
+                    <option>Intermediate</option>
+                    <option>Expert</option>
+                </select>
+                <select onChange={ updateProperty(setEquipment) }>
+                    <option selected>{ equipment }</option>
+                    <option disabled>--Equipment--</option>
+                    <option>None</option>
+                    <option>Dumbbell</option>
+                    <option>Barbell</option>
+                    <option>Kettle Bells</option>
+                    <option>Resistance Bands</option>
+                    <option>Machine</option>
+                    <option>Medicine Ball</option>
+                    <option>Stability Ball</option>
+                    <option>Bosu Ball</option>
+                </select>
                 <button type="submit" className="exerciseForm__button">Update Exercise</button>
             </form>
         </div>

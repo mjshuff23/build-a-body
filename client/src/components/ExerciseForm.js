@@ -70,14 +70,13 @@ function ExerciseForm({ handleClose }) {
                     onChange={ updateProperty(setVideoUrl) }
                 />
                 <select onChange={ updateProperty(setType) }>
-                    <option disabled>--Type of Workout--</option>
+                    <option disabled>--Type of Exercise--</option>
                     <option>Strength</option>
                     <option>Calisthenic</option>
                     <option>Plyometric</option>
                     <option>Cardiovascular</option>
                 </select>
                 <select onChange={ updateProperty(setBodyPart) }>
-                    <option disabled>---Body Part---</option>
                     <option disabled>--Arms--</option>
                     <option>Biceps</option>
                     <option>Triceps</option>

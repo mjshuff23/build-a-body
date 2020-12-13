@@ -75,52 +75,51 @@ function WorkoutForm() {
                     value={ title }
                     onChange={ updateProperty(setTitle) }
                 />
-                <input
-                    type="text"
+                <textarea
                     placeholder="Description"
                     required
                     value={ description }
                     onChange={ updateProperty(setDescription) }
                 />
-                <input
-                    type="text"
-                    placeholder="Type of Workout? (Strength, Cardio, Plyo, ...)"
-                    required
-                    value={ type }
-                    onChange={ updateProperty(setType) }
-                />
+                <select onChange={ updateProperty(setType) }>
+                    <option disabled>--Type of Workout--</option>
+                    <option>Strength</option>
+                    <option>Calisthenic</option>
+                    <option>Plyometric</option>
+                    <option>Cardiovascular</option>
+                </select>
                 <select onChange={ addExercise }>
-                    <option key='none' value='none'>Exercise 1</option>
+                    <option key='none' value='none' className='workout__option'>--Exercise 1--</option>
                     { exercises.map((exercise) => (
                         <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
                     )) }
                 </select>
                 <select onChange={ addExercise }>
-                    <option key='none' value='none'>Exercise 2</option>
+                    <option key='none' value='none' className='workout__option'>--Exercise 2--</option>
                     { exercises.map((exercise) => (
                         <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
                     )) }
                 </select>
                 <select onChange={ addExercise }>
-                    <option key='none' value='none'>Exercise 3</option>
+                    <option key='none' value='none' className='workout__option'>--Exercise 3--</option>
                     { exercises.map((exercise) => (
                         <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
                     )) }
                 </select>
                 <select onChange={ addExercise }>
-                    <option key='none' value='none'>Exercise 4</option>
+                    <option key='none' value='none' className='workout__option'>--Exercise 4--</option>
                     { exercises.map((exercise) => (
                         <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
                     )) }
                 </select>
                 <select onChange={ addExercise }>
-                    <option key='none' value='none'>Exercise 5</option>
+                    <option key='none' value='none' className='workout__option'>--Exercise 5--</option>
                     { exercises.map((exercise) => (
                         <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
                     )) }
                 </select>
                 <select onChange={ addExercise }>
-                    <option key='none' value='none'>Exercise 6</option>
+                    <option key='none' value='none' className='workout__option'>--Exercise 6--</option>
                     { exercises.map((exercise) => (
                         <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
                     )) }

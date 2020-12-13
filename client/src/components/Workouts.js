@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
@@ -13,6 +13,7 @@ function Workouts() {
     const workouts = Object.values(workoutState.list);
     const userId = localStorage.getItem("userId");
     const [anchorEl, setAnchorEl] = React.useState(null);
+
 
     const dispatch = useDispatch();
 
@@ -77,7 +78,7 @@ function Workouts() {
                                     : null }
                             </div>
                             <div>{ workout.description }</div>
-                            <ul>
+                            <ol>
                                 { workout.WorkoutExercises ? workout.WorkoutExercises.map((exercise, index) => (
                                     <div key={ index }>{ exercisesState.list[exercise.exercise_id] ?
                                         <>
@@ -87,7 +88,7 @@ function Workouts() {
 
                                         : null }</div>
                                 )) : null }
-                            </ul>
+                            </ol>
                             <hr></hr>
                         </React.Fragment>
                     );
