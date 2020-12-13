@@ -1,0 +1,66 @@
+.workout__container {
+    padding: 10px 15px;
+    box-sizing: border-box;
+    display: flex;
+    margin: 1% 10%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    background-color: rgb(0 0 0 / 50%);
+    border-radius: 20px;
+}
+
+.workout__infoTitle>h3 {
+    transition: color 500ms;
+    color: rgb(67, 212, 251);
+}
+
+.workout__infoTitle>h3:hover, .workout__infoType>span:hover {
+    color: white;
+}
+
+.workout__infoType>span {
+    color: rgb(67, 212, 251);
+    transition: color 500ms;
+    padding: 0 10px;
+}
+
+.workout__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.workout__description {
+    border-top: 3px dotted #f37a7a;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    width: 100%;
+    border-bottom: 3px dotted #f37a7a;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    transition: background-color 1s;
+}
+
+.workout__description:hover {
+    background-color: rgba(106, 106, 106, 0.3)
+}
+
+.workout__exerciseList {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.workout__exerciseList>div>li {
+    transition: color 500ms;
+}
+
+.workout__exerciseList>div>li:hover {
+    color: rgb(255, 64, 64)
+}

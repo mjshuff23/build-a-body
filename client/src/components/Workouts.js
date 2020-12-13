@@ -6,6 +6,7 @@ import { backendUrl } from '../config';
 import { removeWorkout } from '../store/actions/workouts';
 import { Popover } from '@material-ui/core';
 import WorkoutForm from './WorkoutForm';
+import './stylesheets/Workouts.css';
 
 function Workouts() {
     const workoutState = useSelector(state => state.workouts);
@@ -67,18 +68,24 @@ function Workouts() {
             {workouts ?
                 workouts.map((workout, index) => {
                     return (
-                        <React.Fragment key={ index } >
-                            <br></br>
+                        <div className="workout__container" key={ index } >
                             <div className="workout__info">
-                                { workout.title } - { workout.type }
-                                { Number(userId) === workout.user_id ?
-                                    <DeleteIcon onClick={ () => {
-                                        handleDelete(workout.id);
-                                    } } />
-                                    : null }
+                                <span className="workout__infoTitle">
+                                    <h3>{ workout.title }</h3>
+                                </span>
+                                <div className="workout__infoType">
+                                    <span>{ workout.type } Routine</span>
+                                    {/* Insert Delete Icon For Owner of Workout */ }
+                                    { Number(userId) === workout.user_id ?
+                                        <DeleteIcon onClick={ () => {
+                                            handleDelete(workout.id);
+                                        } } />
+                                        : null
+                                    }
+                                </div>
                             </div>
-                            <div>{ workout.description }</div>
-                            <ol>
+                            <div className="workout__description">{ workout.description }</div>
+                            <ol className="workout__exerciseList">
                                 { workout.WorkoutExercises ? workout.WorkoutExercises.map((exercise, index) => (
                                     <div key={ index }>{ exercisesState.list[exercise.exercise_id] ?
                                         <>
@@ -90,7 +97,7 @@ function Workouts() {
                                 )) : null }
                             </ol>
                             <hr></hr>
-                        </React.Fragment>
+                        </div>
                     );
                 })
                 : null }
