@@ -30,11 +30,27 @@ function WorkoutForm() {
             });
 
             if (response.ok) {
-                const workout = await response.json();
-                // TODO: Dispatch addition of exercise to Redux
-                dispatch(addWorkout(workout));
+                const { newWorkout } = await response.json();
+                console.log(newWorkout);
+
+                await setTimeout(async () => {
+                    const workoutExercisesFetch = await fetch(`${backendUrl}/api/workouts/${newWorkout.id}/exercises`, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (workoutExercisesFetch.ok) {
+                        const workoutExercises = await workoutExercisesFetch.json();
+                        console.log(workoutExercises);
+                        newWorkout.WorkoutExercises = workoutExercises;
+                        dispatch(addWorkout(newWorkout));
+                    }
+                }, 2000);
+
             }
-        }
+            // TODO: Dispatch addition of exercise to Redux
+        };
         createWorkout();
     };
 
@@ -45,7 +61,7 @@ function WorkoutForm() {
     const addExercise = (e) => {
         if (e.target.value === 'none') return;
         exerciseList.push(e.target.value);
-        window.alert('Exercise Added!');
+        console.log(exerciseList);
     };
 
 
@@ -74,7 +90,37 @@ function WorkoutForm() {
                     onChange={ updateProperty(setType) }
                 />
                 <select onChange={ addExercise }>
-                    <option key='none' value='none'>None</option>
+                    <option key='none' value='none'>Exercise 1</option>
+                    { exercises.map((exercise) => (
+                        <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
+                    )) }
+                </select>
+                <select onChange={ addExercise }>
+                    <option key='none' value='none'>Exercise 2</option>
+                    { exercises.map((exercise) => (
+                        <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
+                    )) }
+                </select>
+                <select onChange={ addExercise }>
+                    <option key='none' value='none'>Exercise 3</option>
+                    { exercises.map((exercise) => (
+                        <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
+                    )) }
+                </select>
+                <select onChange={ addExercise }>
+                    <option key='none' value='none'>Exercise 4</option>
+                    { exercises.map((exercise) => (
+                        <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
+                    )) }
+                </select>
+                <select onChange={ addExercise }>
+                    <option key='none' value='none'>Exercise 5</option>
+                    { exercises.map((exercise) => (
+                        <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
+                    )) }
+                </select>
+                <select onChange={ addExercise }>
+                    <option key='none' value='none'>Exercise 6</option>
                     { exercises.map((exercise) => (
                         <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
                     )) }
