@@ -124,7 +124,7 @@ function WorkoutForm() {
                         <option key={ exercise.title } value={ exercise.id }>{ exercise.title }</option>
                     )) }
                 </select>
-                <button type="submit">Create new workout</button>
+                <button type="submit" className="exerciseForm__button">Create new workout</button>
             </form>
         </div>
     );
