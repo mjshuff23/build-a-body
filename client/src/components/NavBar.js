@@ -1,10 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/NavBar.css';
 import { Navbar, Nav } from 'react-bootstrap';
 import { baseUrl } from '../config';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { logout } from '../store/actions/authentication';
 function NavBar() {
-
+    const dispatch = useDispatch();
     const userState = useSelector(state => state.authentication);
     return (
         <Navbar bg="dark" variant="dark" expand="lg">
@@ -18,6 +20,10 @@ function NavBar() {
                     <Nav.Link href={ `/workouts` }>Workouts</Nav.Link>
                     <Nav.Link href={ `/user/` }>{ `${userState.user.email}` }</Nav.Link>
                 </Nav>
+                <div className="navbar__logoutIcon" onClick={ () => {
+                    console.log('click');
+                    dispatch(logout());
+                } } ><ExitToAppIcon /></div>
             </Navbar.Collapse>
         </Navbar>
     );
