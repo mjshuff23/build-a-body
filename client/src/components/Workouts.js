@@ -62,7 +62,7 @@ function Workouts() {
                     horizontal: 'left',
                 } }
             >
-                <WorkoutForm />
+                <WorkoutForm handleClose={ handleClose } />
             </Popover>
             {workouts ?
                 workouts.map((workout, index) => {

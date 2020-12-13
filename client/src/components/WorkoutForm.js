@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { backendUrl } from '../config';
 import { addWorkout } from '../store/actions/workouts';
 
-function WorkoutForm() {
+function WorkoutForm({ handleClose }) {
     const dispatch = useDispatch();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -19,7 +19,7 @@ function WorkoutForm() {
 
         async function createWorkout() {
             if (!userId || !exerciseList.length) return;
-
+            handleClose();
             const response = await fetch(`${backendUrl}/api/workouts`, {
                 method: 'POST',
                 headers: {
