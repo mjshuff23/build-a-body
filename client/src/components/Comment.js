@@ -15,14 +15,6 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
     const [editComment, setEditComment] = useState(content);
     const commentElement = useRef(null);
 
-    useEffect(() => {
-        if (commentElement.current) {
-            commentElement.current.scrollIntoView({
-                block: 'nearest',
-            });
-        }
-    }, []);
-
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);
     };
@@ -33,7 +25,6 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
 
     const handleDelete = async () => {
         if (Number(userId) !== authorId) return;
-        console.log(type);
         // Delete comment on exercise
         const response = await fetch(`${backendUrl}/api/exercises/${id}/comments/${commentId}`, {
             method: 'DELETE',
@@ -45,7 +36,6 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
         if (response.ok) {
             const { deletedCommentId, exerciseId } = await response.json();
             dispatch(removeComment(deletedCommentId, exerciseId));
-            console.log('Removing Comment from Redux, delete was succesful');
         }
     };
 
@@ -74,7 +64,7 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
     };
 
     return (
-        <div ref={ commentElement } className="comment">
+        <div className="comment">
             <div className="comment__header">
                 <span className="comment__author">
                     { author }

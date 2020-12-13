@@ -96,7 +96,7 @@ export default function reducer(state = initialState, action) {
             return newState;
 
         case ADD_COMMENT:
-            newState.list[action.comment.commentableId].Comments.push(action.comment);
+            newState.list[action.comment.commentableId].Comments.unshift(action.comment);
             return newState;
 
         case UPDATE_COMMENT:
@@ -114,9 +114,7 @@ export default function reducer(state = initialState, action) {
         case REMOVE_COMMENT:
             // Find comment
             comments = newState.list[action.exerciseId].Comments;
-            console.log(comments);
             newState.list[action.exerciseId].Comments = comments.filter(comment => {
-                console.log(`${comment.id} === ${action.commentId}`);
                 return comment.id !== action.commentId;
             });
             return newState;

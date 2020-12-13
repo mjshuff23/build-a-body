@@ -167,11 +167,11 @@
 }
 
 .exercise__commentsContainer {
-    position: unset;
     display: flex;
+    flex-direction: column;
+    position: unset;
     overflow: scroll;
     width: inherit;
-    flex-direction: column-reverse;
 }
 
 .exercise__commentsContainer::-webkit-scrollbar {

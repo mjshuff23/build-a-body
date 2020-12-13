@@ -42,6 +42,7 @@ function ExerciseFormEdit(props) {
             }
         }
         editExercise();
+        props.handleCloseEdit();
     };
 
     const updateProperty = (callback) => (e) => {

@@ -21,7 +21,7 @@
     padding: 10px;
 }
 
-.newExerciseForm>input {
+.newExerciseForm>input, .newExerciseForm>select, .newExerciseForm>textarea {
     margin: 5px 0;
     width: 80%;
     border-radius: 10px;
@@ -29,21 +29,21 @@
     transition: color 1s;
 }
 
-.newExerciseForm>input:hover {
+.newExerciseForm>input:hover, .newExerciseForm>select:hover, .newExerciseForm>textarea:hover {
     background-color: rgb(74, 74, 74);
     color: white;
 }
 
-.newExerciseForm>input:focus {
+.newExerciseForm>input:focus, .newExerciseForm>select:focus, .newExerciseForm>textarea:focus {
     background-color: rgb(74, 74, 74);
     color: white;
 }
 
-.newExerciseForm>input:focus::placeholder {
+.newExerciseForm>input:focus::placeholder, .newExerciseForm>textarea:focus::placeholder {
     color: rgb(255, 93, 93);
 }
 
-.newExerciseForm>input:hover::placeholder {
+.newExerciseForm>input:hover::placeholder, .newExerciseForm>textarea:hover::placeholder {
     color: rgb(255, 93, 93);
 }
 
