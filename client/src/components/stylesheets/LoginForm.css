@@ -1,18 +1,60 @@
-.loginForm {
+.loginForm, .signUpForm {
     height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    padding: 10px;
 }
 
-.loginForm__form {
+.loginForm__form, .signUpForm__form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 10px;
 }
 
-.loginForm__button {
-    width: 75%
+.loginForm__form>input, .signUpForm__form>input {
+    border-radius: 10px;
+    display: flex;
+    padding: 1px 5px;
+    text-align: center;
+    transition: color 1s;
+}
+
+.signUpForm__loginLink {
+    padding-bottom: 10px;
+}
+
+.loginForm__button, .signUpForm__button {
+    width: 75%;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.loginForm__container, .signUpForm__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    height: 50%;
+    width: 33%;
+    min-width: 200px;
+    background-color: rgba(1, 10, 20, 65%);
+    border-radius: 10px;
+}
+
+.loginForm__header, .signUpForm__header {
+    color: whitesmoke;
+    padding-top: 5px;
+}
+
+.signUpForm__container {
+    height: auto;
+}
+
+.loginForm__signupLink:hover, .signUpForm__loginLink:hover {
+    color: white;
 }

@@ -40,45 +40,46 @@ function SignUpForm() {
 
     return (
         <div className="signUpForm">
-            <h2 className='signUpForm__header'>Sign Up</h2>
-            <br></br>
-            <form className="signUpForm__form" onSubmit={ handleSubmit }>
-                <input
-                    className="signUpForm__input"
-                    type="text"
-                    placeholder="Username"
-                    value={ username }
-                    onChange={ updateUsername }
-                />
+            <div className="signUpForm__container">
+                <h2 className='signUpForm__header'>Sign Up</h2>
                 <br></br>
-                <input
-                    className="signUpForm__input"
-                    type="text"
-                    placeholder="Email"
-                    value={ email }
-                    onChange={ updateEmail }
-                />
-                <br></br>
-                <input
-                    className="signUpForm__input"
-                    type="password"
-                    placeholder="Password"
-                    value={ password }
-                    onChange={ updatePassword }
-                />
-                <br></br>
-                <input
-                    className="signUpForm__input"
-                    type="password"
-                    placeholder="Confirm Password"
-                    value={ confirmPassword }
-                    onChange={ updateConfirmPassword }
-                />
-                <br></br>
-                <button className="signUpForm__button" type="submit">Sign Up!</button>
-            </form>
-            <NavLink to='/login' className="signUpForm__loginLink">Already have an account?</NavLink>
-
+                <form className="signUpForm__form" onSubmit={ handleSubmit }>
+                    <input
+                        className="signUpForm__input"
+                        type="text"
+                        placeholder="Username"
+                        value={ username }
+                        onChange={ updateUsername }
+                    />
+                    <br></br>
+                    <input
+                        className="signUpForm__input"
+                        type="text"
+                        placeholder="Email"
+                        value={ email }
+                        onChange={ updateEmail }
+                    />
+                    <br></br>
+                    <input
+                        className="signUpForm__input"
+                        type="password"
+                        placeholder="Password"
+                        value={ password }
+                        onChange={ updatePassword }
+                    />
+                    <br></br>
+                    <input
+                        className="signUpForm__input"
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={ confirmPassword }
+                        onChange={ updateConfirmPassword }
+                    />
+                    <br></br>
+                    <button className="signUpForm__button" type="submit">Sign Up!</button>
+                </form>
+                <NavLink to='/login' className="signUpForm__loginLink">Already have an account?</NavLink>
+            </div>
         </div>
     );
 }

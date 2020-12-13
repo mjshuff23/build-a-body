@@ -24,28 +24,30 @@ const LoginForm = () => {
 
     return (
         <div className="loginForm">
-            <h2 className='loginForm__header'>Login</h2>
-            <br></br>
-            <form className="loginForm__form" onSubmit={ handleSubmit }>
-                <input
-                    className="loginForm__input"
-                    type="text"
-                    placeholder="Email"
-                    value={ email }
-                    onChange={ updateEmail }
-                />
+            <div className="loginForm__container">
+                <h2 className='loginForm__header'>Login</h2>
                 <br></br>
-                <input
-                    className="loginForm__input"
-                    type="password"
-                    placeholder="Password"
-                    value={ password }
-                    onChange={ updatePassword }
-                />
-                <br></br>
-                <button className="loginForm__button" type="submit">Login</button>
-            </form>
-            <NavLink to="/landing" className="loginForm__signupLink">No Account? Sign Up Here!</NavLink>
+                <form className="loginForm__form" onSubmit={ handleSubmit }>
+                    <input
+                        className="loginForm__input"
+                        type="text"
+                        placeholder="Email"
+                        value={ email }
+                        onChange={ updateEmail }
+                    />
+                    <br></br>
+                    <input
+                        className="loginForm__input"
+                        type="password"
+                        placeholder="Password"
+                        value={ password }
+                        onChange={ updatePassword }
+                    />
+                    <br></br>
+                    <button className="loginForm__button" type="submit">Login</button>
+                </form>
+                <NavLink to="/landing" className="loginForm__signupLink">No Account? Sign Up Here!</NavLink>
+            </div>
         </div>
     );
 };

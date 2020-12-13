@@ -33,6 +33,7 @@
     min-width: 225px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .exercise__stars {
@@ -47,13 +48,21 @@
 
 .exercise__title {
     font-weight: bold;
-    color: darksalmon;
-    padding-right: 10px;
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+    color: #7cb8bb;
+    border-bottom: 2px dotted whitesmoke;
+    padding-bottom: 5px;
 }
 
 .exercise__difficulty, .exercise__equipment {
     font-weight: bold;
     color: darksalmon;
+}
+
+div>span.exercise__difficulty {
+    padding-top: 5px;
 }
 
 .exercise__info {
@@ -63,6 +72,7 @@
     border: 2px solid white;
     border-radius: 10px;
     padding: 10px;
+    padding-top: 0;
     margin-top: 20px;
     margin-bottom: 10px;
 }
