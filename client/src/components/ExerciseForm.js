@@ -70,41 +70,41 @@ function ExerciseForm({ handleClose }) {
                     onChange={ updateProperty(setVideoUrl) }
                 />
                 <select onChange={ updateProperty(setType) }>
-                    <option>--Type--</option>
+                    <option disabled>--Type of Workout--</option>
                     <option>Strength</option>
                     <option>Calisthenic</option>
                     <option>Plyometric</option>
                     <option>Cardiovascular</option>
                 </select>
                 <select onChange={ updateProperty(setBodyPart) }>
-                    <option>--Body Part--</option>
-                    <option>--Arms--</option>
+                    <option disabled>---Body Part---</option>
+                    <option disabled>--Arms--</option>
                     <option>Biceps</option>
                     <option>Triceps</option>
                     <option>Forearms</option>
-                    <option>--Chest--</option>
+                    <option disabled>--Chest--</option>
                     <option>Pecs</option>
-                    <option>--Back--</option>
+                    <option disabled>--Back--</option>
                     <option>Traps</option>
                     <option>Rhomboids</option>
                     <option>Lats</option>
                     <option>Lower Back</option>
-                    <option>--Shoulders--</option>
+                    <option disabled>--Shoulders--</option>
                     <option>Deltoids</option>
-                    <option>--Legs--</option>
+                    <option disabled>--Legs--</option>
                     <option>Quads</option>
                     <option>Hamstrings</option>
                     <option>Calves</option>
                     <option>Glutes</option>
                 </select>
                 <select onChange={ updateProperty(setDifficulty) }>
-                    <option>--Difficulty--</option>
+                    <option disabled>--Difficulty--</option>
                     <option>Easy</option>
                     <option>Intermediate</option>
                     <option>Expert</option>
                 </select>
                 <select onChange={ updateProperty(setEquipment) }>
-                    <option>--Equipment--</option>
+                    <option disabled>--Equipment--</option>
                     <option>None</option>
                     <option>Dumbbell</option>
                     <option>Barbell</option>
