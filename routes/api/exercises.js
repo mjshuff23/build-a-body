@@ -16,12 +16,17 @@ router.get('/', asyncHandler(async (req, res, next) => {
             model: User, attributes: ['username']
         },
         {
-            model: Rating, include:
-                { model: User, attributes: ['username'] }
+            model: Rating,
+            include: {
+                model: User, attributes: ['username']
+            }
         },
         {
-            model: Comment, include:
-                { model: User, attributes: ['username'] }
+            model: Comment,
+            include: {
+                model: User, attributes: ['username']
+            },
+            order: [['createdAt', 'DESC']]
         }]
     });
 
@@ -93,7 +98,27 @@ router.put(`/:exerciseId`, asyncHandler(async (req, res) => {
     const { title, description, type, body_part,
         difficulty, equipment, video_url } = req.body;
 
-    const exercise = await Exercise.findByPk(parseInt(req.params.exerciseId));
+    const exercise = await Exercise.findOne({
+        where: {
+            id: parseInt(req.params.exerciseId)
+        },
+        include: [{
+            model: User, attributes: ['username']
+        },
+        {
+            model: Rating,
+            include: {
+                model: User, attributes: ['username']
+            }
+        },
+        {
+            model: Comment,
+            include: {
+                model: User, attributes: ['username']
+            },
+            order: [['createdAt', 'DESC']]
+        }]
+    });
 
     exercise.title = title;
     exercise.description = description;
@@ -104,6 +129,18 @@ router.put(`/:exerciseId`, asyncHandler(async (req, res) => {
     exercise.video_url = video_url;
 
     await exercise.save();
+
+    let ratingCount = 0;
+    let ratingSum = 0;
+    exercise.dataValues.voterIds = [];
+    for (let rating of exercise.Ratings) {
+        exercise.dataValues.voterIds.push([rating.user_id, rating.score]);
+        ratingSum += rating.score;
+        ratingCount++;
+
+        exercise.dataValues.averageRating = ratingSum / ratingCount;
+        exercise.dataValues.ratingCount = ratingCount;
+    }
 
     if (exercise) {
         return res.json(exercise);

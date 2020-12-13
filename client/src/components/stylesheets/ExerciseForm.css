@@ -10,41 +10,54 @@
     background-color: rgb(140, 242, 255);
 }
 
-.newExerciseForm {
+.newExerciseForm, .newWorkoutForm {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: rgb(0 0 0 / 80%);
     height: auto;
-    width: 300px;
+    width: 400px;
     border-radius: 20px;
     padding: 10px;
+    outline: none;
 }
 
-.newExerciseForm>input {
+.newExerciseForm>input, .newExerciseForm>select, .newExerciseForm>textarea, .newWorkoutForm>input, .newWorkoutForm>select, .newWorkoutForm>textarea {
     margin: 5px 0;
     width: 80%;
     border-radius: 10px;
     padding: 0 5px;
     transition: color 1s;
+    outline: none;
 }
 
-.newExerciseForm>input:hover {
+.newExerciseForm>input:hover, .newExerciseForm>select:hover, .newExerciseForm>textarea:hover, .newWorkoutForm>input:hover, .newWorkoutForm>select:hover, .newWorkoutForm>textarea:hover {
     background-color: rgb(74, 74, 74);
     color: white;
+    outline: none;
 }
 
-.newExerciseForm>input:focus {
+.newExerciseForm>input:focus, .newExerciseForm>select:focus, .newExerciseForm>textarea:focus, .newWorkoutForm>input:focus, .newWorkoutForm>select:focus, .newWorkoutForm>textarea:focus {
     background-color: rgb(74, 74, 74);
     color: white;
+    outline: none;
 }
 
-.newExerciseForm>input:focus::placeholder {
+.newExerciseForm>input:focus::placeholder, .newExerciseForm>textarea:focus::placeholder, .newWorkoutForm>input:focus::placeholder, .newWorkoutForm>textarea:focus::placeholder {
     color: rgb(255, 93, 93);
 }
 
-.newExerciseForm>input:hover::placeholder {
+.newExerciseForm>input:hover::placeholder, .newExerciseForm>textarea:hover::placeholder, .newWorkoutForm>input:hover::placeholder, .newWorkoutForm>textarea:hover::placeholder {
     color: rgb(255, 93, 93);
+}
+
+.newExerciseForm>textarea, .newWorkoutForm>textarea {
+    min-height: 100px;
+    width: 95%;
+}
+
+.newExerciseForm>select>option:disabled, .newWorkoutForm>select>option:disabled, .newWorkoutForm>select>option.workout__option {
+    color: rgb(223, 49, 49);
 }
 
 .MuiPaper-root {

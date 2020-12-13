@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './stylesheets/Comment.css';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -13,6 +13,7 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
     const dispatch = useDispatch();
     const open = Boolean(anchorEl);
     const [editComment, setEditComment] = useState(content);
+    const commentElement = useRef(null);
 
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);
@@ -24,7 +25,6 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
 
     const handleDelete = async () => {
         if (Number(userId) !== authorId) return;
-        console.log(type);
         // Delete comment on exercise
         const response = await fetch(`${backendUrl}/api/exercises/${id}/comments/${commentId}`, {
             method: 'DELETE',
@@ -36,7 +36,6 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
         if (response.ok) {
             const { deletedCommentId, exerciseId } = await response.json();
             dispatch(removeComment(deletedCommentId, exerciseId));
-            console.log('Removing Comment from Redux, delete was succesful');
         }
     };
 

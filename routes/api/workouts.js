@@ -34,12 +34,14 @@ router.get('/', asyncHandler(async (req, res, next) => {
         }
         workout.dataValues.averageRating = ratingSum / ratingCount;
         workout.dataValues.ratingCount = ratingCount;
+        workout.dataValues.voterIds = [];
 
         workoutsObject[workout.id] = workout;
     }
 
     res.json(workoutsObject);
 }));
+
 
 router.post('/', asyncHandler(async (req, res, next) => {
     const { title, description,
@@ -48,21 +50,60 @@ router.post('/', asyncHandler(async (req, res, next) => {
 
     const workout = await Workout.create({
         title, description,
-        user_id, type
+        user_id, type,
     });
 
-    exerciseList.map(async (exerciseId) => {
-        await WorkoutExercise.create({
+    await exerciseList.map(async (exerciseId) => {
+        let workoutExercise = await WorkoutExercise.create({
             workout_id: workout.id,
             exercise_id: exerciseId
         });
     });
 
-    if (workout) {
-        return res.json(workout);
+    // Find the workout we just created, and include what we need
+    let newWorkout = await Workout.findByPk(workout.id, {
+        include: [{
+            model: User, attributes: ['username']
+        },
+        {
+            model: Rating, include:
+                { model: User, attributes: ['username'] }
+        },
+        {
+            model: Comment, include:
+                { model: User, attributes: ['username'] }
+        }],
+    });
+
+    newWorkout.dataValues.averageRating = 0;
+    newWorkout.dataValues.ratingCount = 0;
+    newWorkout.dataValues.voterIds = [];
+
+    let workoutExercises = await WorkoutExercise.findAll({
+        where: {
+            workout_id: workout.id
+        }
+    });
+
+    console.log(workoutExercises);
+
+    if (newWorkout) {
+        return res.json({ newWorkout });
     }
 
     res.json(`An error occured trying to create that workout!`);
+}));
+
+router.get('/:workoutId/exercises', asyncHandler(async (req, res, next) => {
+    const workoutExercises = await WorkoutExercise.findAll({
+        where: {
+            workout_id: parseInt(req.params.workoutId)
+        }
+    });
+
+    if (workoutExercises) {
+        res.json(workoutExercises);
+    }
 }));
 
 router.delete('/:workoutId', asyncHandler(async (req, res) => {

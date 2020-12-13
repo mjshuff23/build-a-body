@@ -169,7 +169,7 @@ function Exercises() {
                 onClose={ handleClose }
                 anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
                 transformOrigin={ { vertical: 'top', horizontal: 'left' } }>
-                <ExerciseForm />
+                <ExerciseForm handleClose={ handleClose } />
             </Popover>
 
             {
@@ -234,7 +234,7 @@ function Exercises() {
                                     onClose={ handleCloseEdit }
                                     anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
                                     transformOrigin={ { vertical: 'top', horizontal: 'left' } }>
-                                    <ExerciseFormEdit exerciseId={ currentExerciseId } />
+                                    <ExerciseFormEdit handleCloseEdit={ handleCloseEdit } exerciseId={ currentExerciseId } />
                                 </Popover>
                                 <div>
                                     <span className="exercise__difficulty">
@@ -266,17 +266,19 @@ function Exercises() {
                                 <span className="exercise__commentsHeader">
                                     Comments
                                 </span>
-                                {/* Map Through Comments */ }
-                                {
-                                    exercise.Comments ?
-                                        exercise.Comments.map((comment) => {
-                                            {
-                                                if (comment.User.username)
-                                                    return (<Comment author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } id={ comment.commentableId } commentId={ comment.id } type='Exercise' />);
-                                            }
-                                        })
-                                        : null
-                                }
+                                <div className="exercise__commentsContainer">
+                                    {/* Map Through Comments */ }
+                                    {
+                                        exercise.Comments ?
+                                            exercise.Comments.map((comment, index) => {
+                                                {
+                                                    if (comment.User.username)
+                                                        return (<Comment key={ index } author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } id={ comment.commentableId } commentId={ comment.id } type='Exercise' />);
+                                                }
+                                            })
+                                            : null
+                                    }
+                                </div>
                                 <div className="exercise__commentsInput">
                                     <form onSubmit={ (e) => {
                                         e.preventDefault();
