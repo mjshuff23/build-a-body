@@ -20,7 +20,7 @@ function NavBar() {
                     <Nav.Link href={ `/workouts` }>Workouts</Nav.Link>
                     <Nav.Link href={ `/user/` }>{ `${userState.user.email}` }</Nav.Link>
                 </Nav>
-                <div className="navbar__logoutIcon" onClick={ () => dispatch(logout()) } ><ExitToAppIcon /></div>
+                <div className="navBar__logoutIcon" style={ { fontSize: 30 } } onClick={ () => dispatch(logout()) } ><ExitToAppIcon /></div>
             </Navbar.Collapse>
         </Navbar>
     );

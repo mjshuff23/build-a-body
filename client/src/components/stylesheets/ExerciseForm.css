@@ -1,4 +1,4 @@
-.exerciseForm__button {
+.exerciseForm__button, .loginForm__button, .signUpForm__button {
     border-radius: 20px;
     background-color: powderblue;
     margin-top: 10px;
@@ -6,7 +6,7 @@
     padding: 5px 10px;
 }
 
-.exerciseForm__button:hover {
+.exerciseForm__button:hover, .loginForm__button:hover, .signUpForm__button:hover {
     background-color: rgb(140, 242, 255);
 }
 
@@ -31,23 +31,23 @@
     outline: none;
 }
 
-.newExerciseForm>input:hover, .newExerciseForm>select:hover, .newExerciseForm>textarea:hover, .newWorkoutForm>input:hover, .newWorkoutForm>select:hover, .newWorkoutForm>textarea:hover {
+.newExerciseForm>input:hover, .newExerciseForm>select:hover, .newExerciseForm>textarea:hover, .newWorkoutForm>input:hover, .newWorkoutForm>select:hover, .newWorkoutForm>textarea:hover, .loginForm__form>input:hover, .signUpForm__form>input:hover {
     background-color: rgb(74, 74, 74);
     color: white;
     outline: none;
 }
 
-.newExerciseForm>input:focus, .newExerciseForm>select:focus, .newExerciseForm>textarea:focus, .newWorkoutForm>input:focus, .newWorkoutForm>select:focus, .newWorkoutForm>textarea:focus {
+.newExerciseForm>input:focus, .newExerciseForm>select:focus, .newExerciseForm>textarea:focus, .newWorkoutForm>input:focus, .newWorkoutForm>select:focus, .newWorkoutForm>textarea:focus, .loginForm__form>input:focus, .signUpForm__form>input:focus {
     background-color: rgb(74, 74, 74);
     color: white;
     outline: none;
 }
 
-.newExerciseForm>input:focus::placeholder, .newExerciseForm>textarea:focus::placeholder, .newWorkoutForm>input:focus::placeholder, .newWorkoutForm>textarea:focus::placeholder {
+.newExerciseForm>input:focus::placeholder, .newExerciseForm>textarea:focus::placeholder, .newWorkoutForm>input:focus::placeholder, .newWorkoutForm>textarea:focus::placeholder, .loginForm__form>input:focus::placeholder, .signUpForm__form>input:focus::placeholder {
     color: rgb(255, 93, 93);
 }
 
-.newExerciseForm>input:hover::placeholder, .newExerciseForm>textarea:hover::placeholder, .newWorkoutForm>input:hover::placeholder, .newWorkoutForm>textarea:hover::placeholder {
+.newExerciseForm>input:hover::placeholder, .newExerciseForm>textarea:hover::placeholder, .newWorkoutForm>input:hover::placeholder, .newWorkoutForm>textarea:hover::placeholder, .loginForm__form>input:hover::placeholder, .signUpForm__form>input:hover::placeholder {
     color: rgb(255, 93, 93);
 }
 
