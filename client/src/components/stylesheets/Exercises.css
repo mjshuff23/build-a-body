@@ -19,11 +19,11 @@
     margin-bottom: 10px;
 }
 
-.addExerciseIcon {
+.addExerciseIcon, .addWorkoutIcon, .loginForm__button, .signUpForm__button {
     transition: background-color 1s;
 }
 
-.addExerciseIcon:hover {
+.addExerciseIcon:hover, .addWorkoutIcon:hover, .loginForm__button:hover, .signUpForm__button:hover {
     background-color: rgb(94 213 218 / 100%);
     color: black;
 }
@@ -57,8 +57,11 @@
 }
 
 .exercise__difficulty, .exercise__equipment {
+    padding-top: 2px;
     font-weight: bold;
-    color: darksalmon;
+    display: flex;
+    justify-content: center;
+    color: rgb(214, 214, 214);
 }
 
 div>span.exercise__difficulty {
@@ -186,4 +189,9 @@ div>span.exercise__difficulty {
 
 .exercise__commentsContainer::-webkit-scrollbar {
     display: none;
+}
+
+.exercise__difficulty>span, .exercise__equipment>span {
+    color: darksalmon;
+    padding-right: 10px;
 }

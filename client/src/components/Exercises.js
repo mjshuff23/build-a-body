@@ -236,14 +236,14 @@ function Exercises() {
                                     transformOrigin={ { vertical: 'top', horizontal: 'left' } }>
                                     <ExerciseFormEdit handleCloseEdit={ handleCloseEdit } exerciseId={ currentExerciseId } />
                                 </Popover>
-                                <div>
-                                    <span className="exercise__difficulty">
+                                <div className="exercise__difficulty">
+                                    <span>
                                         Difficulty:
                                     </span>
                                     { exercise.difficulty }
                                 </div>
-                                <div>
-                                    <span className="exercise__equipment">
+                                <div className="exercise__equipment">
+                                    <span>
                                         Equipment:
                                     </span>
                                     { exercise.equipment }
