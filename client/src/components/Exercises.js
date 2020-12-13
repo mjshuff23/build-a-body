@@ -282,6 +282,7 @@ function Exercises() {
                                 <div className="exercise__commentsInput">
                                     <form onSubmit={ (e) => {
                                         e.preventDefault();
+                                        if (e.target[0].value === '') return;
                                         handleSubmit(exercise.id, e.target[0].value);
                                         e.target[0].value = '';
                                     } }>

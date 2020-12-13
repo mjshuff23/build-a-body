@@ -33,3 +33,21 @@
 .comment__editIcon {
     margin-right: 5px;
 }
+
+.comment__editTextDiv {
+    position: relative;
+    width: 400px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    color: whitesmoke;
+    justify-content: center;
+    border-radius: 10px;
+    align-items: center;
+    background-color: rgba(1, 10, 20, 65%);
+}
+
+.comment__editTextDiv>form>input {
+    border-radius: 10px;
+    padding-left: 10px;
+}

@@ -85,8 +85,10 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
                                     anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
                                     transformOrigin={ { vertical: 'top', horizontal: 'left' } }>
                                     <div className="comment__editTextDiv">
+                                        <h4>Edit Comment</h4>
                                         <form onSubmit={ (e) => {
                                             e.preventDefault();
+                                            handleClose();
                                             if (type === 'Exercise') {
                                                 handleSubmit();
                                                 e.target[0].value = '';
