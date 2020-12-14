@@ -5,6 +5,7 @@ import ReactPlayer from 'react-player/youtube';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Popover } from '@material-ui/core';
 import { backendUrl } from '../config';
 import { addComment, addRating, removeExercise, updateRating } from '../store/actions/exercises';
@@ -120,37 +121,43 @@ function Exercises() {
         }
     };
 
-    const mapRatings = (exercise) => {
+    const mapRatings = (exercise, liked) => {
         for (let i = 0; i < exercise.voterIds.length; i++) {
             let vote = exercise.voterIds[i];
             if (Number(userId) === vote[0]) {
                 return (
-                    <React.Fragment key={ i }>
-                        <ReactStars
-                            count={ 5 }
-                            value={ vote[1] }
-                            onChange={ (rating) => {
-                                ratingChanged(rating, exercise);
-                            } }
-                            size={ 24 }
-                            color2={ '#ffd700' } />
+                    <div className="exercise__row1">
+                        <div className="exercise__userRating" key={ i }>
+                            <ReactStars
+                                count={ 5 }
+                                value={ vote[1] }
+                                onChange={ (rating) => {
+                                    ratingChanged(rating, exercise);
+                                } }
+                                size={ 24 }
+                                color2={ '#ffd700' } />
+                            <FavoriteIcon style={ { fill: liked } } />
+                        </div>
                         💪💪💪Thanks for rating!💪💪💪
-                    </React.Fragment>
+                    </div>
                 );
             }
         }
         return (
-            <React.Fragment key={ Math.random() }>
-                <ReactStars
-                    count={ 5 }
-                    value={ 0 }
-                    onChange={ (rating) => {
-                        ratingChanged(rating, exercise);
-                    } }
-                    size={ 24 }
-                    color2={ '#ffd700' } />
+            <div className="exercise__row1">
+                <div className="exercise__userRating" key={ Math.random() }>
+                    <ReactStars
+                        count={ 5 }
+                        value={ 0 }
+                        onChange={ (rating) => {
+                            ratingChanged(rating, exercise);
+                        } }
+                        size={ 24 }
+                        color2={ '#ffd700' } />
+                    <FavoriteIcon style={ { fill: liked } } />
+                </div>
                 Rate this exercise!
-            </React.Fragment>
+            </div>
         );
     };
 
@@ -174,6 +181,13 @@ function Exercises() {
 
             {
                 exercises ? exercises.map((exercise, index) => {
+                    let liked = 'gray';
+                    for (let i = 0; i < exercise.Likeds.length; i++) {
+                        if (exercise.Likeds[0].user_id === Number(userId)) {
+                            liked = 'red';
+                        }
+                    }
+
                     let descriptionSteps;
                     if (exercise.description) {
                         descriptionSteps = exercise.description.split(`\n`);
@@ -183,19 +197,22 @@ function Exercises() {
                             <div className="exercise__info">
                                 {
                                     exercise.voterIds && exercise.voterIds.length ? (
-                                        mapRatings(exercise)
+                                        mapRatings(exercise, liked)
                                     ) : (
-                                            <React.Fragment key={ index }>
-                                                <ReactStars
-                                                    count={ 5 }
-                                                    value={ 0 }
-                                                    onChange={ (rating) => {
-                                                        ratingChanged(rating, exercise);
-                                                    } }
-                                                    size={ 24 }
-                                                    color2={ '#ffd700' } />
+                                            <div className="exercise__row1">
+                                                <div className="exercise__userRating" key={ index }>
+                                                    <ReactStars
+                                                        count={ 5 }
+                                                        value={ 0 }
+                                                        onChange={ (rating) => {
+                                                            ratingChanged(rating, exercise);
+                                                        } }
+                                                        size={ 24 }
+                                                        color2={ '#ffd700' } />
+                                                    <FavoriteIcon style={ { fill: liked } } />
+                                                </div>
                                                 Rate this exercise!
-                                            </React.Fragment>
+                                            </div>
                                         )
                                 }
                                 <div className="exercise__ratings">
