@@ -2,8 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 const { asyncHandler, handleValidationErrors } = require('../../utils');
 const { getUserToken, requireAuth } = require('../../auth');
-const { User, Exercise, Rating, Comment } = require('../../db/models');
-const rating = require('../../db/models/rating');
+const { User, Exercise, Rating, Comment, Liked } = require('../../db/models');
 
 const router = express.Router();
 // router.use(requireAuth);
@@ -14,19 +13,22 @@ router.get('/', asyncHandler(async (req, res, next) => {
     const exercises = await Exercise.findAll({
         include: [{
             model: User, attributes: ['username']
-        },
-        {
+        }, {
             model: Rating,
             include: {
                 model: User, attributes: ['username']
             }
-        },
-        {
+        }, {
             model: Comment,
             include: {
                 model: User, attributes: ['username']
             },
             order: [['createdAt', 'DESC']]
+        }, {
+            model: Liked,
+            include: {
+                model: User, attributes: ['username'],
+            },
         }]
     });
 
@@ -74,6 +76,7 @@ router.post('/', asyncHandler(async (req, res) => {
     exercise.dataValues.averageRating = 0;
     exercise.dataValues.ratingCount = 0;
     exercise.dataValues.Ratings = [];
+    exercise.dataValues.Liked = [];
 
     if (exercise) {
         return res.json(exercise);
@@ -117,6 +120,11 @@ router.put(`/:exerciseId`, asyncHandler(async (req, res) => {
                 model: User, attributes: ['username']
             },
             order: [['createdAt', 'DESC']]
+        }, {
+            model: Liked,
+            include: {
+                model: User, attributes: ['username']
+            },
         }]
     });
 
