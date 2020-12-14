@@ -1,4 +1,4 @@
-{
+{\n
     Authentication: {
         token: '',
         user: {
