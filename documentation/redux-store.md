@@ -1,16 +1,31 @@
 {
     Authentication: {
-        user_id: '',
-        username: '',
+        token: '',
+        user: {
+            id: '',
+            username: '',
+            email: '',
+        },
     },
     Exercises: {
-       id: {},
-       id: {},
-       ...
+       list: {
+           id: {
+               User: {},
+               Ratings: [],
+               Comments: [],
+               Likeds: [],
+               voterIds: [],
+               averageRating: #,
+               voteCount: #
+           }
+       },
+       ids: [],
+       bodyParts: [],
+       currentBodyPart: ''
     },
     Workouts: {
-       id: {},
-       id: {},
-       ...
+       list: {},
+       ids: {},
+       currentWorkout: ""
     },
 }
