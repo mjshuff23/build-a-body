@@ -8,6 +8,8 @@ import {
     UPDATE_COMMENT,
     UPDATE_RATING,
     REMOVE_COMMENT,
+    ADD_LIKED_EXERCISE,
+    REMOVE_LIKED_EXERCISE
 } from '../actions/exercises';
 
 const initialState = {
@@ -117,6 +119,21 @@ export default function reducer(state = initialState, action) {
             newState.list[action.exerciseId].Comments = comments.filter(comment => {
                 return comment.id !== action.commentId;
             });
+            return newState;
+
+        case ADD_LIKED_EXERCISE:
+            // Add Liked Row to Exercise
+            console.log(action.likedExercise.likedId);
+            newState.list[action.likedExercise.likedId].Likeds.push(action.likedExercise);
+            return newState;
+
+        case REMOVE_LIKED_EXERCISE:
+            // Find liked row
+            let exerciseLikeds = newState.list[action.likedExerciseId].Likeds;
+            newState.list[action.likedExerciseId].Likeds = exerciseLikeds.filter(like => {
+                return (like.user_id !== action.userId) && (like.likedId !== action.likedExerciseId);
+            });
+
             return newState;
         default:
             return state;

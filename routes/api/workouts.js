@@ -2,7 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 const { asyncHandler, handleValidationErrors } = require('../../utils');
 const { getUserToken, requireAuth } = require('../../auth');
-const { User, Exercise, Workout, WorkoutExercise, Rating, Comment } = require('../../db/models');
+const { User, Exercise, Workout, WorkoutExercise, Rating, Liked, Comment } = require('../../db/models');
 
 const router = express.Router();
 
@@ -14,12 +14,23 @@ router.get('/', asyncHandler(async (req, res, next) => {
         },
         { model: WorkoutExercise },
         {
-            model: Rating, include:
-                { model: User, attributes: ['username'] }
+            model: Rating,
+            include:
+            {
+                model: User, attributes: ['username']
+            }
         },
         {
-            model: Comment, include:
-                { model: User, attributes: ['username'] }
+            model: Comment,
+            include:
+            {
+                model: User, attributes: ['username']
+            }
+        }, {
+            model: Liked,
+            include: {
+                model: User, attributes: ['username']
+            }
         }],
     });
 
@@ -66,12 +77,25 @@ router.post('/', asyncHandler(async (req, res, next) => {
             model: User, attributes: ['username']
         },
         {
-            model: Rating, include:
-                { model: User, attributes: ['username'] }
+            model: Rating,
+            include:
+            {
+                model: User, attributes: ['username']
+            }
         },
         {
-            model: Comment, include:
-                { model: User, attributes: ['username'] }
+            model: Comment,
+            include:
+            {
+                model: User, attributes: ['username']
+            }
+        },
+        {
+            model: Liked,
+            include:
+            {
+                model: User, attributes: ['username']
+            }
         }],
     });
 

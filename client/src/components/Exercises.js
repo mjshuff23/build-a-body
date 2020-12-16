@@ -5,9 +5,10 @@ import ReactPlayer from 'react-player/youtube';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Popover } from '@material-ui/core';
 import { backendUrl } from '../config';
-import { addComment, addRating, removeExercise, updateRating } from '../store/actions/exercises';
+import { addComment, addLikedExercise, removeLikedExercise, addRating, removeExercise, updateRating } from '../store/actions/exercises';
 import ExerciseForm from './ExerciseForm';
 import ExerciseFormEdit from './ExerciseFormEdit';
 import ReactStars from 'react-stars';
@@ -120,38 +121,69 @@ function Exercises() {
         }
     };
 
-    const mapRatings = (exercise) => {
+    const mapRatings = (exercise, liked) => {
         for (let i = 0; i < exercise.voterIds.length; i++) {
             let vote = exercise.voterIds[i];
             if (Number(userId) === vote[0]) {
                 return (
-                    <React.Fragment key={ i }>
-                        <ReactStars
-                            count={ 5 }
-                            value={ vote[1] }
-                            onChange={ (rating) => {
-                                ratingChanged(rating, exercise);
-                            } }
-                            size={ 24 }
-                            color2={ '#ffd700' } />
+                    <div className="exercise__row1">
+                        <div className="exercise__userRating" key={ i }>
+                            <ReactStars
+                                count={ 5 }
+                                value={ vote[1] }
+                                onChange={ (rating) => {
+                                    ratingChanged(rating, exercise);
+                                } }
+                                size={ 24 }
+                                color2={ '#ffd700' } />
+                            <FavoriteIcon className="exercise__liked" style={ { fill: liked } } onClick={ () => {
+                                updateLiked(exercise);
+                            } } />
+                        </div>
                         💪💪💪Thanks for rating!💪💪💪
-                    </React.Fragment>
+                    </div>
                 );
             }
         }
         return (
-            <React.Fragment key={ Math.random() }>
-                <ReactStars
-                    count={ 5 }
-                    value={ 0 }
-                    onChange={ (rating) => {
-                        ratingChanged(rating, exercise);
-                    } }
-                    size={ 24 }
-                    color2={ '#ffd700' } />
+            <div className="exercise__row1">
+                <div className="exercise__userRating" key={ Math.random() }>
+                    <ReactStars
+                        count={ 5 }
+                        value={ 0 }
+                        onChange={ (rating) => {
+                            ratingChanged(rating, exercise);
+                        } }
+                        size={ 24 }
+                        color2={ '#ffd700' } />
+                    <FavoriteIcon className="exercise__liked" style={ { fill: liked } } onClick={ () => {
+                        updateLiked(exercise);
+                    } } />
+                </div>
                 Rate this exercise!
-            </React.Fragment>
+            </div>
         );
+    };
+
+    const updateLiked = async (exercise) => {
+        console.log(exercise);
+        const response = await fetch(`${backendUrl}/api/exercises/${exercise.id}/liked/${userId}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (isNaN(data)) {
+                console.log('Adding Like to Exercise');
+                // If data is not a number, we need to add the like to the exercises Likeds
+                dispatch(addLikedExercise(data));
+            } else {
+                console.log('Removing Like from Exercise');
+                dispatch(removeLikedExercise(data, userId));
+            }
+        }
     };
 
     const open = Boolean(anchorEl);
@@ -174,6 +206,13 @@ function Exercises() {
 
             {
                 exercises ? exercises.map((exercise, index) => {
+                    let liked = 'gray';
+                    for (let i = 0; i < exercise.Likeds.length; i++) {
+                        if (exercise.Likeds[i].user_id === Number(userId)) {
+                            liked = 'red';
+                        }
+                    }
+
                     let descriptionSteps;
                     if (exercise.description) {
                         descriptionSteps = exercise.description.split(`\n`);
@@ -183,19 +222,24 @@ function Exercises() {
                             <div className="exercise__info">
                                 {
                                     exercise.voterIds && exercise.voterIds.length ? (
-                                        mapRatings(exercise)
+                                        mapRatings(exercise, liked)
                                     ) : (
-                                            <React.Fragment key={ index }>
-                                                <ReactStars
-                                                    count={ 5 }
-                                                    value={ 0 }
-                                                    onChange={ (rating) => {
-                                                        ratingChanged(rating, exercise);
-                                                    } }
-                                                    size={ 24 }
-                                                    color2={ '#ffd700' } />
+                                            <div className="exercise__row1">
+                                                <div className="exercise__userRating" key={ index }>
+                                                    <ReactStars
+                                                        count={ 5 }
+                                                        value={ 0 }
+                                                        onChange={ (rating) => {
+                                                            ratingChanged(rating, exercise);
+                                                        } }
+                                                        size={ 24 }
+                                                        color2={ '#ffd700' } />
+                                                    <FavoriteIcon className="exercise__liked" style={ { fill: liked } } onClick={ () => {
+                                                        updateLiked(exercise);
+                                                    } } />
+                                                </div>
                                                 Rate this exercise!
-                                            </React.Fragment>
+                                            </div>
                                         )
                                 }
                                 <div className="exercise__ratings">

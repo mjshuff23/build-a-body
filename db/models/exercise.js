@@ -32,6 +32,15 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       hooks: true,
     });
+    Exercise.hasMany(models.Liked, {
+      foreignKey: 'likedId',
+      constraints: false,
+      scope: {
+        likedType: 'Exercise',
+      },
+      onDelete: 'CASCADE',
+      hooks: true,
+    });
   };
   return Exercise;
 };

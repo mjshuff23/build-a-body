@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Workout.belongsTo(models.User, { foreignKey: 'user_id' });
     Workout.hasMany(models.WorkoutExercise, { foreignKey: 'workout_id', onDelete: 'CASCADE', hooks: true });
+
     Workout.hasMany(models.Comment, {
       foreignKey: 'commentableId',
       constraints: false,
@@ -17,12 +18,25 @@ module.exports = (sequelize, DataTypes) => {
         commentableType: 'Workout'
       }, onDelete: 'CASCADE', hooks: true
     });
+
     Workout.hasMany(models.Rating, {
       foreignKey: 'ratableId',
       constraints: false,
       scope: {
         ratableType: 'Workout'
-      }, onDelete: 'CASCADE', hooks: true
+      },
+      onDelete: 'CASCADE',
+      hooks: true
+    });
+
+    Workout.hasMany(models.Liked, {
+      foreignKey: 'likedId',
+      constraints: false,
+      scope: {
+        likedType: 'Workout',
+      },
+      onDelete: 'CASCADE',
+      hooks: true
     });
   };
   return Workout;

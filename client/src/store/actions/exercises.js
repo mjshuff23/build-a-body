@@ -7,6 +7,8 @@ export const UPDATE_COMMENT = "build-a-body/exercises/UPDATE_COMMENT";
 export const UPDATE_RATING = "build-a-body/exercises/UPDATE_RATING";
 export const SET_CURRENT_BODY_PART = "build-a-body/exercises/CURRENT_BODY_PART";
 export const REMOVE_COMMENT = "build-a-body/exercises/REMOVE_COMMENT";
+export const ADD_LIKED_EXERCISE = "build-a-body/exercises/ADD_LIKED_EXERCISE";
+export const REMOVE_LIKED_EXERCISE = "build-a-body/exercises/REMOVE_LIKED_EXERCISE";
 
 export const setExercises = (exerciseObject, bodyPartsArray) => ({ type: SET_EXERCISES, exerciseObject, bodyPartsArray });
 export const addExercise = (exercise) => ({ type: ADD_EXERCISE, exercise });
@@ -20,3 +22,6 @@ export const updateRating = (exerciseId, rating, userId, oldScore) => ({ type: U
 export const addComment = (comment) => ({ type: ADD_COMMENT, comment });
 export const updateComment = (updatedComment, exerciseId) => ({ type: UPDATE_COMMENT, updatedComment, exerciseId });
 export const removeComment = (commentId, exerciseId) => ({ type: REMOVE_COMMENT, commentId, exerciseId });
+
+export const addLikedExercise = (likedExercise) => ({ type: ADD_LIKED_EXERCISE, likedExercise });
+export const removeLikedExercise = (likedExerciseId, userId) => ({ type: REMOVE_LIKED_EXERCISE, likedExerciseId, userId });
