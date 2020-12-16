@@ -206,3 +206,7 @@ div>span.exercise__difficulty {
     display: flex;
     flex-direction: column;
 }
+
+.exercise__liked {
+    cursor: pointer;
+}

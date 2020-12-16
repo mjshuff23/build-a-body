@@ -136,7 +136,7 @@ function Exercises() {
                                 } }
                                 size={ 24 }
                                 color2={ '#ffd700' } />
-                            <FavoriteIcon style={ { fill: liked } } onClick={ () => {
+                            <FavoriteIcon className="exercise__liked" style={ { fill: liked } } onClick={ () => {
                                 updateLiked(exercise);
                             } } />
                         </div>
@@ -156,7 +156,7 @@ function Exercises() {
                         } }
                         size={ 24 }
                         color2={ '#ffd700' } />
-                    <FavoriteIcon style={ { fill: liked } } onClick={ () => {
+                    <FavoriteIcon className="exercise__liked" style={ { fill: liked } } onClick={ () => {
                         updateLiked(exercise);
                     } } />
                 </div>
@@ -234,7 +234,7 @@ function Exercises() {
                                                         } }
                                                         size={ 24 }
                                                         color2={ '#ffd700' } />
-                                                    <FavoriteIcon style={ { fill: liked } } onClick={ () => {
+                                                    <FavoriteIcon className="exercise__liked" style={ { fill: liked } } onClick={ () => {
                                                         updateLiked(exercise);
                                                     } } />
                                                 </div>
