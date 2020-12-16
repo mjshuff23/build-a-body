@@ -208,7 +208,7 @@ function Exercises() {
                 exercises ? exercises.map((exercise, index) => {
                     let liked = 'gray';
                     for (let i = 0; i < exercise.Likeds.length; i++) {
-                        if (exercise.Likeds[0].user_id === Number(userId)) {
+                        if (exercise.Likeds[i].user_id === Number(userId)) {
                             liked = 'red';
                         }
                     }
