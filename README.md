@@ -1,6 +1,7 @@
 # Bodybuilding Project
 Bodybuilding project is an app focused primarily on helping people get in shape in a sustainable and healthy way.  Our focus is not to sell you supplements, but to sell you the benefits of hard work, proper nutrition, and consistency.
 
+[Live Link](http://aa-build-a-body.herokuapp.com/)
 
 ## Features
 
