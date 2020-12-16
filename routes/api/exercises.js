@@ -276,4 +276,30 @@ router.get('/:exerciseId/comments/:commentId', asyncHandler(async (req, res, nex
     return res.json('test');
 }));
 
+router.get('/:exerciseId/liked/:userId', asyncHandler(async (req, res, next) => {
+    const exerciseId = parseInt(req.params.exerciseId);
+    const userId = parseInt(req.params.userId);
+
+    const likedExercise = await Liked.findOne({
+        where: {
+            user_id: userId,
+            likedId: exerciseId,
+            likedType: 'Exercise'
+        }
+    });
+
+    if (likedExercise) {
+        await likedExercise.destroy();
+        return res.json(exerciseId);
+    } else {
+        const newLike = await Liked.create({
+            user_id: userId,
+            likedId: exerciseId,
+            likedType: 'Exercise'
+        });
+
+        return res.json(newLike);
+    }
+}));
+
 module.exports = router;

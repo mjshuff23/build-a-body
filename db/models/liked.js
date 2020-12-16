@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Liked.addHook("afterFind", findResult => {
       if (!Array.isArray(findResult)) findResult = [findResult];
+      if (findResult[0] === null) return;
       for (const instance of findResult) {
         if (instance.likedType === "Exercise" && instance.Exercise !== undefined) {
           instance.likable = instance.Exercise;

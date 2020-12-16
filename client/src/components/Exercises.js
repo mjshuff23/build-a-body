@@ -8,7 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Popover } from '@material-ui/core';
 import { backendUrl } from '../config';
-import { addComment, addRating, removeExercise, updateRating } from '../store/actions/exercises';
+import { addComment, addLikedExercise, removeLikedExercise, addRating, removeExercise, updateRating } from '../store/actions/exercises';
 import ExerciseForm from './ExerciseForm';
 import ExerciseFormEdit from './ExerciseFormEdit';
 import ReactStars from 'react-stars';
@@ -136,7 +136,9 @@ function Exercises() {
                                 } }
                                 size={ 24 }
                                 color2={ '#ffd700' } />
-                            <FavoriteIcon style={ { fill: liked } } />
+                            <FavoriteIcon style={ { fill: liked } } onClick={ () => {
+                                updateLiked(exercise);
+                            } } />
                         </div>
                         💪💪💪Thanks for rating!💪💪💪
                     </div>
@@ -154,11 +156,34 @@ function Exercises() {
                         } }
                         size={ 24 }
                         color2={ '#ffd700' } />
-                    <FavoriteIcon style={ { fill: liked } } />
+                    <FavoriteIcon style={ { fill: liked } } onClick={ () => {
+                        updateLiked(exercise);
+                    } } />
                 </div>
                 Rate this exercise!
             </div>
         );
+    };
+
+    const updateLiked = async (exercise) => {
+        console.log(exercise);
+        const response = await fetch(`${backendUrl}/api/exercises/${exercise.id}/liked/${userId}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (isNaN(data)) {
+                console.log('Adding Like to Exercise');
+                // If data is not a number, we need to add the like to the exercises Likeds
+                dispatch(addLikedExercise(data));
+            } else {
+                console.log('Removing Like from Exercise');
+                dispatch(removeLikedExercise(data, userId));
+            }
+        }
     };
 
     const open = Boolean(anchorEl);
@@ -209,7 +234,9 @@ function Exercises() {
                                                         } }
                                                         size={ 24 }
                                                         color2={ '#ffd700' } />
-                                                    <FavoriteIcon style={ { fill: liked } } />
+                                                    <FavoriteIcon style={ { fill: liked } } onClick={ () => {
+                                                        updateLiked(exercise);
+                                                    } } />
                                                 </div>
                                                 Rate this exercise!
                                             </div>
