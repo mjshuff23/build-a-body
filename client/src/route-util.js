@@ -6,7 +6,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
         { ...rest }
         render={ (props) =>
             rest.needLogin === true ? (
-                <Redirect to="/login" />
+                <Redirect to="/landing" />
             ) : (
                     <Component { ...props } />
                 )

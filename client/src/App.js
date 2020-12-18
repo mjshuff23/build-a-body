@@ -8,6 +8,7 @@ import LandingPage from './components/LandingPage';
 import MainPage from './components/MainPage';
 import './components/stylesheets/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SignUpForm from './components/SignupForm';
 
 function App({ needLogin, loadToken }) {
     const [loaded, setLoaded] = useState(false);
@@ -25,6 +26,7 @@ function App({ needLogin, loadToken }) {
         <BrowserRouter>
             <Switch>
                 <Route path="/landing" component={ LandingPage } />
+                <Route path="/signup" component={ SignUpForm } />
                 <ProtectedRoute
                     path="/login"
                     exact={ true }
