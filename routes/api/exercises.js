@@ -76,7 +76,7 @@ router.post('/', asyncHandler(async (req, res) => {
     exercise.dataValues.averageRating = 0;
     exercise.dataValues.ratingCount = 0;
     exercise.dataValues.Ratings = [];
-    exercise.dataValues.Liked = [];
+    exercise.dataValues.Likeds = [];
 
     if (exercise) {
         return res.json(exercise);
