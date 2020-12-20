@@ -53,11 +53,9 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
             },
             body: JSON.stringify({ userId, editComment, commentId })
         });
-        console.log(`Comment ID: ${commentId}`);
 
         if (response.ok) {
             const { updatedComment, exerciseId } = await response.json();
-            console.log(updatedComment, exerciseId);
             dispatch(updateComment(updatedComment, exerciseId));
             return true;
         }

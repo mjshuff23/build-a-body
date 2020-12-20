@@ -75,8 +75,6 @@ function Exercises() {
             });
 
             if (response.ok) return true;
-
-            console.log(`Error trying to delete exercise ${exerciseId}`);
         }
         const deleted = await deleteExercise(exerciseId);
         if (deleted) {
@@ -166,7 +164,6 @@ function Exercises() {
     };
 
     const updateLiked = async (exercise) => {
-        console.log(exercise);
         const response = await fetch(`${backendUrl}/api/exercises/${exercise.id}/liked/${userId}`, {
             headers: {
                 'Content-Type': 'application/json'
@@ -176,11 +173,9 @@ function Exercises() {
         if (response.ok) {
             const data = await response.json();
             if (isNaN(data)) {
-                console.log('Adding Like to Exercise');
                 // If data is not a number, we need to add the like to the exercises Likeds
                 dispatch(addLikedExercise(data));
             } else {
-                console.log('Removing Like from Exercise');
                 dispatch(removeLikedExercise(data, userId));
             }
         }

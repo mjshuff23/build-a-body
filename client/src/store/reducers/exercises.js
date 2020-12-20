@@ -123,7 +123,6 @@ export default function reducer(state = initialState, action) {
 
         case ADD_LIKED_EXERCISE:
             // Add Liked Row to Exercise
-            console.log(action.likedExercise.likedId);
             newState.list[action.likedExercise.likedId].Likeds.push(action.likedExercise);
             return newState;
 

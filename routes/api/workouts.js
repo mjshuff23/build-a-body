@@ -109,8 +109,6 @@ router.post('/', asyncHandler(async (req, res, next) => {
         }
     });
 
-    console.log(workoutExercises);
-
     if (newWorkout) {
         return res.json({ newWorkout });
     }

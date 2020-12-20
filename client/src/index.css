@@ -4,6 +4,8 @@
     --primary-bg-color: #212121;
     --primary-font-color: #f7f5fa;
     --primary-link-color: #1098f7;
+    --primary-link-color--hover: #47b2ff;
+    --primary-box-bg: rgba(1, 10, 20, 70%);
 }
 
 body {

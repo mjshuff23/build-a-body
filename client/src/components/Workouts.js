@@ -28,8 +28,6 @@ function Workouts() {
             });
 
             if (response.ok) return true;
-
-            console.log(`Error trying to delete exercise ${workoutId}`);
         }
         const deleted = await deleteWorkout(workoutId);
         if (deleted) {

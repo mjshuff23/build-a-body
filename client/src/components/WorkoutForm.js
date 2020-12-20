@@ -31,7 +31,6 @@ function WorkoutForm({ handleClose }) {
 
             if (response.ok) {
                 const { newWorkout } = await response.json();
-                console.log(newWorkout);
 
                 await setTimeout(async () => {
                     const workoutExercisesFetch = await fetch(`${backendUrl}/api/workouts/${newWorkout.id}/exercises`, {
@@ -42,7 +41,6 @@ function WorkoutForm({ handleClose }) {
 
                     if (workoutExercisesFetch.ok) {
                         const workoutExercises = await workoutExercisesFetch.json();
-                        console.log(workoutExercises);
                         newWorkout.WorkoutExercises = workoutExercises;
                         dispatch(addWorkout(newWorkout));
                     }
@@ -61,7 +59,6 @@ function WorkoutForm({ handleClose }) {
     const addExercise = (e) => {
         if (e.target.value === 'none') return;
         exerciseList.push(e.target.value);
-        console.log(exerciseList);
     };
 
 
