@@ -9,7 +9,6 @@ import MainPage from './components/MainPage';
 import './components/stylesheets/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUpForm from './components/SignupForm';
-import ValidatedLoginForm from './components/ValidatedLoginForm';
 
 function App({ needLogin, loadToken }) {
     const [loaded, setLoaded] = useState(false);
