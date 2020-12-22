@@ -312,8 +312,11 @@ function Exercises() {
                                     {
                                         exercise.Comments ?
                                             exercise.Comments.map((comment, index) => {
-                                                if (comment.User.username)
+                                                if (comment.User.username) {
                                                     return (<Comment key={ index } author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } id={ comment.commentableId } commentId={ comment.id } type='Exercise' />);
+                                                } else {
+                                                    return null;
+                                                }
                                             })
                                             : null
                                     }
