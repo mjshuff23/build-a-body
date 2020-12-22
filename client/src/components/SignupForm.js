@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Redirect } from 'react-router-dom';
 import { register } from '../store/actions/authentication';
 import './stylesheets/SignupForm.css';
+import * as EmailValidator from 'email-validator';
 
 function SignUpForm() {
     const token = useSelector((state) => state.authentication.token);
@@ -13,9 +14,15 @@ function SignUpForm() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const dispatch = useDispatch();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        dispatch(register(username, email, password, confirmPassword));
+        if (!EmailValidator.validate(email)) {
+            return alert("Please Enter a Valid Email");
+        }
+        if (password !== confirmPassword) return alert("Passwords must match");
+        if (password.length < 8) return alert("Passwords must be at least 8 characters long");
+        const error = await dispatch(register(username, email, password, confirmPassword));
+        if (error) return alert(error);
     };
 
     const updateUsername = (event) => {

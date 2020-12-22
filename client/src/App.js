@@ -32,7 +32,7 @@ function App({ needLogin, loadToken }) {
                     path="/login"
                     exact={ true }
                     needLogin={ needLogin }
-                    component={ ValidatedLoginForm }
+                    component={ LoginForm }
                 />
                 <PrivateRoute
                     path="/"

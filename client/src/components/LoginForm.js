@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { NavLink, Redirect } from "react-router-dom";
 import { login } from "../store/actions/authentication";
 import './stylesheets/LoginForm.css';
+import * as EmailValidator from 'email-validator';
 
 const LoginForm = () => {
     const [email, setEmail] = useState("demo@example.com");
@@ -11,7 +12,14 @@ const LoginForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(login(email, password));
+        if (!EmailValidator.validate(email)) {
+            return alert("Please Enter a Valid Email");
+        }
+
+        const error = await dispatch(login(email, password));
+        if (error) {
+            return alert(error);
+        }
         return <Redirect to="/" />;
     };
 
