@@ -4,6 +4,7 @@ import './index.css';
 import AppContainer from './App';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
+import ValidatedLoginForm from './components/ValidatedLoginForm';
 
 const store = configureStore();
 

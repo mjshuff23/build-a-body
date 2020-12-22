@@ -10,7 +10,9 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.5.3",
+    "email-validator": "^2.0.4",
     "fontsource-roboto": "^3.0.3",
+    "formik": "^2.2.6",
     "http-proxy-middleware": "^1.0.5",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
@@ -24,7 +26,8 @@
     "react-scripts": "3.4.3",
     "react-stars": "^2.2.5",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.32.8"
   },
   "scripts": {
     "start": "react-scripts start",
