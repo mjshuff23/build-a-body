@@ -65,7 +65,7 @@ function ExerciseForm({ handleClose }) {
                 />
                 <input
                     type="text"
-                    placeholder="Video URL"
+                    placeholder="https://www.youtube.com/embed/id"
                     value={ videoUrl }
                     onChange={ updateProperty(setVideoUrl) }
                 />
