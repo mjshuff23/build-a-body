@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './stylesheets/Comment.css';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -13,7 +13,6 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
     const dispatch = useDispatch();
     const open = Boolean(anchorEl);
     const [editComment, setEditComment] = useState(content);
-    const commentElement = useRef(null);
 
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);

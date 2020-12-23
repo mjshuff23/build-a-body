@@ -5,7 +5,7 @@ import NavBar from './NavBar';
 import Feed from './Feed';
 import Workouts from './Workouts';
 import User from './User';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setExercises } from '../store/actions/exercises';
 import { setWorkouts } from '../store/actions/workouts';
 import { backendUrl } from '../config';
@@ -13,8 +13,6 @@ import './stylesheets/MainPage.css';
 
 
 function MainPage() {
-    const exerciseState = useSelector(state => state.exercises);
-
     const dispatch = useDispatch();
 
     useEffect(() => {

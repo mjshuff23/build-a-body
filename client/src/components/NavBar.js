@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/NavBar.css';
 import { Navbar, Nav } from 'react-bootstrap';
-import { baseUrl } from '../config';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { logout } from '../store/actions/authentication';
 function NavBar() {

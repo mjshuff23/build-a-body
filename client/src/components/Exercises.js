@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/Exercises.css';
-import ReactPlayer from 'react-player/youtube';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
@@ -18,7 +17,6 @@ function Exercises() {
     const exerciseState = useSelector(state => state.exercises);
     const exercises = Object.values(exerciseState.list);
     const userId = localStorage.getItem("userId");
-    const token = localStorage.getItem("build-a-body/authentication/token");
     const [anchorEl, setAnchorEl] = useState(null);
     const [anchorElEdit, setAnchorElEdit] = useState(null);
     const [currentExerciseId, setCurrentExerciseId] = useState('');
@@ -299,7 +297,11 @@ function Exercises() {
                                 )) }
                             </div>
                             <div>
-                                <ReactPlayer className="exercise__video" url={ exercise.video_url } controls={ true } />
+                                {/* <ReactPlayer className="exercise__video" url={ exercise.video_url } controls={ true } /> */ }
+                                <iframe id="ytplayer" type="text/html" width="640" height="360"
+                                    src={ exercise.video_url }
+                                    frameBorder="0"
+                                    title={ exercise.id }></iframe>
                             </div>
                             <div className="exercise__comments">
                                 <span className="exercise__commentsHeader">
@@ -310,9 +312,10 @@ function Exercises() {
                                     {
                                         exercise.Comments ?
                                             exercise.Comments.map((comment, index) => {
-                                                {
-                                                    if (comment.User.username)
-                                                        return (<Comment key={ index } author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } id={ comment.commentableId } commentId={ comment.id } type='Exercise' />);
+                                                if (comment.User.username) {
+                                                    return (<Comment key={ index } author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } id={ comment.commentableId } commentId={ comment.id } type='Exercise' />);
+                                                } else {
+                                                    return null;
                                                 }
                                             })
                                             : null

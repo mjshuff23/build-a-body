@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { NavLink, Redirect } from "react-router-dom";
 import { login } from "../store/actions/authentication";
 import './stylesheets/LoginForm.css';
+import * as EmailValidator from 'email-validator';
 
 const LoginForm = () => {
     const [email, setEmail] = useState("demo@example.com");
@@ -11,7 +12,14 @@ const LoginForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(login(email, password));
+        if (!EmailValidator.validate(email)) {
+            return alert("Please Enter a Valid Email");
+        }
+
+        const error = await dispatch(login(email, password));
+        if (error) {
+            return alert(error);
+        }
         return <Redirect to="/" />;
     };
 
@@ -36,7 +44,7 @@ const LoginForm = () => {
                         value={ email }
                         onChange={ updateEmail }
                     />
-                    <br></br>
+                    <div className="loginForm__invalidEmail">Invalid Email</div>
                     <input
                         className="loginForm__input"
                         type="password"
@@ -44,7 +52,7 @@ const LoginForm = () => {
                         value={ password }
                         onChange={ updatePassword }
                     />
-                    <br></br>
+                    <div className="loginForm__invalidPassword">Invalid Password</div>
                     <button className="loginForm__button" type="submit">Login</button>
                 </form>
                 <NavLink to="/signup" className="loginForm__signupLink">No Account? Sign Up Here!</NavLink>

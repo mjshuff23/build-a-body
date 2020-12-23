@@ -58,3 +58,8 @@
 .loginForm__signupLink:hover, .signUpForm__loginLink:hover {
     color: white;
 }
+
+.loginForm__invalidEmail, .loginForm__invalidPassword {
+    color: red;
+    display: none;
+}
