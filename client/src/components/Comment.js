@@ -40,6 +40,7 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
 
     const updateCurrentComment = (e) => {
         if (!e.target) return;
+        console.log(e.target);
         setEditComment(e.target.value);
     };
 

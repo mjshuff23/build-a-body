@@ -8,7 +8,7 @@ function WorkoutForm({ handleClose }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [type, setType] = useState("");
-    let exerciseList = [];
+    let exerciseList = new Set();
     const exercises = useSelector(state => Object.values(state.exercises.list));
 
     const token = localStorage.getItem('build-a-body/authentication/token');
@@ -18,7 +18,8 @@ function WorkoutForm({ handleClose }) {
         e.preventDefault();
 
         async function createWorkout() {
-            if (!userId || !exerciseList.length) return;
+            if (!userId || !exerciseList.size) return;
+            let exerciseArray = Array.from(exerciseList);
             handleClose();
             const response = await fetch(`${backendUrl}/api/workouts`, {
                 method: 'POST',
@@ -26,7 +27,7 @@ function WorkoutForm({ handleClose }) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ title, description, type, user_id: userId, exerciseList })
+                body: JSON.stringify({ title, description, type, user_id: userId, exerciseList: exerciseArray })
             });
 
             if (response.ok) {
@@ -58,7 +59,7 @@ function WorkoutForm({ handleClose }) {
 
     const addExercise = (e) => {
         if (e.target.value === 'none') return;
-        exerciseList.push(e.target.value);
+        exerciseList.add(e.target.value);
     };
 
 
