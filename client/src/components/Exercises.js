@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './stylesheets/Exercises.css';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -22,6 +22,10 @@ function Exercises() {
     const [currentExerciseId, setCurrentExerciseId] = useState('');
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+
+    }, [exerciseState]);
 
     const ratingChanged = async (score, exercise) => {
         // Check if user has already voted on this exercise
@@ -312,6 +316,7 @@ function Exercises() {
                                     {
                                         exercise.Comments ?
                                             exercise.Comments.map((comment, index) => {
+                                                console.log(comment);
                                                 if (comment.User.username) {
                                                     return (<Comment key={ index } author={ comment.User.username } authorId={ comment.user_id } content={ comment.content } date={ comment.createdAt } id={ comment.commentableId } commentId={ comment.id } type='Exercise' />);
                                                 } else {
