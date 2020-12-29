@@ -21,7 +21,12 @@
 }
 
 .comment__editIcon {
+    cursor: pointer;
     margin-left: 10px;
+}
+
+.comment__deleteIcon {
+    cursor: pointer;
 }
 
 .comment__editText {
