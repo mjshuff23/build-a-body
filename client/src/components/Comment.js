@@ -97,8 +97,7 @@ function Comment({ author, authorId, content, date, id, commentId, type }) {
                                                 e.target[0].value = '';
                                             }
                                         } }>
-                                            <input type="text" className="comment__editText" placeholder="Enter a new comment or delete with trash can"
-                                                value={ editComment }
+                                            <input type="text" className="comment__editText" placeholder="Enter New Comment"
                                                 onChange={ updateCurrentComment }
                                             />
                                         </form>
