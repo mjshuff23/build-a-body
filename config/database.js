@@ -15,14 +15,15 @@ module.exports = {
     seederStorage: 'sequelize',
   },
   test: {
-    dialect: "sqlite",
-    DB_CONN: "sqlite.memory",
+    dialect: 'sqlite',
+    DB_CONN: 'sqlite.memory',
     logging: false,
     seederStorage: 'sequelize',
   },
   production: {
     use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
+    dialectOptions: { ssl: true },
     seederStorage: 'sequelize',
   },
 };
