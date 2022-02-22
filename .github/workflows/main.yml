@@ -20,12 +20,17 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-    # Runs a single command using the runners shell
-    - name: Build and push
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku git:remote -a aa-build-a-body
-    - name: Release
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: git push heroku main
+    - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "aa-build-a-body" # Must be unique in Heroku
+          heroku_email: "mjshuff23@gmail.com"
+    # # Runs a single command using the runners shell
+    # - name: Build and push
+    #   env:
+    #     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    #   run: heroku git:remote -a aa-build-a-body
+    # - name: Release
+    #   env:
+    #     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    #   run: git push heroku main
